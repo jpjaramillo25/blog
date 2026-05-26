@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Medir la pobreza a ciegas — Policy Brief</title>
+<meta name="description" content="Las cifras oficiales de pobreza del Ecuador dejaron de ser confiables para medir el progreso: el margen de error se multiplicó por cuatro desde 2020 y el marco muestral de la ENEMDU sigue anclado al censo de 2010.">
+<meta name="author" content="Juan Pablo Jaramillo-Ramón">
+<meta name="date" content="2026-05-26">
+<meta name="category" content="policy brief">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Medir la pobreza a ciegas">
+<meta property="og:description" content="Por qué las cifras oficiales de pobreza del Ecuador ya no son confiables y por qué urge actualizar el marco muestral de la ENEMDU.">
+<meta property="og:locale" content="es_EC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Medir la pobreza a ciegas">
+<meta name="twitter:description" content="Por qué las cifras oficiales de pobreza del Ecuador ya no son confiables y por qué urge actualizar el marco muestral de la ENEMDU.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#211c17; --paper:#f4efe5; --paper2:#ebe3d3; --card:#faf6ec;
+    --rule:#ccc2ac; --red:#9c3018; --slate:#2f4858; --ochre:#946514;
+    --muted:#6b6356; --teal:#2f6b5e;
+    --sans:'IBM Plex Sans',-apple-system,Segoe UI,sans-serif;
+    --serif:'Spectral',Georgia,serif;
+    --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--sans); font-size:16.5px; line-height:1.68;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 32px 90px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+  /* ---- masthead ---- */
+  .top-rule{height:6px;background:var(--ink)}
+  .top-rule .seg{height:100%;width:18%;background:var(--red);float:right}
+  header.mast{padding:34px 0 26px;border-bottom:1px solid var(--rule)}
+  .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--red);font-weight:500}
+  .kicker .dot{color:var(--muted);margin:0 8px}
+  h1.title{font-family:var(--serif);font-weight:600;font-size:54px;
+    line-height:1.04;letter-spacing:-.015em;margin:14px 0 6px}
+  .dek{font-family:var(--serif);font-style:italic;font-size:21px;
+    color:var(--slate);line-height:1.4;max-width:38em;margin:10px 0 0}
+  .byline{font-family:var(--mono);font-size:11.5px;color:var(--muted);
+    margin-top:20px;letter-spacing:.04em}
+
+  /* ---- exec summary ---- */
+  .summary{background:var(--ink);color:#f4efe5;border-radius:3px;
+    padding:30px 34px;margin:34px 0 14px}
+  .summary h2{font-family:var(--mono);font-size:12px;letter-spacing:.2em;
+    text-transform:uppercase;color:#e0a58c;margin:0 0 18px;font-weight:500}
+  .summary ol{margin:0;padding:0;list-style:none;counter-reset:k}
+  .summary li{counter-increment:k;position:relative;padding:0 0 0 46px;
+    margin:0 0 16px;font-size:16px;line-height:1.6}
+  .summary li:last-child{margin-bottom:0}
+  .summary li::before{content:counter(k,decimal-leading-zero);
+    position:absolute;left:0;top:1px;font-family:var(--serif);font-weight:600;
+    font-size:20px;color:#e0a58c}
+  .summary b{color:#fff;font-weight:600}
+
+  /* ---- stat strip ---- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--rule);border:1px solid var(--rule);margin:28px 0 8px}
+  .stat{background:var(--paper);padding:18px 16px}
+  .stat .n{font-family:var(--serif);font-weight:600;font-size:34px;
+    line-height:1;color:var(--red)}
+  .stat .l{font-size:12.5px;color:var(--muted);line-height:1.35;margin-top:8px}
+
+  /* ---- sections ---- */
+  section{padding-top:46px}
+  .sec-head{display:flex;align-items:baseline;gap:16px;
+    border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:18px}
+  .sec-num{font-family:var(--serif);font-weight:600;font-size:30px;color:var(--red)}
+  .sec-head h2{font-family:var(--serif);font-weight:600;font-size:27px;
+    margin:0;letter-spacing:-.01em;line-height:1.15}
+  p{margin:0 0 15px}
+  p.lead{font-size:18.5px;line-height:1.55;color:var(--slate);
+    font-family:var(--serif)}
+  .wide{max-width:none}
+
+  /* ---- figures ---- */
+  figure{margin:26px 0;background:var(--card);border:1px solid var(--rule);
+    border-radius:3px;padding:20px 22px}
+  .fig-tag{font-family:var(--mono);font-size:11px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--red);font-weight:500}
+  .fig-title{font-family:var(--serif);font-weight:600;font-size:18.5px;
+    margin:5px 0 4px;line-height:1.25}
+  figcaption{font-size:13px;color:var(--muted);line-height:1.5;
+    margin-top:12px;border-top:1px solid var(--rule);padding-top:10px}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin:10px 0 6px;
+    font-size:12.5px;color:var(--muted)}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .swatch{width:22px;height:0;border-top-width:3px;border-top-style:solid}
+  .chart-box{position:relative;width:100%}
+
+  /* ---- pull quote ---- */
+  .pull{border-left:4px solid var(--red);padding:4px 0 4px 22px;
+    margin:26px 0;font-family:var(--serif);font-size:23px;font-style:italic;
+    line-height:1.4;color:var(--ink)}
+
+  /* ---- timeline ---- */
+  .timeline{margin:24px 0 8px;position:relative;padding-left:30px}
+  .timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:14px;
+    width:2px;background:var(--rule)}
+  .tl{position:relative;margin-bottom:20px}
+  .tl::before{content:"";position:absolute;left:-30px;top:4px;width:16px;
+    height:16px;border-radius:50%;background:var(--paper);
+    border:3px solid var(--slate)}
+  .tl.crit::before{border-color:var(--red);background:var(--red)}
+  .tl .yr{font-family:var(--mono);font-weight:500;font-size:13px;
+    color:var(--red);letter-spacing:.04em}
+  .tl .ev{font-weight:600;font-size:15.5px;margin:1px 0 2px}
+  .tl .ds{font-size:14px;color:var(--muted);line-height:1.5}
+
+  /* ---- two-error diagram ---- */
+  .twin{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0 0}
+  .panel{border:1px solid var(--rule);border-radius:3px;padding:18px 18px 16px;
+    background:var(--card)}
+  .panel.seen{border-top:4px solid var(--slate)}
+  .panel.unseen{border-top:4px solid var(--red)}
+  .panel .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
+    text-transform:uppercase;font-weight:500}
+  .panel.seen .tag{color:var(--slate)}
+  .panel.unseen .tag{color:var(--red)}
+  .panel h3{font-family:var(--serif);font-weight:600;font-size:18px;
+    margin:6px 0 8px}
+  .panel p{font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 8px}
+  .panel .verdict{font-size:13px;font-weight:600;color:var(--ink);
+    border-top:1px solid var(--rule);padding-top:8px;margin-top:4px}
+  .twin-foot{background:var(--ink);color:#f4efe5;border-radius:3px;
+    padding:18px 22px;margin-top:14px;font-size:15px;line-height:1.55}
+  .twin-foot b{color:#e0a58c}
+
+  /* ---- recommendations ---- */
+  .recs{counter-reset:r;margin:18px 0 0;padding:0;list-style:none}
+  .recs li{counter-increment:r;position:relative;padding:16px 18px 16px 60px;
+    border:1px solid var(--rule);border-radius:3px;margin-bottom:10px;
+    background:var(--card)}
+  .recs li::before{content:counter(r);position:absolute;left:16px;top:14px;
+    font-family:var(--serif);font-weight:600;font-size:24px;color:var(--red)}
+  .recs .rt{font-weight:600;font-size:15.5px;margin-bottom:2px}
+  .recs .rd{font-size:14px;color:var(--muted);line-height:1.5}
+
+  /* ---- footer / sources ---- */
+  .note{margin-top:46px;border-top:2px solid var(--ink);padding-top:18px}
+  .note h2{font-family:var(--mono);font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--red);margin:0 0 10px;font-weight:500}
+  .note p,.note li{font-size:12.5px;color:var(--muted);line-height:1.55}
+  .note ul{margin:6px 0 0;padding-left:18px}
+  .colophon{margin-top:24px;font-family:var(--mono);font-size:11px;
+    color:var(--muted);letter-spacing:.03em;line-height:1.7}
+
+  @media (max-width:680px){
+    .wrap{padding:0 18px 60px}
+    h1.title{font-size:36px}
+    .stats{grid-template-columns:1fr 1fr}
+    .twin{grid-template-columns:1fr}
+  }
+  @media print{
+    body{background:#fff}
+    .summary,.twin-foot{background:#fff;color:#000;border:1.5px solid #000}
+    .summary li::before,.summary h2,.twin-foot b{color:#9c3018}
+    figure,.tl,.recs li,.panel{page-break-inside:avoid}
+    section{page-break-inside:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="top-rule"><div class="seg"></div></div>
+<div class="wrap">
+
+<header class="mast">
+  <div class="kicker">Policy Brief<span class="dot">/</span>Estadísticas sociales<span class="dot">/</span>Ecuador</div>
+  <h1 class="title">Medir la pobreza<br>a ciegas</h1>
+  <p class="dek">Las cifras oficiales de pobreza del Ecuador dejaron de ser confiables para medir el progreso. La causa de fondo es un marco muestral anclado al censo de 2010, y su actualización es urgente.</p>
+  <div class="byline">Documento de política · Mayo 2026 · Análisis basado en tabulados oficiales del INEC</div>
+</header>
+
+<div class="summary">
+  <h2>Mensajes clave</h2>
+  <ol>
+    <li>El margen de error de la tasa de pobreza se multiplicó por cerca de <b>cuatro</b> desde 2020. En junio de 2025, la pobreza rural podía situarse, con igual respaldo estadístico, en cualquier punto <b>entre 25% y 58%</b>.</li>
+    <li>Las variaciones de un año a otro ya no se distinguen del ruido estadístico. El propio INEC califica las últimas variaciones de pobreza como <b>"no estadísticamente significativas"</b>: no es posible afirmar si la pobreza sube o baja.</li>
+    <li>El marco muestral de la ENEMDU sigue construido sobre la cartografía del <b>Censo de 2010</b>: dieciséis años de desactualización. Sus proyecciones de población vencieron en 2020 y el Censo 2022 todavía no lo reemplaza.</li>
+    <li>Los intervalos publicados solo miden el error de muestreo. El <b>sesgo de cobertura</b> de un marco viejo no aparece en ellos: la incertidumbre real es aún mayor que la ya enorme que muestran las cifras.</li>
+  </ol>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="n">16 años</div><div class="l">de antigüedad del marco muestral: censo 2010 → 2026</div></div>
+  <div class="stat"><div class="n">±7,7 pp</div><div class="l">margen de error de la pobreza nacional, junio 2025</div></div>
+  <div class="stat"><div class="n">≈ 4×</div><div class="l">crecimiento del margen de error tras el quiebre de 2020</div></div>
+  <div class="stat"><div class="n">No&nbsp;sig.</div><div class="l">calificación del INEC a la variación de pobreza 2024→2025</div></div>
+</div>
+
+<!-- ============ 01 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2>El problema, en una sola cifra</h2></div>
+  <p class="lead">Una encuesta sirve para tomar decisiones cuando su margen de error es pequeño frente al cambio que se quiere detectar. La ENEMDU ya no cumple esa condición.</p>
+  <p>La Encuesta Nacional de Empleo, Desempleo y Subempleo (ENEMDU) es la herramienta oficial con la que el Ecuador mide la pobreza por ingresos y la desigualdad. Cada estimación que publica el INEC viene acompañada de un intervalo de confianza al 95%: el rango dentro del cual se ubica, con alta probabilidad, el valor real. Mientras ese intervalo sea estrecho, la cifra es útil. Cuando se ensancha, deja de informar.</p>
+  <p>Calculando el <i>margen de error relativo</i> de cada estimación —la mitad del intervalo dividida por la cifra reportada— sobre los propios tabulados del INEC, el resultado es inequívoco: entre 2007 y 2017 ese margen se mantuvo estable, cerca del 4%–5%. A partir de 2020 se dispara. Para 2024–2025 supera el 19% a nivel nacional, el 25% en el área rural y el 27% en la pobreza multidimensional.</p>
+
+  <figure>
+    <div class="fig-tag">Figura 1</div>
+    <div class="fig-title">El margen de error se quintuplicó: precisión de los indicadores de pobreza, 2007–2025</div>
+    <div class="legend">
+      <span><span class="swatch" style="border-color:#9c3018"></span>Pobreza rural</span>
+      <span><span class="swatch" style="border-color:#2f4858;border-top-style:dashed"></span>Pobreza nacional</span>
+      <span><span class="swatch" style="border-color:#946514;border-top-style:dotted"></span>Pobreza multidimensional (IPM)</span>
+    </div>
+    <div class="chart-box" style="height:320px"><canvas id="c1" role="img" aria-label="Gráfico de líneas que muestra el margen de error relativo de los indicadores de pobreza entre 2007 y 2025, estable cerca del 4 por ciento hasta 2017 y disparándose a entre 19 y 27 por ciento en 2024 y 2025."></canvas></div>
+    <figcaption>Margen de error relativo = (límite superior − límite inferior) ÷ 2, dividido por la estimación puntual. Serie de diciembre. La zona sombreada marca el quiebre metodológico de la ENEMDU en 2020. Fuente: tabulados de pobreza e IPM del INEC, diciembre 2025.</figcaption>
+  </figure>
+</section>
+
+<!-- ============ 02 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>La precisión se desplomó</h2></div>
+  <p>El deterioro no es solo relativo. En términos absolutos, el intervalo de confianza de la pobreza nacional de diciembre pasó de apenas <b>±1 a ±2 puntos porcentuales</b> durante toda la década de 2010 a <b>±4 a ±6 puntos</b> en los años recientes. En el área rural el intervalo llegó a <b>±11 puntos</b> en 2024: la cifra reportada podía estar errada por más de una quinta parte de su valor.</p>
+
+  <figure>
+    <div class="fig-tag">Figura 2</div>
+    <div class="fig-title">Amplitud del intervalo de confianza al 95%, en puntos porcentuales</div>
+    <div class="legend">
+      <span><span class="swatch" style="border-color:#9c3018"></span>Rural</span>
+      <span><span class="swatch" style="border-color:#2f4858;border-top-style:dashed"></span>Nacional</span>
+      <span><span class="swatch" style="border-color:#946514;border-top-style:dotted"></span>Urbana</span>
+    </div>
+    <div class="chart-box" style="height:300px"><canvas id="c2" role="img" aria-label="Gráfico de líneas de la amplitud del intervalo de confianza de la pobreza en puntos porcentuales, que crece marcadamente después de 2020 y alcanza hasta 23 puntos en el área rural."></canvas></div>
+    <figcaption>Distancia entre el límite superior e inferior del IC 95% de la tasa de pobreza por ingresos. Serie de diciembre. Fuente: tabulados del INEC.</figcaption>
+  </figure>
+
+  <p>El salto coincide con un cambio documentado: el INEC reconoce que entre 2020 y mayo de 2021 modificó <b>el tamaño y la distribución de la muestra</b> y los factores de ponderación, afectando la comparabilidad histórica. La muestra se redujo —el boletín de diciembre se levanta hoy sobre cerca de 9.000 viviendas— y una muestra más pequeña produce, mecánicamente, intervalos más anchos. Promediando antes y después del quiebre, el margen de error relativo se multiplicó por 3,5 a nivel nacional y por 4 en el área rural.</p>
+
+  <figure>
+    <div class="fig-tag">Figura 3</div>
+    <div class="fig-title">Antes y después de 2020: margen de error relativo promedio</div>
+    <div class="legend">
+      <span><span class="swatch" style="border-color:#b3a98f"></span>Promedio 2007–2019</span>
+      <span><span class="swatch" style="border-color:#9c3018"></span>Promedio 2021–2025</span>
+    </div>
+    <div class="chart-box" style="height:270px"><canvas id="c3" role="img" aria-label="Gráfico de barras que compara el margen de error relativo promedio antes de 2020, cercano al 5 por ciento, y después de 2020, entre 16 y 21 por ciento, para la pobreza nacional, urbana y rural."></canvas></div>
+    <figcaption>Promedio del margen de error relativo de la pobreza por ingresos (serie de diciembre) en cada periodo. Fuente: cálculo propio sobre tabulados del INEC.</figcaption>
+  </figure>
+</section>
+
+<!-- ============ 03 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>Los años ya no se distinguen entre sí</h2></div>
+  <p class="lead">Cuando los intervalos de varios años se superponen, la estadística no permite afirmar que la pobreza haya cambiado. Es exactamente lo que ocurre hoy.</p>
+  <p>La Figura 4 grafica la tasa de pobreza nacional de diciembre y su intervalo de confianza. Hasta 2017 las barras eran cortas y separadas: un descenso real era visible. Desde 2021, los intervalos son tan amplios que <b>se solapan unos con otros</b>. El intervalo de 2024 (22%–34%) contiene a las estimaciones puntuales de 2022, 2023 y 2025. Estadísticamente, esos cuatro años son indistinguibles.</p>
+
+  <figure>
+    <div class="fig-tag">Figura 4</div>
+    <div class="fig-title">Pobreza nacional por ingresos: estimación puntual e intervalo de confianza, diciembre</div>
+    <div class="legend">
+      <span><span class="swatch" style="border-color:#2f4858;border-top-width:9px"></span>Intervalo de confianza 95%</span>
+      <span><span class="swatch" style="border-color:#9c3018;border-top-width:3px"></span>Estimación puntual reportada</span>
+    </div>
+    <div class="chart-box" style="height:380px"><canvas id="c4" role="img" aria-label="Gráfico de barras horizontales que muestra la tasa de pobreza nacional y su intervalo de confianza para cada diciembre de 2019 a 2025; los intervalos recientes son anchos y se superponen entre sí."></canvas></div>
+    <figcaption>Cada barra abarca del límite inferior al superior del IC 95%; la marca roja señala la cifra oficial. La superposición de las barras de 2021 a 2025 indica ausencia de diferencias estadísticamente significativas. Fuente: tabulados del INEC.</figcaption>
+  </figure>
+
+  <p>Esto no es una interpretación externa. El propio INEC advierte, en sus boletines, que las variaciones recientes <b>no son estadísticamente significativas</b>. En julio de 2025, la afirmación oficial de que "220 mil personas salieron de la pobreza" entre junio de 2024 y junio de 2025 fue verificada de forma independiente: la reducción de 1,5 puntos cae dentro del margen de error y no puede presentarse como un logro comprobado.</p>
+
+  <div class="pull">Si la cifra puede haber subido o bajado con igual probabilidad, anunciar una "reducción de la pobreza" no es informar: es interpretar ruido.</div>
+
+  <p>El caso más extremo es la serie trimestral. En junio de 2025, la pobreza rural se estimó en 41,7%, pero con un intervalo que va de <b>25,2% a 58,1%</b> —casi 33 puntos de amplitud—. Un rango que abarca desde "uno de cada cuatro" hasta "casi seis de cada diez" habitantes rurales no orienta ninguna política pública.</p>
+
+  <figure>
+    <div class="fig-tag">Figura 5</div>
+    <div class="fig-title">Pobreza rural, serie de junio: el intervalo que ya no informa nada</div>
+    <div class="chart-box" style="height:230px"><canvas id="c5" role="img" aria-label="Gráfico de barras horizontales del intervalo de confianza de la pobreza rural en junio de 2023, 2024 y 2025; el intervalo de 2025 se extiende de 25 a 58 por ciento."></canvas></div>
+    <figcaption>Intervalo de confianza 95% de la tasa de pobreza rural por ingresos en la ronda de junio. La marca roja indica la estimación puntual. Fuente: tabulados del INEC.</figcaption>
+  </figure>
+
+  <p>La pobreza extrema, por trabajar con cifras más pequeñas, sufre el problema con mayor intensidad: su margen de error relativo supera hoy el <b>40%</b> a nivel nacional y rural. La cifra de pobreza extrema reportada podría estar errada en casi la mitad de su valor.</p>
+
+  <figure>
+    <div class="fig-tag">Figura 6</div>
+    <div class="fig-title">Pobreza extrema: margen de error relativo, 2007–2025</div>
+    <div class="legend">
+      <span><span class="swatch" style="border-color:#9c3018"></span>Rural</span>
+      <span><span class="swatch" style="border-color:#2f4858;border-top-style:dashed"></span>Nacional</span>
+    </div>
+    <div class="chart-box" style="height:290px"><canvas id="c6" role="img" aria-label="Gráfico de líneas del margen de error relativo de la pobreza extrema, que pasa de cerca del 6 por ciento antes de 2017 a más del 40 por ciento en 2024 y 2025."></canvas></div>
+    <figcaption>Margen de error relativo del IC 95% de la tasa de pobreza extrema por ingresos. Serie de diciembre. Fuente: tabulados del INEC.</figcaption>
+  </figure>
+</section>
+
+<!-- ============ 05 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>La causa de fondo: un marco de 2010</h2></div>
+  <p>Toda encuesta de hogares se levanta sobre un <i>marco muestral</i>: el inventario de viviendas y sectores —la cartografía del país— del que se sortean los hogares a entrevistar. El marco de la ENEMDU se construyó con los resultados y la cartografía del <b>VII Censo de Población y VI de Vivienda de 2010</b>, y se implementó desde septiembre de 2013. Desde entonces ha recibido apenas una actualización cartográfica parcial.</p>
+  <p>Quince años después, ese mapa describe un país que ya no existe. No contiene los barrios construidos después de 2010, ni los asentamientos informales que crecieron en la periferia de las ciudades, ni refleja la migración interna ni la llegada de población extranjera. El Ecuador realizó precisamente por eso un nuevo censo en 2022. Pero, hasta la documentación metodológica más reciente disponible, la ENEMDU seguía sorteando hogares del mapa de 2010.</p>
+
+  <div class="timeline">
+    <div class="tl"><div class="yr">2010</div><div class="ev">VII Censo de Población y Vivienda</div><div class="ds">Se levanta la cartografía que servirá de base al marco maestro de muestreo de las encuestas de hogares.</div></div>
+    <div class="tl"><div class="yr">2013</div><div class="ev">El marco de 2010 entra en operación en la ENEMDU</div><div class="ds">La encuesta comienza a sortear viviendas a partir de la cartografía censal de 2010.</div></div>
+    <div class="tl"><div class="yr">2017</div><div class="ev">Última actualización cartográfica parcial</div><div class="ds">Una revisión limitada de sectores; el marco permanece anclado al universo de 2010.</div></div>
+    <div class="tl crit"><div class="yr">Junio 2020</div><div class="ev">Vencen las proyecciones de población del censo 2010</div><div class="ds">El INEC indica que el ejercicio de proyecciones poblacionales basado en el censo 2010 se calculó solo hasta esta fecha; los factores de expansión pierden su anclaje original.</div></div>
+    <div class="tl crit"><div class="yr">2020–2021</div><div class="ev">Reducción de la muestra y cambios metodológicos</div><div class="ds">El INEC modifica el tamaño y la distribución de la muestra; la comparabilidad histórica queda afectada y los intervalos comienzan a ensancharse.</div></div>
+    <div class="tl"><div class="yr">2022</div><div class="ev">VIII Censo de Población y Vivienda</div><div class="ds">El país obtiene un retrato demográfico y cartográfico actualizado, indispensable para reconstruir el marco muestral.</div></div>
+    <div class="tl crit"><div class="yr">2026</div><div class="ev">El marco de la ENEMDU sigue anclado a 2010</div><div class="ds">La cartografía del Censo 2022 aún no reemplaza al marco vigente. La medición de la pobreza acumula dieciséis años de desactualización.</div></div>
+  </div>
+</section>
+
+<!-- ============ 06 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2>El error que los intervalos no muestran</h2></div>
+  <p class="lead">Aquí está el punto decisivo: el marco viejo no es lo que ensancha los intervalos de confianza. Su daño es peor, porque es invisible.</p>
+  <p>Conviene distinguir dos errores que con frecuencia se confunden. El intervalo de confianza que publica el INEC mide <b>solo uno de ellos</b>.</p>
+
+  <div class="twin">
+    <div class="panel seen">
+      <div class="tag">Lo que el intervalo SÍ mide</div>
+      <h3>Error de muestreo</h3>
+      <p>Surge de entrevistar a una muestra y no a toda la población. Se reduce con muestras más grandes y crece con muestras pequeñas.</p>
+      <p>Es la causa directa del ensanchamiento visible desde 2020: la muestra se redujo.</p>
+      <div class="verdict">Es medible, se reporta, y ya por sí solo impide la inferencia interanual.</div>
+    </div>
+    <div class="panel unseen">
+      <div class="tag">Lo que el intervalo NO mide</div>
+      <h3>Error de cobertura</h3>
+      <p>Surge de un marco que ya no representa al país: viviendas y zonas enteras quedan sin posibilidad de ser seleccionadas.</p>
+      <p>Es el daño del marco de 2010, y crece silenciosamente cada año que el mapa se aleja más de la realidad.</p>
+      <div class="verdict">No aparece en ningún intervalo publicado. Es un sesgo sistemático, no cuantificado.</div>
+    </div>
+  </div>
+  <div class="twin-foot">
+    La incertidumbre real de las cifras de pobreza es la <b>suma de ambos errores</b>. Los intervalos de confianza —ya enormes— solo capturan el primero. Funcionan como un <b>piso</b> de la incertidumbre verdadera, nunca como un techo. Actualizar el marco no es un ajuste técnico menor: es la única forma de cerrar la parte del error que hoy ni siquiera se puede ver.</div>
+
+  <p style="margin-top:22px">Hay una señal adicional de que las cifras envían mensajes contradictorios: mientras la pobreza por ingresos cae a mínimos históricos, la pobreza multidimensional —que mide acceso real a educación, salud y servicios— ha subido de forma sostenida en los últimos años. Indicadores que deberían moverse juntos apuntan en direcciones opuestas. Cuando una fuente se contradice consigo misma, la explicación más simple no es el progreso: es la pérdida de calidad del dato.</p>
+</section>
+
+<!-- ============ 07 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">06</span><h2>Por qué urge actuar</h2></div>
+  <p>Las cifras de pobreza no son un dato académico. De ellas dependen la focalización de transferencias y bonos, la asignación territorial del gasto social, la evaluación de programas y el cumplimiento de metas nacionales e internacionales. Una medición que no distingue un año de otro produce tres riesgos concretos:</p>
+  <p><b>Decisiones mal dirigidas.</b> Si no se sabe dónde la pobreza realmente aumentó o disminuyó, los recursos se asignan sobre ruido. Zonas con necesidades crecientes —las que más cambiaron desde 2010— son justamente las peor representadas por el marco viejo.</p>
+  <p><b>Erosión de la confianza pública.</b> Cuando cifras oficiales se usan para proclamar logros que la propia metodología califica de no significativos, el costo lo paga la credibilidad de toda la estadística nacional, incluida la que sí es sólida.</p>
+  <p><b>Una ventana que se cierra.</b> El Censo 2022 ya está levantado. Cada trimestre que la ENEMDU sigue operando sobre el marco de 2010 es un trimestre de datos cuyo sesgo no podrá corregirse después. El costo de no actualizar crece con el tiempo.</p>
+</section>
+
+<!-- ============ 08 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">07</span><h2>Recomendaciones</h2></div>
+  <ol class="recs">
+    <li><div class="rt">Reconstruir el marco muestral con la cartografía del Censo 2022</div><div class="rd">Es la medida central y la más urgente. Debe fijarse un cronograma público con fecha de entrada en operación del nuevo marco maestro de muestreo.</div></li>
+    <li><div class="rt">Restituir el tamaño de muestra previo a 2020</div><div class="rd">Recuperar la precisión exige revertir la reducción muestral. Sin ello, los intervalos seguirán siendo demasiado anchos aunque el marco se actualice.</div></li>
+    <li><div class="rt">Publicar coeficientes de variación junto a cada estimación</div><div class="rd">Reportar de forma visible y estandarizada la precisión de cada cifra —y advertir cuándo un indicador no alcanza un umbral mínimo de confiabilidad para su difusión.</div></li>
+    <li><div class="rt">Etiquetar la significancia estadística en toda comunicación oficial</div><div class="rd">Ninguna variación de pobreza debería comunicarse como aumento o reducción sin indicar, en el mismo titular, si es estadísticamente significativa.</div></li>
+    <li><div class="rt">Estimar y divulgar el error de cobertura del marco actual</div><div class="rd">Comparar el marco de 2010 con el Censo 2022 permite cuantificar el sesgo hoy invisible y dar a los usuarios una medida honesta de la incertidumbre total.</div></li>
+    <li><div class="rt">Auditoría técnica independiente del diseño muestral</div><div class="rd">Una revisión externa —academia y organismos especializados— que valide el rediseño y blinde la credibilidad del proceso.</div></li>
+  </ol>
+</section>
+
+<div class="note">
+  <h2>Nota metodológica</h2>
+  <p>Las cifras de error de este documento se calcularon directamente sobre los tabulados oficiales del INEC. El <i>margen de error relativo</i> se define como la mitad de la amplitud del intervalo de confianza al 95% (límite superior menos límite inferior, dividido entre dos), expresada como porcentaje de la estimación puntual. Salvo indicación contraria, las series corresponden a la ronda de diciembre de cada año. Las comparaciones "antes / después de 2020" promedian los periodos 2007–2019 y 2021–2025. Este brief utiliza exclusivamente datos publicados por el INEC; no recalcula la pobreza, sino que examina la precisión con que la encuesta la mide.</p>
+  <h2 style="margin-top:18px">Fuentes</h2>
+  <ul>
+    <li>INEC — Tabulados de pobreza por ingresos y desigualdad, ENEMDU, diciembre 2025 (hoja "Intervalos de confianza").</li>
+    <li>INEC — Tabulados del Índice de Pobreza Multidimensional, ENEMDU, diciembre 2025.</li>
+    <li>INEC — Boletines técnicos de pobreza y desigualdad, ENEMDU, diciembre 2024 y diciembre 2025.</li>
+    <li>INEC — Metodología de diseño muestral de la ENEMDU (documentos 2020–2024) y nota metodológica sobre los cambios 2020–2021.</li>
+    <li>Verificación independiente sobre la variación de pobreza junio 2024 – junio 2025 (Lupa.com.ec, julio 2025).</li>
+    <li>Cobertura de prensa sobre las cifras de pobreza de diciembre 2025 (El Universo; Expreso, enero 2026).</li>
+  </ul>
+  <div class="colophon">
+    Policy Brief · Medir la pobreza a ciegas · Mayo 2026<br>
+    Documento de análisis de política pública basado en datos abiertos del INEC.<br>
+    Autor: Juan Pablo Jaramillo-Ramón
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  if(!window.Chart){return;}
+  var INK='#211c17',RED='#9c3018',SLATE='#2f4858',OCHRE='#946514',
+      MUT='#6b6356',GRID='rgba(33,28,23,0.09)';
+  Chart.defaults.font.family="'IBM Plex Sans',sans-serif";
+  Chart.defaults.font.size=11.5;
+  Chart.defaults.color=MUT;
+
+  var YEARS=['2007','2008','2009','2010','2011','2012','2013','2014','2015',
+    '2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+
+  // shaded post-2020 zone for line charts
+  var zoneBand={
+    id:'zoneBand',
+    beforeDatasetsDraw:function(chart,a,opts){
+      var labels=chart.data.labels, idx=labels.indexOf(opts.from);
+      if(idx<0)return;
+      var x=chart.scales.x.getPixelForValue(idx), ar=chart.chartArea, ctx=chart.ctx;
+      ctx.save();
+      ctx.fillStyle='rgba(156,48,24,0.06)';
+      ctx.fillRect(x,ar.top,ar.right-x,ar.bottom-ar.top);
+      ctx.strokeStyle='rgba(156,48,24,0.55)';
+      ctx.setLineDash([5,4]); ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(x,ar.top); ctx.lineTo(x,ar.bottom); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle=RED; ctx.font="500 10px 'IBM Plex Mono',monospace";
+      ctx.textAlign='left';
+      ctx.fillText('QUIEBRE 2020',x+5,ar.top+12);
+      ctx.restore();
+    }
+  };
+
+  // point-estimate tick for horizontal floating-bar charts
+  var pointTick={
+    id:'pointTick',
+    afterDatasetsDraw:function(chart,a,opts){
+      var pts=opts.points||[], meta=chart.getDatasetMeta(0),
+          xs=chart.scales.x, ctx=chart.ctx;
+      ctx.save();
+      meta.data.forEach(function(bar,i){
+        if(pts[i]==null)return;
+        var px=xs.getPixelForValue(pts[i]),
+            h=(bar.height||16)/2+3;
+        ctx.strokeStyle=RED; ctx.lineWidth=3;
+        ctx.beginPath();
+        ctx.moveTo(px,bar.y-h); ctx.lineTo(px,bar.y+h);
+        ctx.stroke();
+      });
+      ctx.restore();
+    }
+  };
+
+  function lineDS(label,data,color,dash){
+    return {label:label,data:data,borderColor:color,backgroundColor:color,
+      borderWidth:2.6,borderDash:dash||[],tension:.28,
+      pointRadius:2.3,pointHoverRadius:4,spanGaps:true};
+  }
+  var lineOpts=function(ymax,ytitle){
+    return {responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},
+        zoneBand:{from:'2020'},
+        tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+c.parsed.y+'%';}}}},
+      scales:{
+        x:{grid:{display:false},ticks:{autoSkip:false,maxRotation:50,minRotation:50,font:{size:10}}},
+        y:{min:0,max:ymax,grid:{color:GRID},border:{display:false},
+          title:{display:true,text:ytitle,font:{size:11}},
+          ticks:{callback:function(v){return v+(ytitle.indexOf('%')>-1?'%':'');}}}
+      }};
+  };
+
+  // Fig 1 — relative margin of error
+  new Chart(document.getElementById('c1'),{
+    type:'line',
+    data:{labels:YEARS,datasets:[
+      lineDS('Pobreza rural',[3.4,3.6,3.3,4.0,3.7,4.3,5.2,5.6,4.6,5.7,6.6,8.5,9.3,10.9,18.8,14.8,19.9,26.5,25.2],RED),
+      lineDS('Pobreza nacional',[3.7,3.7,3.5,1.8,4.6,4.6,4.7,4.9,4.1,4.7,5.5,7.2,8.6,9.3,14.7,12.6,14.8,20.8,19.4],SLATE,[8,5]),
+      lineDS('IPM nacional',[null,null,3.7,4.3,5.4,5.1,4.6,4.3,4.0,4.5,5.3,6.7,7.9,11.3,12.4,14.9,18.5,24.9,27.2],OCHRE,[2,4])
+    ]},
+    options:lineOpts(30,'Margen de error relativo (%)'),
+    plugins:[zoneBand]
+  });
+
+  // Fig 2 — absolute CI width
+  new Chart(document.getElementById('c2'),{
+    type:'line',
+    data:{labels:YEARS,datasets:[
+      lineDS('Rural',[4.23,4.25,3.84,4.21,3.8,4.18,4.41,3.98,3.62,4.39,5.17,6.83,7.73,10.77,15.97,12.13,16.81,22.95,18.95],RED),
+      lineDS('Nacional',[2.7,2.6,2.55,1.2,2.61,2.5,2.39,2.2,1.89,2.14,2.34,3.34,4.32,6.17,8.16,6.35,7.69,11.63,8.3],SLATE,[8,5]),
+      lineDS('Urbana',[3.27,3.14,3.19,2.76,3.01,2.34,2.79,2.66,2.08,2.21,2.03,3.19,4.66,6.81,7.78,5.61,4.83,10.85,6.32],OCHRE,[2,4])
+    ]},
+    options:lineOpts(25,'Amplitud del IC 95% (puntos pp)'),
+    plugins:[zoneBand]
+  });
+
+  // Fig 3 — pre/post 2020 grouped bars
+  new Chart(document.getElementById('c3'),{
+    type:'bar',
+    data:{labels:['Pobreza nacional','Pobreza urbana','Pobreza rural'],datasets:[
+      {label:'Promedio 2007–2019',data:[4.7,7.9,5.2],backgroundColor:'#b3a98f',
+        borderColor:'#8f8568',borderWidth:1,barPercentage:.7,categoryPercentage:.6},
+      {label:'Promedio 2021–2025',data:[16.5,19.3,21.0],backgroundColor:RED,
+        borderColor:'#7a2412',borderWidth:1,barPercentage:.7,categoryPercentage:.6}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+c.parsed.y+'%';}}}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:12}}},
+        y:{min:0,max:25,grid:{color:GRID},border:{display:false},
+          title:{display:true,text:'Margen de error relativo (%)'},
+          ticks:{callback:function(v){return v+'%';}}}}}
+  });
+
+  // Fig 4 — national poverty point + CI, horizontal floating bars
+  new Chart(document.getElementById('c4'),{
+    type:'bar',
+    data:{labels:['2019','2020','2021','2022','2023','2024','2025'],datasets:[
+      {label:'IC 95%',
+       data:[[22.88,27.20],[29.96,36.13],[23.61,31.76],[22.05,28.40],[22.17,29.86],[22.18,33.81],[17.22,25.52]],
+       backgroundColor:'rgba(47,72,88,0.26)',borderColor:SLATE,borderWidth:1.2,
+       borderSkipped:false,barPercentage:.62}
+    ]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        pointTick:{points:[25.04,33.04,27.69,25.23,26.01,27.99,21.37]},
+        tooltip:{callbacks:{label:function(c){
+          var v=c.raw;return 'IC: '+v[0]+'% – '+v[1]+'%';}}}},
+      scales:{
+        x:{min:14,max:40,grid:{color:GRID},border:{display:false},
+          title:{display:true,text:'Tasa de pobreza por ingresos (%)'},
+          ticks:{callback:function(v){return v+'%';}}},
+        y:{grid:{display:false},ticks:{font:{size:13,weight:'500'}}}}},
+    plugins:[pointTick]
+  });
+
+  // Fig 5 — rural poverty June, horizontal floating bars
+  new Chart(document.getElementById('c5'),{
+    type:'bar',
+    data:{labels:['Junio 2023','Junio 2024','Junio 2025'],datasets:[
+      {label:'IC 95%',
+       data:[[39.14,53.66],[33.97,52.36],[25.24,58.10]],
+       backgroundColor:'rgba(156,48,24,0.20)',borderColor:RED,borderWidth:1.2,
+       borderSkipped:false,barPercentage:.55}
+    ]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        pointTick:{points:[46.40,43.17,41.67]},
+        tooltip:{callbacks:{label:function(c){
+          var v=c.raw;return 'IC: '+v[0]+'% – '+v[1]+'%';}}}},
+      scales:{
+        x:{min:20,max:62,grid:{color:GRID},border:{display:false},
+          title:{display:true,text:'Tasa de pobreza rural por ingresos (%)'},
+          ticks:{callback:function(v){return v+'%';}}},
+        y:{grid:{display:false},ticks:{font:{size:13,weight:'500'}}}}},
+    plugins:[pointTick]
+  });
+
+  // Fig 6 — extreme poverty relative margin
+  new Chart(document.getElementById('c6'),{
+    type:'line',
+    data:{labels:YEARS,datasets:[
+      lineDS('Rural',[6.4,6.4,7.0,7.5,7.0,8.1,9.4,10.0,8.3,8.3,12.7,19.3,20.9,22.4,49.1,35.7,39.0,41.7,45.0],RED),
+      lineDS('Nacional',[5.9,5.9,5.9,6.3,7.5,7.7,8.1,8.6,7.1,7.4,10.6,15.8,17.6,19.8,36.3,29.3,38.1,40.7,45.6],SLATE,[8,5])
+    ]},
+    options:lineOpts(55,'Margen de error relativo (%)'),
+    plugins:[zoneBand]
+  });
+})();
+</script>
+
+</body>
+</html>
