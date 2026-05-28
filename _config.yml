@@ -1,0 +1,10 @@
+title: My Blog
+description: A personal blog
+theme: jekyll-theme-primer
+
+# Build settings
+destination: ./
+exclude:
+  - .git
+  - .gitignore
+  - .nojekyll
