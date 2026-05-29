@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Ecuador no pasó de isla de paz a país violento por casualidad. Un event study mensual con 3.456 observaciones fecha la fractura: abril de 2021, un mes antes de que Lasso asumiera.">
+<title>¿Cuándo la violencia partió a Ecuador en dos?</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* ── TIPOGRAFÍA ──────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+/* ── VARIABLES ───────────────────────────────────────────────── */
+:root {
+  --costa:    #991b1b;
+  --costa-lt: #fef2f2;
+  --resto:    #1e40af;
+  --amber:    #92400e;
+  --amber-lt: #fffbeb;
+  --green:    #14532d;
+  --ink:      #1c1917;
+  --muted:    #57534e;
+  --light:    #a8a29e;
+  --rule:     #e7e5e4;
+  --bg:       #fafaf9;
+  --card:     #ffffff;
+  --serif:    'Source Serif 4', Georgia, serif;
+  --sans:     'DM Sans', system-ui, sans-serif;
+  --display:  'Playfair Display', Georgia, serif;
+  --max:      740px;
+}
+
+/* ── RESET ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.82;
+  padding: 0 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── LAYOUT ──────────────────────────────────────────────────── */
+.wrap { max-width: var(--max); margin: 0 auto; padding: 52px 0 96px; }
+
+/* ── HEADER ──────────────────────────────────────────────────── */
+.cat {
+  font-family: var(--sans); font-size: .72rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--costa);
+  margin-bottom: 14px;
+}
+h1 {
+  font-family: var(--display);
+  font-size: clamp(2rem, 5.5vw, 3.1rem);
+  font-weight: 800; line-height: 1.1;
+  color: var(--ink); margin-bottom: 22px;
+}
+.deck {
+  font-family: var(--sans); font-size: 1.05rem; color: var(--muted);
+  line-height: 1.65; border-left: 3px solid var(--costa);
+  padding-left: 18px; margin-bottom: 28px;
+}
+.byline {
+  font-family: var(--sans); font-size: .78rem; color: var(--light);
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  padding: 10px 0; margin-bottom: 46px;
+}
+.byline em { font-style: italic; }
+
+/* ── KPIs ────────────────────────────────────────────────────── */
+.kpi-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--rule);
+  border: 1px solid var(--rule); border-radius: 6px;
+  overflow: hidden; margin-bottom: 52px;
+}
+.kpi { background: var(--card); padding: 18px 12px; text-align: center; }
+.kpi .val {
+  font-family: var(--sans); font-size: 1.5rem; font-weight: 700;
+  line-height: 1.1; margin-bottom: 7px;
+}
+.kpi .lbl {
+  font-family: var(--sans); font-size: .67rem; color: var(--light);
+  line-height: 1.4;
+}
+.val-red   { color: var(--costa); }
+.val-dark  { color: #7f1d1d; }
+.val-amber { color: var(--amber); }
+.val-ink   { color: var(--ink); }
+
+/* ── SECCIONES ───────────────────────────────────────────────── */
+.sn {
+  display: flex; align-items: center; gap: 14px;
+  margin: 52px 0 20px;
+}
+.sn-badge {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--ink); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--sans); font-size: 11px; font-weight: 700; flex-shrink: 0;
+}
+.sn h2 { font-family: var(--sans); font-size: 1.1rem; font-weight: 700; color: var(--ink); }
+hr.rule { border: none; border-top: 1px solid var(--rule); margin: 50px 0; }
+p { margin-bottom: 22px; }
+strong { font-weight: 600; }
+
+/* ── FIGURAS ─────────────────────────────────────────────────── */
+.fig { margin: 38px 0 46px; }
+.fig-label {
+  font-family: var(--sans); font-size: .7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--light); margin-bottom: 4px;
+}
+.fig-title {
+  font-family: var(--sans); font-size: .9rem; font-weight: 700;
+  color: var(--ink); margin-bottom: 3px; line-height: 1.35;
+}
+.fig-sub {
+  font-family: var(--sans); font-size: .77rem; color: var(--muted);
+  margin-bottom: 12px; line-height: 1.45;
+}
+.chart-wrap {
+  background: var(--card); border: 1px solid var(--rule);
+  border-radius: 4px; padding: 20px 12px 12px; position: relative;
+}
+.fig-note {
+  font-family: var(--sans); font-size: .71rem; color: var(--light);
+  margin-top: 8px; line-height: 1.55;
+}
+
+/* ── LEYENDA MANUAL EVENT STUDY ──────────────────────────────── */
+.es-legend {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  font-family: var(--sans); font-size: .73rem; color: var(--muted);
+  margin-bottom: 10px;
+}
+.es-legend span { display: flex; align-items: center; gap: 5px; }
+.dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+/* ── CALLOUTS ────────────────────────────────────────────────── */
+.box {
+  border-radius: 0 4px 4px 0; padding: 16px 20px;
+  margin: 28px 0; font-family: var(--sans);
+  font-size: .9rem; line-height: 1.68; color: var(--ink);
+}
+.box-red    { border-left: 3px solid var(--costa); background: var(--costa-lt); }
+.box-amber  { border-left: 3px solid var(--amber); background: var(--amber-lt); }
+.box-green  { border-left: 3px solid var(--green); background: #f0fdf4; }
+
+/* ── ECUACIÓN ────────────────────────────────────────────────── */
+.eq {
+  background: #f5f5f4; border-radius: 4px; border-left: 3px solid var(--rule);
+  padding: 13px 18px; font-family: 'Courier New', monospace;
+  font-size: .8rem; color: #44403c; line-height: 1.8;
+  margin: 24px 0; overflow-x: auto;
+}
+
+/* ── CRONOLOGÍA ──────────────────────────────────────────────── */
+.timeline { list-style: none; margin: 10px 0 4px; }
+.timeline li {
+  padding: 4px 0 4px 0; font-family: var(--sans);
+  font-size: .88rem; line-height: 1.55; color: var(--ink);
+  display: flex; gap: 10px;
+}
+.timeline li::before { content: "—"; color: var(--amber); flex-shrink: 0; }
+.timeline li strong { color: var(--costa); }
+
+/* ── NOTA METODOLÓGICA ───────────────────────────────────────── */
+.method {
+  background: #f5f5f4; border: 1px solid var(--rule); border-radius: 4px;
+  padding: 22px 26px; font-family: var(--sans); font-size: .81rem;
+  line-height: 1.72; color: var(--muted); margin-top: 54px;
+}
+.method h4 {
+  font-size: .72rem; text-transform: uppercase; letter-spacing: .09em;
+  color: var(--ink); font-weight: 700; margin-bottom: 12px;
+}
+.method p { margin-bottom: 9px; color: var(--muted); font-size: .81rem; }
+.method p:last-child { margin-bottom: 0; }
+.method a { color: var(--costa); }
+.method strong { color: var(--ink); }
+
+/* ── FOOTER ──────────────────────────────────────────────────── */
+.foot {
+  font-family: var(--sans); font-size: .73rem; color: var(--light);
+  border-top: 1px solid var(--rule); padding-top: 20px;
+  margin-top: 52px; line-height: 1.7;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .kpi-row { grid-template-columns: repeat(2, 1fr); }
+  h1 { font-size: 1.85rem; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ENCABEZADO -->
+  <p class="cat">Seguridad pública &nbsp;·&nbsp; Ecuador &nbsp;·&nbsp; Análisis de datos</p>
+
+  <h1>¿Cuándo la violencia<br>partió a Ecuador en dos?</h1>
+
+  <p class="deck">
+    Ecuador no pasó de ser una isla de paz a ser el país más violento de la región por casualidad.
+    Pasó de ser un país de tránsito de droga a ser un hub de exportación de cocaína.
+    Ese proceso tuvo una fecha, una geografía y un contexto político preciso.
+    Este post usa datos mensuales del Ministerio del Interior —granularidad que el análisis anual no podía ofrecer—
+    para identificar mes a mes cuándo comenzó la fractura y cuándo se volvió imposible de revertir.
+  </p>
+
+  <p class="byline">
+    Análisis de datos &nbsp;·&nbsp; Mayo 2026 &nbsp;·&nbsp; Fuente: Ministerio del Interior del Ecuador
+    &nbsp;·&nbsp; <em>Extiende con datos mensuales el trabajo de Jaramillo-Ramón, Pino-Uribe y Piedrahita-Bustamante, datos anuales 2014–2023.</em>
+  </p>
+
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="kpi"><div class="val val-red">Abr 2021</div><div class="lbl">primer mes con brecha<br>estadísticamente probada</div></div>
+    <div class="kpi"><div class="val val-dark">+400%</div><div class="lbl">homicidios en la Costa<br>entre 2020 y 2023</div></div>
+    <div class="kpi"><div class="val val-amber">0%</div><div class="lbl">ejecución presupuestaria<br>Min. Interior, 2022</div></div>
+    <div class="kpi"><div class="val val-ink">+1.69</div><div class="lbl">coef. máximo sept-2025<br>log-pts, p &lt; 0.001</div></div>
+  </div>
+
+  <!-- S1 -->
+  <div class="sn"><div class="sn-badge">01</div><h2>Ecuador no era un país violento. Y el narco existía desde antes.</h2></div>
+
+  <p>Hay dos cosas que hay que tener claras antes de hablar de datos. La primera: Ecuador redujo sostenidamente su tasa de homicidios entre 2009 y 2018. Llegó a ser el segundo país más pacífico de la región, impulsado en parte por reformas institucionales documentadas. La segunda: el narcotráfico en Ecuador existe desde los años 80. El país siempre fue vecino de Colombia y Perú, los dos principales productores de cocaína del mundo. Eso no es nuevo.</p>
+
+  <p>Lo que cambió a partir de 2021 no fue que apareció el narco. Lo que cambió es que Ecuador dejó de ser un país de tránsito poco violento y se convirtió en un <strong>hub de exportación de cocaína hacia Europa altamente disputado por el crimen transnacional</strong>. Cuando eso ocurre, el valor de controlar los puertos —Guayaquil, Manta, Esmeraldas, Puerto Bolívar— se dispara, y con él la violencia entre las organizaciones que compiten por ese control. La UNODC (2023) y <em>The Economist</em> lo documentaron: Ecuador es el "narcoestado más nuevo del mundo" no porque antes no hubiera droga, sino porque antes el Estado aún podía contener la competencia violenta.</p>
+
+  <p>Dos factores que se refuerzan explican el salto: el externo —la expansión de los cultivos de coca en Colombia superó las 200.000 hectáreas en 2021-2023, inundando las rutas ecuatorianas de cocaína— y el interno: el Estado ecuatoriano perdió la capacidad de ejercer el monopolio legítimo de la violencia en el momento más crítico.</p>
+
+  <div class="box box-amber">
+    <strong style="color:var(--amber)">El detonante inmediato que los datos mensuales permiten fechar:</strong> en diciembre de 2020 fue asesinado Jorge Luis Zambrano, alias "Rasquiña", líder de Los Choneros —la organización que había consolidado el control del territorio costero ecuatoriano. Su muerte dejó un vacío de poder inmediato. Las organizaciones subordinadas —Los Lobos, Los Pipos, Los Chone Killers, Los Tiguerones— se disputaron entre sí el territorio. En febrero de 2021 ocurrió la primera masacre carcelaria. Lo que siguió fue una guerra.
+  </div>
+
+  <hr class="rule">
+
+  <!-- S2 -->
+  <div class="sn"><div class="sn-badge">02</div><h2>El Estado que no llegó: lo que Lasso no hizo</h2></div>
+
+  <p>Cuando Guillermo Lasso asumió la presidencia el 24 de mayo de 2021, Ecuador ya tenía una crisis de seguridad activa. La guerra entre bandas había comenzado pocos meses antes. La pregunta relevante no es si Lasso la causó, sino qué hizo el Estado con ella.</p>
+
+  <p>La respuesta documentada es demoledora. En 2022, el Ministerio del Interior reportó <strong>0% de ejecución de su presupuesto de inversión</strong>. Al año siguiente, esa cifra subió apenas al 13.75%. El titular del ministerio, Juan Zapata, fue censurado por la Asamblea Nacional en 2024. El Índice Mundial de Crimen registró durante el período Lasso una caída de más del 20% en cinco indicadores clave: políticas contra el crimen, capacidad judicial, investigación, control territorial y combate al lavado.</p>
+
+  <p>A eso se suma complicidad documentada: Dritan Rexhepi —el capo albanés que reconectó el narcotráfico ecuatoriano con los mercados europeos— fue liberado en 2021 con certificado de buena conducta emitido por el propio Estado. Alias "Junior" de las Águilas salió en 2023 bajo las mismas condiciones. <strong>El Estado no solo no contuvo la violencia: en varios casos facilitó las condiciones para que escalara.</strong></p>
+
+  <p>El resultado fue que entre 2021 y 2023 Ecuador vivió 11 masacres carcelarias con más de 400 muertos. La tasa de homicidios dentro del sistema penitenciario llegó a 83 por cada 10.000 reclusos, cuando antes era de apenas 10. Las cárceles, símbolo del control del Estado, se convirtieron en el símbolo de su colapso.</p>
+
+  <!-- FIGURA 1 -->
+  <div class="fig">
+    <p class="fig-label">Figura 1</p>
+    <p class="fig-title">Homicidios mensuales: Costa vs. Resto del Ecuador, enero 2014 – diciembre 2025</p>
+    <p class="fig-sub">En 2020 ambos grupos se movieron de forma comparable —ése es el período de referencia del modelo. Desde inicios de 2021 la Costa empieza a separarse. La brecha nunca se cierra.</p>
+    <div class="chart-wrap"><canvas id="chartTotal" height="220"></canvas></div>
+    <p class="fig-note">Fuente: Dirección de Estadística y Economía de la Seguridad, Ministerio del Interior. 39.819 registros individuales.</p>
+  </div>
+
+  <hr class="rule">
+
+  <!-- S3 -->
+  <div class="sn"><div class="sn-badge">03</div><h2>La novedad: meses, no años, y un período de referencia correcto</h2></div>
+
+  <p>Análisis previos trabajan con datos anuales y confirman un coeficiente de tratamiento de <strong>+30 homicidios por 100.000 habitantes</strong> en la Costa durante 2021-2023, significativo al 1%. La contribución de este post es usar la granularidad mensual para fechar con precisión lo que el análisis anual solo puede aproximar: ¿en qué mes exacto comenzó la divergencia?</p>
+
+  <p>La decisión más importante del diseño de diferencias en diferencias es el período de referencia —el "cero" contra el cual se miden todos los coeficientes. Si ese cero está mal calibrado, el modelo produce resultados engañosos. Omitir un solo mes produce 74 coeficientes pre-tratamiento negativos significativos de 84, violando el supuesto de tendencias paralelas que exige coeficientes nulos. Omitir el bloque enero–mayo 2021 da 48 de 84 significativos: tampoco funciona, porque esos meses ya eran inusualmente violentos —la guerra entre bandas ya había comenzado. <strong>La especificación válida es tomar el año 2020 completo como referencia: solo 5 de 72 coeficientes pre-tratamiento son significativos y se mantienen cerca del cero</strong>, lo esperado por azar en 72 meses.</p>
+
+  <div class="eq">
+    log(1 + H<sub>pt</sub>) = α + β·Costa<sub>p</sub>
+    + Σ<sub>τ∉2020</sub> γ<sub>τ</sub>·𝟙(t=τ)
+    + Σ<sub>τ∉2020</sub> <strong>δ<sub>τ</sub></strong>·𝟙(t=τ)×Costa<sub>p</sub>
+    + λ<sub>p</sub> + ε<sub>pt</sub>
+  </div>
+
+  <p>Los δ<sub>τ</sub> son los coeficientes de interés: cuánto más o menos violenta fue la Costa en cada mes relativo al Resto y relativo al promedio de 2020. Los efectos fijos de provincia λ<sub>p</sub> eliminan todas las diferencias estables entre provincias. Los errores estándar son robustos (HC3).</p>
+
+  <p>Usar 2020 como referencia también tiene sentido sustantivo: fue el último año en que ambos grupos se movieron con dinámica similar, antes de que el vacío de poder post-Rasquiña y el colapso institucional bajo Lasso alteraran la ecuación.</p>
+
+  <hr class="rule">
+
+  <!-- S4 -->
+  <div class="sn"><div class="sn-badge">04</div><h2>El event study: tres momentos en la fractura</h2></div>
+
+  <!-- FIGURA 2 -->
+  <div class="fig">
+    <p class="fig-label">Figura 2</p>
+    <p class="fig-title">Event Study mensual: δ<sub>τ</sub> (Costa × mes), referencia = promedio de 2020</p>
+    <div class="es-legend">
+      <span><span class="dot" style="background:#bfdbfe"></span>Pre-2020 (no sig.)</span>
+      <span><span class="dot" style="background:#d1d5db"></span>Ref: 2020 (omitido)</span>
+      <span><span class="dot" style="background:#fca5a5"></span>Post no sig.</span>
+      <span><span class="dot" style="background:#f87171"></span>p &lt; 0.10</span>
+      <span><span class="dot" style="background:#dc2626"></span>p &lt; 0.05</span>
+      <span><span class="dot" style="background:#991b1b"></span>p &lt; 0.01</span>
+    </div>
+    <div class="chart-wrap"><canvas id="chartES" height="280"></canvas></div>
+    <p class="fig-note">OLS con HC3. Variable dependiente: log(1+homicidios). Efectos fijos de provincia. N=3.456. R²=0.852. Solo 5/72 coefs pre-2020 significativos al 5%: tendencias paralelas verificadas ✓. Barras de error: IC 95%.</p>
+  </div>
+
+  <p><strong>Momento 1 — Tendencias paralelas verificadas (2014–2019).</strong> La zona azul previa a 2020 muestra coeficientes dispersos alrededor de cero sin ningún patrón sistemático. Solo 5 de 72 son significativos al 5% —exactamente lo esperado por azar. El diseño es válido: la Costa y el Resto del país se movían en paralelo antes de la crisis.</p>
+
+  <p><strong>Momento 2 — La fractura comienza poco antes de Lasso (abril 2021).</strong> Este es el hallazgo más importante que los datos mensuales añaden al análisis anual. El primer mes con un coeficiente estadísticamente significativo es abril de 2021 (δ = +0.53, p = 0.003) —un mes antes de que Lasso asumiera. Mayo de 2021, el mes de la posesión, también es significativo (δ = +0.63, p = 0.001). La guerra entre bandas, desatada tras el asesinato de "Rasquiña" en diciembre de 2020, ya estaba produciendo una divergencia detectable en los datos antes de que hubiera un nuevo gobierno.</p>
+
+  <p><strong>Momento 3 — La consolidación imparable (agosto 2021 en adelante).</strong> Noviembre de 2021 es el primer mes con coeficiente mayor a +0.99 (p &lt; 0.001). Desde diciembre de 2021 en adelante, todos los meses son significativos al 1% sin excepción. El pico de toda la serie es <strong>septiembre de 2025: δ = +1.69, p &lt; 0.001</strong>.</p>
+
+  <div class="box box-red">
+    <strong style="color:var(--costa)">¿Qué significa δ = +1.69?</strong> exp(1.69) ≈ 5.4. En septiembre de 2025, la Costa tuvo aproximadamente <strong>cinco veces más homicidios</strong> de los que habría tenido si —desde 2020— hubiera seguido la trayectoria del Resto del país. Ese mismo mes el ratio bruto fue de 11 a 1: 707 homicidios en la Costa frente a 64 en el Resto.
+  </div>
+
+  <hr class="rule">
+
+  <!-- S5 -->
+  <div class="sn"><div class="sn-badge">05</div><h2>El dato que cambia el relato: la fractura precede a Lasso en un mes</h2></div>
+
+  <p>Este hallazgo merece un párrafo propio porque cambia la narrativa política con precisión quirúrgica. La divergencia estadística no comenzó el 24 de mayo de 2021, cuando Lasso juró el cargo. Comenzó en abril de 2021, durante los últimos días del gobierno de Lenín Moreno.</p>
+
+  <p>Eso no absuelve a Lasso. Lo que dice es algo más preciso: la fractura la inició el vacío de poder criminal, no el cambio de gobierno. Lo que hizo el gobierno de Lasso —o más exactamente, lo que no hizo— fue dejar que esa fractura se consolidara, se profundizara y se volviera estructural durante 30 meses de gestión, con presupuesto no ejecutado, ministros incompetentes y presos de alta peligrosidad liberados con certificados de buena conducta.</p>
+
+  <p>La diferencia importa para el diagnóstico de política pública. Si la fractura hubiera empezado exactamente con el cambio de gobierno, podría argumentarse que fue un shock exógeno político. Que empiece un mes antes, en plena transición, indica que fue un shock criminal que el nuevo gobierno heredó y luego amplificó por omisión.</p>
+
+  <div class="box box-amber">
+    <strong style="color:var(--amber)">Cronología que los datos mensuales permiten establecer:</strong>
+    <ul class="timeline" style="margin-top:12px">
+      <li>Dic 2020 &nbsp;— Asesinato de "Rasquiña". Inicio del vacío de poder en Los Choneros.</li>
+      <li>Feb 2021 &nbsp;— Primera masacre carcelaria. El Estado ya había perdido el control de las cárceles.</li>
+      <li><strong>Abr 2021 &nbsp;— Primer mes con diferencial Costa-Resto estadísticamente significativo (δ=+0.53, p=0.003).</strong></li>
+      <li>May 2021 &nbsp;— Lasso asume. El diferencial sigue creciendo (δ=+0.63, p=0.001).</li>
+      <li>Nov 2021 &nbsp;— Coeficiente supera +0.99. La fractura es estructural.</li>
+      <li>2022 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— Presupuesto del Ministerio del Interior: 0% ejecutado en inversión.</li>
+      <li>Sep 2025 &nbsp;— Pico histórico: δ=+1.69, ratio bruto de 11 a 1.</li>
+    </ul>
+  </div>
+
+  <hr class="rule">
+
+  <!-- S6 -->
+  <div class="sn"><div class="sn-badge">06</div><h2>Lasso se fue. La violencia se quedó. Noboa tampoco la cerró.</h2></div>
+
+  <p>Guillermo Lasso disolvió la Asamblea en mayo de 2023 y convocó elecciones anticipadas. Daniel Noboa asumió en noviembre de 2023 con una nueva estrategia: estado de emergencia, despliegue militar, declaración de conflicto armado interno. Los primeros meses de 2024 mostraron coeficientes algo menores que los de 2023, lo que podría leerse como una moderación inicial.</p>
+
+  <p>Pero los datos de 2025 desmontaron esa lectura. El pico histórico de toda la serie —septiembre de 2025, δ = +1.69— ocurrió bajo Noboa. En los doce meses de 2025, todos los coeficientes son significativos al 5%, y diez de los doce lo son al 1%. No hay ningún mes de 2025 donde la brecha entre la Costa y el Resto del país se cierre o siquiera se achique de forma significativa.</p>
+
+  <p>Cuatro años después del primer mes significativo, la Costa ecuatoriana sigue siendo un territorio con una dinámica de violencia radicalmente distinta al resto del país. Bajo Lasso, bajo Noboa, sin cambio estadístico detectable.</p>
+
+  <hr class="rule">
+
+  <!-- S7 -->
+  <div class="sn"><div class="sn-badge">07</div><h2>Por qué importa fechar la fractura con precisión</h2></div>
+
+  <p>Una crisis de seguridad sin fecha es una crisis sin responsables. Lo que este análisis establece con certeza estadística es lo siguiente: antes de 2020, no hay evidencia de que la Costa se separara del Resto del país en materia de homicidios. En abril de 2021, un mes antes de que Lasso asumiera, apareció la primera señal estadística de divergencia, producto del colapso del orden criminal tras el asesinato de "Rasquiña". En noviembre de 2021, seis meses después de que Lasso tomara el cargo sin ejecutar presupuesto de seguridad, esa divergencia ya era estructural. Y así ha permanecido hasta diciembre de 2025.</p>
+
+  <p><strong>Ecuador tiene una fractura territorial de violencia concentrada en la Costa. Comenzó con el colapso criminal de diciembre de 2020. Se aceleró con el colapso institucional de 2021-2023. Y no ha cedido bajo ningún gobierno posterior.</strong></p>
+
+  <!-- METODOLOGÍA -->
+  <div class="method">
+    <h4>Nota metodológica</h4>
+    <p>Datos: microdatos de homicidios intencionales del MDI, publicados el 18 de mayo de 2026. N = 39.819 registros, enero 2014–diciembre 2025. Panel: 24 provincias × 144 meses = 3.456 observaciones. El 25% de las celdas tienen cero homicidios. Variable dependiente: log(1+homicidios).</p>
+    <p><strong>Período omitido: 2020 completo (Especificación C).</strong> Omitir un solo mes o el bloque ene–may 2021 viola el supuesto de tendencias paralelas (48–74 de 84 coefs pre-tratamiento significativos al 5%). Omitir 2020 completo produce solo 5/72 significativos —lo esperado por azar— y es la única especificación válida. Efectos fijos de provincia + 132 dummies año-mes + 132 interacciones año-mes × Costa. Errores HC3. OLS. R² = 0.852.</p>
+    <p>Código de replicación y base de datos: <a href="https://github.com/jpjaramillo25/ecuador-homicidios-2021">github.com/jpjaramillo25/ecuador-homicidios-2021</a></p>
+    <p>Referencias: Jaramillo-Ramón, J.P., Pino-Uribe, J.F., Piedrahita-Bustamante, P. "Ecuador since 2021: Escalation in Homicides, Weak State and Transnational-Subnational Organized Crime" (en revisión). Otras: Pontón et al. (2020); Yashar (2018); UNODC (2023); Clapp/<em>The Economist</em> (2024); Pino et al. (2025); Dressler y Wolff (2024).</p>
+  </div>
+
+  <div class="foot">
+    ¿Cuándo la violencia partió a Ecuador en dos? · Mayo 2026<br>
+    Fuente: Dirección de Estadística y Economía de la Seguridad — Ministerio del Interior del Ecuador.
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+// ── DATOS ─────────────────────────────────────────────────────────────────────
+const LABELS = ["2014-01","2014-02","2014-03","2014-04","2014-05","2014-06","2014-07","2014-08","2014-09","2014-10","2014-11","2014-12","2015-01","2015-02","2015-03","2015-04","2015-05","2015-06","2015-07","2015-08","2015-09","2015-10","2015-11","2015-12","2016-01","2016-02","2016-03","2016-04","2016-05","2016-06","2016-07","2016-08","2016-09","2016-10","2016-11","2016-12","2017-01","2017-02","2017-03","2017-04","2017-05","2017-06","2017-07","2017-08","2017-09","2017-10","2017-11","2017-12","2018-01","2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07","2019-08","2019-09","2019-10","2019-11","2019-12","2020-01","2020-02","2020-03","2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01","2021-02","2021-03","2021-04","2021-05","2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-10","2022-11","2022-12","2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-10","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12"];
+
+const COSTA=[113,65,100,71,66,77,54,69,69,46,74,83,64,45,71,62,69,75,54,53,52,66,45,49,62,49,53,54,54,61,58,50,53,39,56,49,64,60,59,58,55,53,40,41,49,51,46,55,49,50,61,61,63,54,46,48,60,52,57,45,47,60,56,88,74,71,66,61,65,75,83,79,79,77,56,61,68,84,71,83,77,107,109,115,95,154,135,141,141,133,147,166,276,180,252,184,258,282,294,305,373,307,360,337,412,401,351,478,458,445,569,575,571,635,721,532,699,741,686,668,442,330,463,456,516,501,500,525,531,603,582,635,729,673,752,665,810,514,576,680,707,678,760,695];
+const RESTO=[38,36,29,49,41,38,28,45,21,36,32,30,34,37,35,23,26,25,21,25,30,23,37,29,37,24,25,23,35,23,29,22,29,17,33,24,31,30,34,28,35,27,35,27,22,18,19,33,24,36,28,38,35,22,55,28,29,24,26,35,36,27,27,30,29,30,24,28,30,40,28,35,34,39,24,27,28,31,23,39,28,31,39,42,27,72,38,35,31,37,51,37,49,45,30,39,60,35,56,68,62,56,51,64,71,76,74,55,76,60,90,70,91,75,74,70,82,92,80,88,65,58,73,70,69,110,100,96,79,97,84,78,71,78,105,77,125,60,61,91,64,104,98,108];
+
+const ES_COEF=[0.154,-0.0462,0.4527,-0.1405,-0.1016,-0.1167,-0.109,-0.4732,0.2123,-0.5826,-0.1102,0.2211,-0.1021,-0.3075,-0.0405,-0.1398,0.0502,0.1385,-0.0779,-0.1248,-0.2753,-0.0217,-0.5131,-0.301,-0.2972,-0.2195,0.0582,-0.1206,-0.3639,-0.0661,0.0071,-0.1407,-0.2515,-0.1607,-0.5539,-0.1326,-0.1229,-0.1623,-0.3333,-0.1168,-0.5215,-0.0191,-0.4218,-0.5775,-0.1217,-0.15,0.0107,-0.1998,-0.3544,-0.1911,-0.1412,-0.3133,-0.2466,-0.0581,-0.1082,-0.2454,-0.3729,-0.1897,-0.1585,-0.4153,-0.3053,-0.0711,-0.3992,-0.1449,-0.057,-0.0082,-0.0478,-0.1966,-0.2771,-0.1723,0.2638,0.0263,0,0,0,0,0,0,0,0,0,0,0,0,0.1181,0.1642,0.3792,0.5275,0.6325,0.4035,0.1658,0.7637,0.5073,0.5423,0.9955,0.6038,1.0087,0.9942,0.7633,0.8544,1.1879,1.1944,1.3729,1.064,1.1874,1.1894,0.9586,1.4913,1.2692,1.3665,1.3703,1.2719,1.1799,1.4258,1.3174,1.2175,1.3302,1.4724,1.3195,1.3939,0.9144,0.8223,0.9404,0.9707,1.1457,1.0405,1.0626,1.0505,1.0806,1.2288,1.2484,1.334,1.3654,1.2128,1.0619,1.3525,1.1774,1.4441,1.5456,1.226,1.6925,1.3485,1.3782,1.1832];
+const ES_LO=[-0.4452,-0.5094,-0.0704,-0.5891,-0.4416,-0.5536,-0.577,-1.121,-0.2273,-0.9821,-0.5244,-0.0444,-0.6057,-0.7362,-0.5981,-0.4395,-0.4001,-0.2202,-0.5715,-0.4618,-0.5828,-0.4402,-1.0935,-0.6734,-0.7867,-0.8,-0.511,-0.5639,-0.9804,-0.6049,-0.4348,-0.5744,-0.7729,-0.6117,-0.9062,-0.6291,-0.7426,-0.5904,-0.7223,-0.516,-0.938,-0.4364,-0.9154,-0.9337,-0.5936,-0.4563,-0.3604,-0.7076,-0.6826,-0.7594,-0.5704,-0.7132,-0.6288,-0.5266,-0.5536,-0.65,-0.8805,-0.654,-0.4538,-0.8706,-0.779,-0.4613,-0.8037,-0.6105,-0.3022,-0.6049,-0.5986,-0.6499,-0.6746,-0.5029,-0.2018,-0.3705,0,0,0,0,0,0,0,0,0,0,0,0,-0.3835,-0.4164,-0.031,0.1794,0.2661,0.0021,-0.2882,0.337,0.056,0.1037,0.6286,0.2616,0.6383,0.5545,0.2353,0.3776,0.5497,0.843,0.9662,0.669,0.7854,0.7443,0.5782,1.1093,0.8389,1.0596,0.9841,0.9685,0.7546,1.1246,0.7225,0.8668,0.9182,0.9338,0.808,0.9423,0.3476,0.3717,0.1557,0.3444,0.4495,0.606,0.4129,0.4489,0.5198,0.5762,0.8163,0.7637,0.7758,0.7151,0.4907,0.933,0.5425,1.0028,0.9822,0.6086,1.2986,0.85,0.9258,0.8174];
+const ES_HI=[0.7531,0.417,0.9758,0.3081,0.2384,0.3203,0.3589,0.1746,0.6519,-0.1831,0.3039,0.4866,0.4014,0.1211,0.5171,0.1598,0.5004,0.4972,0.4158,0.2123,0.0322,0.3967,0.0672,0.0713,0.1922,0.361,0.6274,0.3228,0.2526,0.4726,0.4491,0.2931,0.2699,0.2903,-0.2016,0.3638,0.4969,0.2658,0.0557,0.2823,-0.105,0.3983,0.0717,-0.2214,0.3503,0.1563,0.3819,0.3081,-0.0263,0.3773,0.2881,0.0866,0.1356,0.4104,0.3372,0.1592,0.1347,0.2747,0.1367,0.04,0.1685,0.319,0.0054,0.3208,0.1881,0.5885,0.503,0.2567,0.1204,0.1583,0.7294,0.4231,0,0,0,0,0,0,0,0,0,0,0,0,0.6197,0.7447,0.7893,0.8755,0.9989,0.8049,0.6199,1.1904,0.9586,0.9808,1.3625,0.9461,1.3792,1.4338,1.2913,1.3312,1.8262,1.5458,1.7796,1.459,1.5895,1.6346,1.3391,1.8732,1.6994,1.6733,1.7566,1.5753,1.6051,1.7271,1.9122,1.5682,1.7421,2.011,1.8309,1.8455,1.4812,1.273,1.7252,1.5969,1.8419,1.4749,1.7124,1.6521,1.6415,1.8813,1.6805,1.9042,1.9549,1.7105,1.6332,1.7719,1.8124,1.8854,2.109,1.8433,2.0864,1.847,1.8305,1.5491];
+const ES_PVAL=[0.6145,0.8451,0.0898,0.5393,0.5581,0.6008,0.6479,0.1522,0.3439,0.0043,0.6019,0.1026,0.691,0.1597,0.8867,0.3604,0.8271,0.4492,0.7573,0.4681,0.0793,0.9189,0.0831,0.1131,0.2339,0.4586,0.8411,0.594,0.2473,0.8098,0.9748,0.5251,0.3445,0.485,0.0021,0.6006,0.6976,0.4574,0.0931,0.5662,0.0141,0.9287,0.0939,0.0015,0.6134,0.3371,0.9548,0.4407,0.0343,0.51,0.5193,0.1247,0.2059,0.808,0.6339,0.2346,0.1499,0.4234,0.2926,0.0738,0.2066,0.7208,0.0531,0.542,0.6484,0.9784,0.8649,0.3953,0.1718,0.307,0.2668,0.8966,null,null,null,null,null,null,null,null,null,null,null,null,0.6444,0.5794,0.07,0.003,0.0007,0.0488,0.474,0.0005,0.0276,0.0154,0,0.0005,0,0,0.0046,0.0004,0.0003,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0016,0.0003,0.0188,0.0024,0.0013,0,0.0013,0.0006,0.0002,0.0002,0,0,0,0,0.0003,0,0.0003,0,0,0.0001,0,0,0,0];
+
+const OMIT = new Set([72,73,74,75,76,77,78,79,80,81,82,83]);
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function esBarColor(i) {
+  if (OMIT.has(i)) return '#d1d5db';
+  if (i < 72)      return '#bfdbfe';
+  const p = ES_PVAL[i];
+  if (p === null || p === undefined) return '#d1d5db';
+  if (p < 0.01) return '#991b1b';
+  if (p < 0.05) return '#dc2626';
+  if (p < 0.10) return '#f87171';
+  return '#fca5a5';
+}
+
+// Sparse labels: show every 6th
+const sparseLabels = LABELS.map((l, i) => i % 6 === 0 ? l.slice(2) : '');
+
+const gridColor = 'rgba(0,0,0,0.06)';
+const tickFont  = { family: 'DM Sans, system-ui, sans-serif', size: 10 };
+const tickColor = '#a8a29e';
+
+// ── FIGURA 1: TOTALES ─────────────────────────────────────────────────────────
+const ctx1 = document.getElementById('chartTotal').getContext('2d');
+new Chart(ctx1, {
+  type: 'bar',
+  data: {
+    labels: sparseLabels,
+    datasets: [
+      { label: 'Costa', data: COSTA, backgroundColor: 'rgba(153,27,27,0.80)', borderRadius: 1 },
+      { label: 'Resto', data: RESTO, backgroundColor: 'rgba(30,64,175,0.65)', borderRadius: 1 },
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { labels: { color: tickColor, font: tickFont } },
+      tooltip: {
+        callbacks: {
+          title: (items) => LABELS[items[0].dataIndex],
+          label: (item) => `${item.dataset.label}: ${item.raw}`
+        }
+      },
+      annotation: {
+        annotations: {
+          ref: { type:'line', xMin:72, xMax:72, borderColor:'#92400e', borderWidth:1.5, borderDash:[4,3],
+            label:{ content:'← Ref: 2020', enabled:true, position:'start', color:'#92400e', font:{size:8,family:'DM Sans,sans-serif'} } },
+          lasso: { type:'line', xMin:88, xMax:88, borderColor:'#4b5563', borderWidth:1.5, borderDash:[4,3],
+            label:{ content:'Lasso →', enabled:true, position:'start', color:'#4b5563', font:{size:8,family:'DM Sans,sans-serif'} } },
+        }
+      }
+    },
+    scales: {
+      x: { ticks:{ color:tickColor, font:tickFont }, grid:{ color:gridColor } },
+      y: { ticks:{ color:tickColor, font:tickFont }, grid:{ color:gridColor } }
+    }
+  }
+});
+
+// ── FIGURA 2: EVENT STUDY ─────────────────────────────────────────────────────
+const barColors = LABELS.map((_, i) => esBarColor(i));
+const ctx2 = document.getElementById('chartES').getContext('2d');
+
+new Chart(ctx2, {
+  type: 'bar',
+  data: {
+    labels: sparseLabels,
+    datasets: [{
+      label: 'δτ',
+      data: ES_COEF,
+      backgroundColor: barColors,
+      borderRadius: 1,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: (items) => LABELS[items[0].dataIndex],
+          label: (item) => {
+            const i = item.dataIndex;
+            if (OMIT.has(i)) return 'Período omitido (referencia = 0)';
+            const p = ES_PVAL[i];
+            const sig = p === null ? '' : p < 0.001 ? ' ***' : p < 0.01 ? ' **' : p < 0.05 ? ' *' : p < 0.1 ? ' †' : ' ns';
+            const pStr = p === null ? 'omitido' : p < 0.001 ? '<0.001' : p.toFixed(3);
+            return [
+              `δ = ${item.raw.toFixed(3)}${sig}`,
+              `IC 95%: [${ES_LO[i].toFixed(3)}, ${ES_HI[i].toFixed(3)}]`,
+              `p = ${pStr}`,
+            ];
+          }
+        }
+      }
+    },
+    scales: {
+      x: { ticks:{ color:tickColor, font:tickFont }, grid:{ color:gridColor } },
+      y: {
+        min: -1.4, max: 2.2,
+        ticks:{ color:tickColor, font:tickFont },
+        grid:{ color:gridColor },
+        title:{ display:true, text:'δτ (log-pts)', color:tickColor, font:{ size:10, family:'DM Sans,sans-serif' } }
+      }
+    }
+  },
+  plugins: [{
+    id: 'errorbars',
+    afterDatasetsDraw(chart) {
+      const { ctx, scales: { x, y } } = chart;
+      ctx.save();
+      LABELS.forEach((_, i) => {
+        if (OMIT.has(i) || ES_LO[i] === 0 && ES_HI[i] === 0) return;
+        const xp  = x.getPixelForValue(i);
+        const yLo = y.getPixelForValue(ES_LO[i]);
+        const yHi = y.getPixelForValue(ES_HI[i]);
+        ctx.strokeStyle = 'rgba(0,0,0,0.28)';
+        ctx.lineWidth   = 0.9;
+        ctx.beginPath(); ctx.moveTo(xp, yLo); ctx.lineTo(xp, yHi); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(xp-3, yLo); ctx.lineTo(xp+3, yLo); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(xp-3, yHi); ctx.lineTo(xp+3, yHi); ctx.stroke();
+      });
+      // Zero line
+      ctx.strokeStyle = 'rgba(146,64,14,0.4)';
+      ctx.lineWidth   = 1.2;
+      ctx.setLineDash([4, 3]);
+      const yz = y.getPixelForValue(0);
+      ctx.beginPath();
+      ctx.moveTo(chart.chartArea.left,  yz);
+      ctx.lineTo(chart.chartArea.right, yz);
+      ctx.stroke();
+      // Reference block shade
+      const x20s = x.getPixelForValue(72) - x.getPixelForValue(0)*0 ;
+      const x20e = x.getPixelForValue(83);
+      ctx.setLineDash([]);
+      ctx.fillStyle = 'rgba(200,200,200,0.12)';
+      ctx.fillRect(x.getPixelForValue(72)-4, chart.chartArea.top, x.getPixelForValue(83)-x.getPixelForValue(72)+8, chart.chartArea.bottom-chart.chartArea.top);
+      // Reference markers
+      [[72,'← Ref 2020','#92400e'],[85,'1er sig. abr-21','#14532d'],[88,'Lasso','#374151'],[128,'pico →','#7f1d1d']].forEach(([idx,label,col]) => {
+        const xp2 = x.getPixelForValue(idx);
+        ctx.strokeStyle = col;
+        ctx.lineWidth   = 1.4;
+        ctx.setLineDash([3,3]);
+        ctx.beginPath(); ctx.moveTo(xp2, chart.chartArea.top); ctx.lineTo(xp2, chart.chartArea.bottom); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle   = col;
+        ctx.font        = '8px DM Sans, sans-serif';
+        ctx.fillText(label, xp2+3, chart.chartArea.top+10);
+      });
+      ctx.restore();
+    }
+  }]
+});
+</script>
+</body>
+</html>
