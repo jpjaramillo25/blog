@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Juan Pablo Jaramillo-Ramón">
+<meta name="description" content="En 28 meses de gobierno, Noboa apenas sumó 85.730 afiliados al IESS. Frente a una PEA de 8,75 millones, el cambio es de apenas un punto porcentual. Los datos del REESS-INEC revelan un mercado laboral estancado, no en recuperación.">
+<title>Empleo formal estancado — Policy Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{
+  --ink:#18160f;
+  --ink-2:#4a4740;
+  --ink-3:#8a877e;
+  --paper:#f8f5ee;
+  --paper-2:#f0ece2;
+  --rule:#ddd8ce;
+  --red:#b02020;
+  --red-bg:#faf0ef;
+  --green:#1a6040;
+  --green-bg:#eaf4ee;
+  --amber:#7a4e00;
+  --amber-bg:#fdf4e0;
+  --blue:#1a3f6e;
+  --blue-bg:#eaf0f9;
+  --max:680px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:17px}
+body{background:var(--paper);color:var(--ink);font-family:'Lora',Georgia,serif;line-height:1.75}
+
+/* layout */
+.w{max-width:var(--max);margin:0 auto;padding:0 1.5rem}
+
+/* header */
+.top-bar{border-top:3px solid var(--ink);padding:1.5rem 0 0}
+.breadcrumb{font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);display:flex;gap:.75rem;align-items:center;margin-bottom:1.25rem}
+.breadcrumb span{color:var(--ink-3)}
+.tag{background:var(--ink);color:var(--paper);padding:2px 9px;font-size:10px;letter-spacing:.15em;font-weight:500}
+h1{font-family:'Lora',serif;font-size:clamp(1.9rem,5.5vw,3rem);font-weight:600;line-height:1.1;letter-spacing:-.025em;margin-bottom:1rem;color:var(--ink)}
+.dek{font-family:'DM Sans',sans-serif;font-size:1.05rem;font-weight:300;color:var(--ink-2);line-height:1.6;margin-bottom:1.25rem}
+.meta-row{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink-3);padding:1rem 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-bottom:0}
+
+/* key messages */
+.key-msgs{background:var(--ink);color:var(--paper);padding:2rem 1.5rem;margin:0 0 0}
+.key-msgs-inner{max-width:var(--max);margin:0 auto}
+.key-msgs-label{font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(248,245,238,.5);margin-bottom:1rem}
+.key-msgs ol{padding-left:1.25rem}
+.key-msgs li{font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:300;line-height:1.6;margin-bottom:.75rem;color:rgba(248,245,238,.9)}
+.key-msgs li strong{font-weight:500;color:#f8f5ee}
+.key-msgs li:last-child{margin-bottom:0}
+
+/* stat strip */
+.stat-strip{background:var(--paper-2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:1.5rem 0;margin-bottom:0}
+.stat-strip-inner{max-width:var(--max);margin:0 auto;padding:0 1.5rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.stat-box{border-right:1px solid var(--rule);padding-right:1rem}
+.stat-box:last-child{border-right:none}
+.stat-num{font-family:'Lora',serif;font-size:1.9rem;font-weight:600;line-height:1;display:block;margin-bottom:3px;color:var(--ink)}
+.stat-num.red{color:var(--red)}
+.stat-num.amber{color:var(--amber)}
+.stat-label{font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);line-height:1.4;display:block}
+
+/* body */
+article{max-width:var(--max);margin:0 auto;padding:2.5rem 1.5rem}
+.section-num{font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.5rem}
+h2{font-family:'Lora',serif;font-size:1.5rem;font-weight:600;line-height:1.2;margin-bottom:1rem;color:var(--ink)}
+h3{font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin:1.5rem 0 .6rem;border-left:3px solid var(--red);padding-left:.6rem}
+p{margin-bottom:1.25rem;font-size:1rem;color:var(--ink)}
+p:first-of-type::first-letter{font-size:3.6rem;font-weight:600;float:left;line-height:.88;margin-right:7px;margin-top:5px;color:var(--ink);font-family:'Lora',serif}
+strong{font-weight:600}
+
+/* section divider */
+.section-break{border:none;border-top:2px solid var(--ink);margin:2.5rem 0 2rem;position:relative}
+
+/* pullquote */
+.pullquote{border-left:4px solid var(--red);padding:.6rem 1.25rem;margin:1.75rem 0;background:var(--red-bg)}
+.pullquote p{font-family:'Lora',serif;font-style:italic;font-size:1.15rem;color:var(--ink);margin:0;line-height:1.5}
+.pullquote p::first-letter{font-size:inherit;float:none;margin:0}
+
+/* callouts */
+.callout{padding:.9rem 1.1rem;margin:1.5rem 0;font-family:'DM Sans',sans-serif;font-size:.9rem;line-height:1.6;border-left:3px solid}
+.callout p{margin:0;font-size:.9rem}
+.callout p::first-letter{float:none;font-size:inherit;margin:0}
+.callout strong{font-weight:500}
+.c-red{background:var(--red-bg);border-color:var(--red);color:var(--ink)}
+.c-green{background:var(--green-bg);border-color:var(--green);color:var(--ink)}
+.c-amber{background:var(--amber-bg);border-color:var(--amber);color:var(--ink)}
+.c-blue{background:var(--blue-bg);border-color:var(--blue);color:var(--ink)}
+
+/* figures */
+.fig{margin:2rem 0;padding:1.25rem 1.25rem 1rem;background:#fff;border:1px solid var(--rule)}
+.fig-label{font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+.fig-title{font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;color:var(--ink);margin-bottom:4px;line-height:1.35}
+.fig-sub{font-family:'DM Sans',sans-serif;font-size:.78rem;color:var(--ink-3);margin-bottom:1rem;line-height:1.4}
+.fig-source{font-family:'DM Sans',sans-serif;font-size:.7rem;color:var(--ink-3);margin-top:.75rem;letter-spacing:.02em}
+.chart-wrap{position:relative;width:100%}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-family:'DM Sans',sans-serif;font-size:.75rem;color:var(--ink-2);margin-bottom:.75rem}
+.l-item{display:flex;align-items:center;gap:5px}
+.l-dot{width:11px;height:11px;border-radius:2px;flex-shrink:0}
+
+/* PEA visualisation */
+.pea-vis{margin:1.75rem 0;padding:1.25rem;background:var(--paper-2);border:1px solid var(--rule)}
+.pea-vis-label{font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin-bottom:1rem}
+.pea-row{margin-bottom:1rem}
+.pea-row:last-child{margin-bottom:0}
+.pea-row-label{font-family:'DM Sans',sans-serif;font-size:.78rem;color:var(--ink-2);margin-bottom:4px;display:flex;justify-content:space-between}
+.pea-bar-outer{height:24px;background:var(--rule);border-radius:2px;overflow:hidden;position:relative}
+.pea-fill{height:100%;display:flex;align-items:center;padding-right:6px;justify-content:flex-end}
+.pea-fill span{font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:500;color:#fff}
+.pea-note{font-family:'DM Sans',sans-serif;font-size:.72rem;color:var(--ink-3);margin-top:.75rem;line-height:1.5}
+
+/* data table */
+table{width:100%;border-collapse:collapse;font-family:'DM Sans',sans-serif;font-size:.85rem;margin:1.5rem 0}
+th{text-align:left;padding:7px 10px;font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);border-bottom:2px solid var(--ink);font-weight:500}
+td{padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:middle}
+tr:last-child td{border-bottom:2px solid var(--ink);font-weight:500}
+.n{text-align:right;font-feature-settings:'tnum'}
+.pos{color:var(--green);font-weight:600}
+.neg{color:var(--red);font-weight:600}
+
+/* two-box compare */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+.compare-box{padding:1rem 1.1rem;font-family:'DM Sans',sans-serif}
+.compare-box h4{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;font-weight:500}
+.compare-box ul{list-style:none;padding:0}
+.compare-box li{font-size:.85rem;line-height:1.55;margin-bottom:.4rem;color:var(--ink-2);padding-left:1rem;position:relative}
+.compare-box li::before{content:'›';position:absolute;left:0;color:inherit}
+.box-red{background:var(--red-bg);border-left:3px solid var(--red)}
+.box-red h4{color:var(--red)}
+.box-red li::before{color:var(--red)}
+.box-green{background:var(--green-bg);border-left:3px solid var(--green)}
+.box-green h4{color:var(--green)}
+.box-green li::before{color:var(--green)}
+
+/* recomendaciones */
+.rec-list{list-style:none;padding:0;margin:1rem 0}
+.rec-list li{font-family:'DM Sans',sans-serif;font-size:.9rem;line-height:1.6;margin-bottom:.75rem;padding:.75rem 1rem .75rem 3rem;background:var(--paper-2);border:1px solid var(--rule);position:relative;color:var(--ink-2)}
+.rec-list li strong{color:var(--ink);display:block;margin-bottom:2px;font-size:.88rem}
+.rec-num{position:absolute;left:1rem;top:.85rem;font-family:'Lora',serif;font-size:1.2rem;font-weight:600;color:var(--rule);line-height:1}
+
+/* footer */
+footer{border-top:2px solid var(--ink);padding:1.5rem 0 2rem;max-width:var(--max);margin:2rem auto 0}
+.footer-body{padding:0 1.5rem}
+.footer-body p{font-family:'DM Sans',sans-serif;font-size:.75rem;color:var(--ink-3);line-height:1.6;margin-bottom:.5rem}
+.footer-body p::first-letter{float:none;font-size:inherit;margin:0}
+.footer-body strong{color:var(--ink-2)}
+
+@media(max-width:560px){
+  .stat-strip-inner{grid-template-columns:repeat(2,1fr)}
+  .stat-box:nth-child(2){border-right:none}
+  .compare-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="w">
+<div class="top-bar">
+  <div class="breadcrumb">
+    <span class="tag">Policy Brief</span>
+    <span>Mercado laboral</span>
+    <span>·</span>
+    <span>Ecuador</span>
+  </div>
+  <h1>El espejismo del empleo formal</h1>
+  <p class="dek">En 28 meses de gobierno, Noboa apenas sumó 85.730 afiliados al IESS. Frente a una PEA de 8,75 millones, la cobertura del empleo formal subió un punto porcentual. Los datos del REESS-INEC no muestran recuperación: muestran estancamiento con anestesia estadística.</p>
+  <div class="meta-row">Documento de análisis · Mayo 2026 · Basado en el Registro Estadístico de Empleo en la Seguridad Social, INEC · Autor: Juan Pablo Jaramillo-Ramón</div>
+</div>
+</div>
+
+<!-- mensajes clave -->
+<div class="key-msgs">
+  <div class="key-msgs-inner">
+    <div class="key-msgs-label">Mensajes clave</div>
+    <ol>
+      <li>El empleo formal creció <strong>85.730 puestos</strong> entre noviembre de 2023 y marzo de 2026, un 2,6% en casi dos años y medio. Al ritmo del gobierno de Noboa, Ecuador necesitaría <strong>más de medio siglo</strong> para llevar a toda la PEA a la formalidad.</li>
+      <li>Cuando se mide contra la Población Económicamente Activa —8,75 millones de personas— la tasa de formalidad <strong>pasó de 37,8% a 38,8%</strong>: un punto porcentual en 28 meses. En términos prácticos, 6 de cada 10 ecuatorianos en edad de trabajar <strong>siguen sin seguridad social</strong>.</li>
+      <li>El crecimiento lo generó el sector privado (+98.018 empleos). El sector público, lejos de expandirse, <strong>recortó 5.915 plazas</strong>. El Estado achicó la nómina mientras el discurso oficial celebraba la creación de empleo.</li>
+      <li>Los sectores que más crecieron —manufactura, agricultura, comercio— son precisamente los de <strong>mayor precariedad y menores salarios</strong>. El sector que más cayó fue enseñanza (−11.943), un retroceso grave en capital humano.</li>
+      <li>El empleo juvenil (15-24 años) <strong>prácticamente no se movió</strong>: +2.491 personas en todo el período. Con la PEA joven que Ecuador tiene, este es el dato más condenatorio del balance.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- stat strip -->
+<div class="stat-strip">
+  <div class="stat-strip-inner">
+    <div class="stat-box">
+      <span class="stat-num">+1 pp</span>
+      <span class="stat-label">Cambio en cobertura formal sobre PEA en 28 meses</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num red">61%</span>
+      <span class="stat-label">De la PEA sigue sin empleo formal a marzo 2026</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num amber">+2.491</span>
+      <span class="stat-label">Jóvenes 15-24 años formalizados en todo el período</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num red">−11.943</span>
+      <span class="stat-label">Empleos perdidos en el sector de enseñanza</span>
+    </div>
+  </div>
+</div>
+
+<article>
+
+<!-- 01 -->
+<span class="section-num">01</span>
+<h2>El número que el gobierno celebra y lo que realmente significa</h2>
+
+<p>Cuando el gobierno de Daniel Noboa presenta sus cifras de empleo, habla de decenas de miles de nuevos puestos de trabajos. El dato es una ficción contable. Sistemáticamente se omite al denominador: una Población Económicamente Activa de entre 8,5 y 9 millones de personas, de las cuales apenas 4 de cada 10 tienen un empleo formal con seguridad social.</p>
+
+<p>Entre noviembre de 2023, cuando Noboa asumió el poder, y marzo de 2026, el empleo registrado en la seguridad social pasó de <strong>3.305.090 a 3.390.820 trabajadores</strong>. Son 85.730 nuevos afiliados. La tasa de crecimiento es del 2,6% en 28 meses, es decir, menos del 1% anual. Para una economía que se presenta como en recuperación, ese ritmo no es señal de dinamismo: es la velocidad de un país que se mueve apenas por encima de la inercia.</p>
+
+<div class="pullquote">
+  <p>"En casi dos años y medio de gobierno, la cobertura del empleo formal sobre la PEA subió un punto porcentual manteniendo la PEA estática. De 37,8% a 38,8%."</p>
+</div>
+
+<div class="pea-vis">
+  <div class="pea-vis-label">Empleo formal como proporción de la PEA — El contexto que el gobierno no muestra</div>
+  <div class="pea-row">
+    <div class="pea-row-label"><span>Noviembre 2023 · inicio del gobierno</span><span style="font-family:'DM Sans',sans-serif;font-size:.78rem;color:var(--ink-2)">3.305.090 afiliados</span></div>
+    <div class="pea-bar-outer">
+      <div class="pea-fill" style="width:37.8%;background:var(--ink-2);"><span>37,8%</span></div>
+    </div>
+  </div>
+  <div class="pea-row">
+    <div class="pea-row-label"><span>Marzo 2026 · último dato</span><span style="font-family:'DM Sans',sans-serif;font-size:.78rem;color:var(--ink-2)">3.390.820 afiliados</span></div>
+    <div class="pea-bar-outer">
+      <div class="pea-fill" style="width:38.8%;background:var(--ink);"><span>38,8%</span></div>
+    </div>
+  </div>
+  <div class="pea-row">
+    <div class="pea-row-label"><span>Sin empleo formal · marzo 2026</span><span style="font-family:'DM Sans',sans-serif;font-size:.78rem;color:var(--red)">5.359.180 personas</span></div>
+    <div class="pea-bar-outer" style="background:var(--rule)">
+      <div style="height:100%;width:100%;background:repeating-linear-gradient(45deg,#e8e0d0,#e8e0d0 4px,#f0ece2 4px,#f0ece2 8px);display:flex;align-items:center;padding-left:8px;">
+        <span style="font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:500;color:var(--red)">61,2% de la PEA · sin seguridad social</span>
+      </div>
+    </div>
+  </div>
+  <p class="pea-note">PEA estimada: 8,75 millones (rango oficial 8,5M–9,0M). Al ritmo de 85.730 nuevos afiliados cada 28 meses, Ecuador tardaría aproximadamente <strong>155 años</strong> en formalizar a toda la PEA actualmente sin cobertura.</p>
+</div>
+
+<!-- 02 -->
+<hr class="section-break">
+<span class="section-num">02</span>
+<h2>Una recuperación que no existió: la trayectoria real mes a mes</h2>
+
+<p>La narrativa oficial describe al Ecuador en proceso de recuperación económica. La serie mensual de empleo formal la contradice punto por punto. El primer año de gobierno —noviembre de 2023 a febrero de 2024— fue de caída libre: se perdieron cerca de 37.000 empleos formales. Atribuirlo solo a la estacionalidad es insuficiente; en el mismo período, el conflicto armado interno y el shock energético destruyeron capacidad productiva real.</p>
+
+<p>La recuperación que siguió a partir de marzo de 2024 fue lenta, interrumpida y frágil. Agosto de 2024 cerró con pérdida neta. Diciembre de 2024 y enero de 2025 volvieron a caer. El verdadero impulso llegó recién entre abril y septiembre de 2025, encadenando seis meses positivos, para luego flaquear de nuevo en enero y febrero de 2026. No es la curva de una economía que despega: es la de un mercado que recupera lo perdido sin avanzar más allá.</p>
+
+<div class="fig">
+  <div class="fig-label">Figura 1</div>
+  <div class="fig-title">Empleo formal total: una recuperación que tarda más de un año en recuperar el nivel inicial</div>
+  <div class="fig-sub">Total de afiliados con relación de dependencia en miles · noviembre 2023 – marzo 2026. La línea punteada marca el nivel de noviembre 2023.</div>
+  <div class="legend">
+    <div class="l-item"><span class="l-dot" style="background:#18160f;"></span>Empleo registrado</div>
+    <div class="l-item"><span class="l-dot" style="background:#b02020;opacity:.5;"></span>Línea de referencia: nivel nov-23</div>
+  </div>
+  <div class="chart-wrap" style="height:270px">
+    <canvas id="c1" role="img" aria-label="Evolución mensual del empleo formal en Ecuador noviembre 2023 a marzo 2026. Caída inicial pronunciada, recuperación lenta y frágil."></canvas>
+  </div>
+  <p class="fig-source">Fuente: REESS – INEC, marzo 2026. Elaboración propia.</p>
+</div>
+
+<div class="callout c-red">
+  <p><strong>El dato incómodo:</strong> el empleo formal de enero de 2024 (3.273.233) fue el más bajo del período y tardó doce meses completos en superar el nivel de partida de noviembre de 2023. Un gobierno que celebra creación de empleo pasó casi un año sin haber creado ninguno neto.</p>
+</div>
+
+<!-- 03 -->
+<hr class="section-break">
+<span class="section-num">03</span>
+<h2>Privado crece, público recorta: quién realmente genera empleo</h2>
+
+<p>El desglose por tipo de empleador desmonta otra pieza del relato oficial. El crecimiento del empleo formal no ocurrió en el Estado: ocurrió a pesar del Estado. El sector privado sumó <strong>98.018 trabajadores formales</strong> entre noviembre de 2023 y marzo de 2026. El sector público, en el mismo período, eliminó <strong>5.915 puestos</strong>. Las Fuerzas Armadas (ISSFA) también se contrajeron.</p>
+
+<p>Esto es relevante por dos razones. Primera: el gobierno no puede atribuirse como logro propio el empleo creado por las empresas privadas; a lo sumo, puede argumentar que no lo obstaculizó. Segunda: la reducción del empleo público en plena crisis de seguridad —cuando el Estado necesitaba capacidad operativa en todos los frentes— tiene costos que van más allá del mercado laboral.</p>
+
+<div class="fig">
+  <div class="fig-label">Figura 2</div>
+  <div class="fig-title">Sector privado vs. sector público: trayectorias divergentes</div>
+  <div class="fig-sub">Índice base 100 = noviembre 2023. El privado crece; el Estado recorta.</div>
+  <div class="legend">
+    <div class="l-item"><span class="l-dot" style="background:#1a3f6e;"></span>Privado</div>
+    <div class="l-item"><span class="l-dot" style="background:#b02020;"></span>Público</div>
+    <div class="l-item"><span class="l-dot" style="background:#7a4e00;"></span>ISSFA</div>
+    <div class="l-item"><span class="l-dot" style="background:#1a6040;"></span>ISSPOL</div>
+  </div>
+  <div class="chart-wrap" style="height:250px">
+    <canvas id="c2" role="img" aria-label="Sector privado supera el 104 en índice base 100. El sector público baja a 99."></canvas>
+  </div>
+  <p class="fig-source">Fuente: REESS – INEC. Base 100 = noviembre 2023.</p>
+</div>
+
+<!-- 04 -->
+<hr class="section-break">
+<span class="section-num">04</span>
+<h2>La trampa del promedio: quién se quedó afuera del crecimiento</h2>
+
+<p>El número global de 85.730 nuevos empleados oculta una distribución profundamente desigual. Cuando se abre por grupo de edad, el cuadro que aparece no es el de una economía que amplía oportunidades para todos: es el de una que consolida el empleo para quienes ya lo tenían y abandona a los que más lo necesitan.</p>
+
+<div class="fig">
+  <div class="fig-label">Figura 3</div>
+  <div class="fig-title">El crecimiento por edad: los mayores de 45 capturan el 73% de los nuevos empleos</div>
+  <div class="fig-sub">Empleo formal por grupo etario en miles · noviembre 2023 – marzo 2026</div>
+  <div class="legend" id="leg-edad"></div>
+  <div class="chart-wrap" style="height:260px">
+    <canvas id="c3" role="img" aria-label="Empleo por edad. El grupo 45-64 crece sostenidamente. Los jóvenes se mantienen planos."></canvas>
+  </div>
+  <p class="fig-source">Fuente: REESS – INEC. Elaboración propia.</p>
+</div>
+
+<table>
+  <thead>
+    <tr><th>Grupo de edad</th><th class="n">Nov-23</th><th class="n">Mar-26</th><th class="n">Variación neta</th><th class="n">% del total creado</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>15 – 24 años</td><td class="n">292.825</td><td class="n">295.316</td><td class="n pos">+2.491</td><td class="n">2,9%</td></tr>
+    <tr><td>25 – 34 años</td><td class="n">916.001</td><td class="n">924.245</td><td class="n pos">+8.244</td><td class="n">9,6%</td></tr>
+    <tr><td>35 – 44 años</td><td class="n">874.208</td><td class="n">891.854</td><td class="n pos">+17.646</td><td class="n">20,6%</td></tr>
+    <tr><td><strong>45 – 64 años</strong></td><td class="n"><strong>1.076.955</strong></td><td class="n"><strong>1.139.964</strong></td><td class="n pos"><strong>+63.009</strong></td><td class="n"><strong>73,5%</strong></td></tr>
+    <tr><td>65 años y más</td><td class="n">145.101</td><td class="n">139.441</td><td class="n neg">−5.660</td><td class="n neg">—</td></tr>
+    <tr><td>Total</td><td class="n">3.305.090</td><td class="n">3.390.820</td><td class="n pos">+85.730</td><td class="n">100%</td></tr>
+  </tbody>
+</table>
+
+<div class="callout c-red">
+  <p><strong>El empleo juvenil: el diagnóstico más severo.</strong> En 28 meses, el grupo de 15 a 24 años sumó 2.491 empleos formales. Si Ecuador tiene una PEA joven de aproximadamente 1,5 millones de personas, este resultado equivale a formalizar al 0,17% de ese universo por cada mes de gobierno. Es, sin atenuantes, un fracaso de política.</p>
+</div>
+
+<!-- 05 -->
+<hr class="section-break">
+<span class="section-num">05</span>
+<h2>Los sectores que crecen y los que se hunden</h2>
+
+<p>La manufactura, la agricultura y el comercio lideran el crecimiento sectorial. Son también, no por coincidencia, los sectores con los salarios más bajos y las condiciones laborales más precarias del mercado formal. El Ecuador está formalizando trabajo de bajo valor agregado mientras pierde empleos en los sectores que construyen capital humano.</p>
+
+<p>La enseñanza perdió <strong>11.943 puestos formales</strong>: es la mayor pérdida sectorial del período y la más preocupante en términos estructurales. Un país que reduce el empleo formal en educación no está invirtiendo en su futuro: está liquidándolo. La salud también retrocedió (−1.838), agravando una crisis de acceso a servicios que el propio gobierno reconoció durante la pandemia de cortes de luz.</p>
+
+<div class="fig">
+  <div class="fig-label">Figura 4</div>
+  <div class="fig-title">Variación neta por rama de actividad económica</div>
+  <div class="fig-sub">Empleos ganados o perdidos · noviembre 2023 – marzo 2026 · CIIU Rev. 4.1, nivel sección</div>
+  <div class="chart-wrap" style="height:490px">
+    <canvas id="c4" role="img" aria-label="Variación sectorial. Manufactura y agricultura lideran crecimiento. Enseñanza pierde 11.943 empleos."></canvas>
+  </div>
+  <p class="fig-source">Fuente: REESS – INEC, marzo 2026. Excluye doméstico, campesino y no clasificados.</p>
+</div>
+
+<!-- 06 -->
+<hr class="section-break">
+<span class="section-num">06</span>
+<h2>Los salarios: crecen en el papel, sin garantía de que alcancen</h2>
+
+<p>El salario promedio del empleo registrado pasó de $813,75 en noviembre de 2023 a $852,20 en marzo de 2026: un incremento de $38,45, equivalente al 4,7% nominal. La cifra suena positiva hasta que se pregunta cuánto subió la inflación en el mismo período, y hasta que se desagrega.</p>
+
+<p>Los trabajadores domésticos —el estrato más vulnerable— parten de $386 y llegan a $414: el aumento absoluto más bajo en dólares. El sector de alojamiento y restaurantes, que empleó a más de 11.000 nuevos trabajadores formales, promedia $552 al mes. El grueso de los nuevos empleos creados bajo el gobierno de Noboa se concentra en el tramo de salarios entre $500 y $700, que es exactamente donde la capacidad de ahorro y consumo es más limitada.</p>
+
+<div class="fig">
+  <div class="fig-label">Figura 5</div>
+  <div class="fig-title">Salario promedio por grupo de edad</div>
+  <div class="fig-sub">En dólares corrientes · noviembre 2023 – marzo 2026. El crecimiento nominal no informa sobre poder adquisitivo real.</div>
+  <div class="legend" id="leg-sal"></div>
+  <div class="chart-wrap" style="height:260px">
+    <canvas id="c5" role="img" aria-label="Salario por edad. Grupo 35-44 lidera con ~$964. Los jóvenes promedian $535."></canvas>
+  </div>
+  <p class="fig-source">Fuente: REESS – INEC. Salario corriente medio.</p>
+</div>
+
+<div class="callout c-amber">
+  <p><strong>La brecha de género que los datos ocultan:</strong> el salario promedio por sexo muestra cifras casi idénticas ($853 hombres, $851 mujeres). Esto no refleja igualdad salarial; refleja que las mujeres están concentradas en sectores de salario similar al promedio masculino. La desagregación dentro de cada sector revelaría brechas que este indicador agrega y borra.</p>
+</div>
+
+<!-- 07 -->
+<hr class="section-break">
+<span class="section-num">07</span>
+<h2>Lo que los números no pueden decir: el silencio del empleo informal</h2>
+
+<p>El REESS-INEC mide con precisión y rigor el empleo formal. Lo que no puede medir —y aquí está la limitación decisiva para evaluar el gobierno— es lo que sucede en el otro 61%. El Ecuador tiene un mercado laboral donde la mayoría trabaja sin contrato, sin seguridad social, sin protección frente al despido. Esos trabajadores no aparecen en ninguna de las cifras que este análisis examina.</p>
+
+<p>Para completar el cuadro habría que cruzar estos datos con la Encuesta Nacional de Empleo, Desempleo y Subempleo (ENEMDU). Pero como otro análisis de este blog ha documentado, la ENEMDU arrastra sus propios problemas graves de precisión desde 2020. El Ecuador no solo tiene un problema de formalidad laboral: tiene un problema de medición que impide saber con exactitud qué tan mal —o bien— está el mercado de trabajo en su totalidad.</p>
+
+<div class="compare-grid">
+  <div class="compare-box box-red">
+    <h4>Lo que los datos muestran</h4>
+    <ul>
+      <li>Crecimiento mínimo de formalidad: +1 pp sobre la PEA</li>
+      <li>Empleo juvenil estancado: +2.491 en 28 meses</li>
+      <li>Enseñanza pierde casi 12.000 empleos</li>
+      <li>El Estado reduce su nómina en 5.915 puestos</li>
+      <li>El crecimiento es en sectores de bajo salario</li>
+      <li>El grupo de 45-64 acapara 3 de cada 4 empleos nuevos</li>
+    </ul>
+  </div>
+  <div class="compare-box box-green">
+    <h4>Lo que podría ser positivo</h4>
+    <ul>
+      <li>El sector privado creó 98.018 empleos sin apoyo estatal directo</li>
+      <li>La serie 2025 encadenó meses de crecimiento sostenido</li>
+      <li>Manufactura y agricultura crecen: base productiva real</li>
+      <li>Las mujeres crecen algo más rápido (+3%) que los hombres (+2,3%)</li>
+      <li>El salario nominal subió 4,7% sobre una base baja</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 08 -->
+<hr class="section-break">
+<span class="section-num">08</span>
+<h2>Por qué esto importa: el costo político del triunfalismo estadístico</h2>
+
+<p>Presentar 85.730 empleos formales como un logro de gobierno, sin contextualizarlos frente a la PEA, sin señalar que la cobertura formal subió un solo punto porcentual, sin advertir que el empleo juvenil es prácticamente inexistente en el resultado, no es informar: es construir un relato que el número, leído completo, no sostiene.</p>
+
+<p>El riesgo no es solo político. Cuando un gobierno calibra sus políticas sobre indicadores que presenta sesgados, termina diseñando intervenciones para el número que muestra, no para el problema que existe. Si la métrica es "afiliados al IESS" y el número sube levemente, la presión para reformar a fondo el mercado laboral —flexibilizar sin precarizar, atacar las causas de la informalidad, invertir en formación técnica, reactivar el empleo educativo— desaparece. El triunfalismo estadístico no solo engaña al ciudadano: paraliza al propio gobierno.</p>
+
+<div class="pullquote">
+  <p>"Ecuador necesitaría más de un siglo, al ritmo actual, para llevar a la formalidad a los 5,3 millones de trabajadores que hoy están fuera de la seguridad social."</p>
+</div>
+
+<!-- 09 -->
+<hr class="section-break">
+<span class="section-num">09</span>
+<h2>Lo que urge hacer</h2>
+
+<ul class="rec-list">
+  <li><span class="rec-num">1</span><strong>Adoptar la tasa de formalidad sobre la PEA como indicador oficial de progreso</strong>Pasar del conteo absoluto de afiliados a la proporción de la PEA con empleo formal como métrica principal. Sin ese denominador, cualquier cifra de nuevos empleos es políticamente manipulable.</li>
+  <li><span class="rec-num">2</span><strong>Establecer una meta explícita de empleo juvenil formal</strong>Con apenas 2.491 jóvenes formalizados en 28 meses, el gobierno necesita una política activa y medible —con meta, presupuesto e institución responsable— para el grupo de 15-24 años.</li>
+  <li><span class="rec-num">3</span><strong>Revertir la pérdida de empleo en enseñanza</strong>Una economía que pierde empleos formales en educación destruye su capacidad productiva futura. La recuperación del empleo docente formal debe ser prioritaria, no residual.</li>
+  <li><span class="rec-num">4</span><strong>Diseñar incentivos de formalización para sectores de alta informalidad</strong>La construcción, el comercio informal y los servicios de baja calificación concentran a millones de trabajadores sin cobertura. El diseño de incentivos tributarios y de seguridad social debe apuntar a ellos.</li>
+  <li><span class="rec-num">5</span><strong>Cruzar REESS con ENEMDU para tener el cuadro completo</strong>El empleo formal es solo una parte del mercado laboral. Sin datos confiables de informalidad y subempleo, el diagnóstico es incompleto. Esto exige también resolver el problema de precisión de la ENEMDU documentado en este mismo blog.</li>
+</ul>
+
+<!-- nota metodológica -->
+<hr class="section-break">
+<h3>Nota metodológica</h3>
+<p>Este análisis utiliza exclusivamente los tabulados oficiales del Registro Estadístico de Empleo en la Seguridad Social (REESS), publicados por el INEC con corte a marzo de 2026. El empleo registrado incluye trabajadores bajo relación de dependencia afiliados al IESS (sector privado, sector público, doméstico y Seguro Social Campesino), al ISSFA y al ISSPOL. No incluye trabajadores independientes ni informales sin afiliación. La PEA de referencia (8,75 millones) es el punto medio del rango oficial de 8,5M a 9,0M declarado por el INEC. Las tasas de cobertura formal se calcularon dividiendo el empleo registrado total sobre esa PEA de referencia.</p>
+
+<h3>Fuentes</h3>
+<p>INEC — Indicadores Laborales: Empleo Registrado, tabulados REESS, marzo 2026 (archivos: <em>Indicadores_Laborales_Empleo_03_2026.xlsx</em> e <em>Indicadores_Laborales_Plazas_03_2026.xlsx</em>). Hojas utilizadas: 1_1_1 (empleo por rama), 2_0_1 (por sexo), 2_0_2 (por edad), 2_1_1–2_4_1 (por sector), 4_1_1–4_1_2 (salarios por sexo y edad), 4_2_1 (salarios por rama).</p>
+
+</article>
+
+<footer>
+  <div class="footer-body">
+    <p><strong>Policy Brief · El espejismo del empleo formal · Mayo 2026</strong><br>Documento de análisis de política pública basado en datos abiertos del INEC. Autor: Juan Pablo Jaramillo-Ramón</p>
+    <p>Los datos del REESS están sujetos a revisión por parte del INEC, dado que la base del IESS es transaccional y puede sufrir reprocesamientos históricos. Las cifras de este análisis corresponden al corte publicado en mayo de 2026.</p>
+  </div>
+</footer>
+
+<script>
+const lbs=['nov-23','dic-23','ene-24','feb-24','mar-24','abr-24','may-24','jun-24','jul-24','ago-24','sep-24','oct-24','nov-24','dic-24','ene-25','feb-25','mar-25','abr-25','may-25','jun-25','jul-25','ago-25','sep-25','oct-25','nov-25','dic-25','ene-26','feb-26','mar-26'];
+const empT=[3305090,3291336,3273233,3268406,3269857,3282036,3291389,3292878,3299418,3299206,3310188,3316037,3315181,3308442,3301826,3304461,3307575,3324627,3336471,3343729,3352665,3352514,3367433,3375708,3382758,3383760,3375834,3375423,3390820];
+const priv=[2226753,2212047,2192905,2188551,2190082,2202044,2211340,2214026,2221090,2221721,2233032,2240095,2239740,2232834,2225988,2228754,2231889,2248621,2259736,2267234,2276344,2275936,2289126,2296618,2302748,2302897,2296513,2296434,2324771];
+const pub=[650639,648847,648283,646760,645949,645668,644927,644162,643046,643218,642097,641265,640820,641002,640938,640741,640408,639909,641119,641073,641217,641640,642397,643038,643837,644455,643717,643432,644724];
+const issfa=[338121,342113,344045,344094,344706,344897,345131,344843,344973,343800,343783,343277,342826,343126,343073,343183,342850,342920,342779,342379,342117,341991,342199,342041,342130,342100,341680,341567,340516];
+const issp=[89577,88329,88000,88001,89120,89427,89991,89847,90309,90467,91276,91400,91795,91480,91827,91783,92428,93177,92837,93043,92987,92947,93711,94011,94043,94308,93924,94000,93809];
+const a15=[292825,288513,286291,284387,284068,287194,287923,285903,285758,284958,288149,287698,286530,283033,283312,281813,281039,285281,287202,286716,287349,287404,291646,292407,293944,293010,294062,292500,295316];
+const a25=[916001,909367,899941,897652,898192,902310,904696,903711,905080,904773,905993,907559,906630,903424,899106,900416,900983,907771,910167,911931,914682,915044,919185,921973,924715,924389,918813,918925,924245];
+const a35=[874208,871316,866856,866376,867424,869506,871814,872499,873819,873962,876751,878085,877416,875695,873508,874904,875989,879608,882269,884075,885704,885218,888551,890310,891440,891257,888856,888770,891854];
+const a45=[1076955,1077126,1075924,1076680,1077859,1081137,1085208,1088976,1092540,1093519,1097155,1100297,1102082,1103477,1103137,1105764,1108173,1111311,1116035,1120275,1123802,1123926,1127416,1130333,1132147,1134013,1133754,1135604,1139964];
+const aLabs=['A Agricultura','B Minas','C Manufactura','D Electricidad','E Agua','F Construcción','G Comercio','H Transporte','I Alojamiento','J Info/Comun.','K Finanzas','L Inmobiliaria','M Prof/Cient.','N Serv. adm.','O Adm. pública','P Enseñanza','Q Salud','R Arte','S Otros serv.'];
+const aN23=[235244,29836,362858,21249,24490,91190,535214,143676,109854,59216,78068,35623,142286,174206,299910,291181,160307,16341,66122];
+const aM26=[252810,34492,381056,22994,25143,94523,547690,149147,121098,59458,77273,34275,143824,184149,311394,279238,158469,18218,73717];
+const aG=aM26.map((v,i)=>v-aN23[i]);
+const s15=[517.59,514.30,506.13,502.14,499.36,498.62,495.10,495.68,496.23,497.89,492.91,499.45,501.89,508.50,506.56,504.29,508.50,506.39,503.46,504.07,502.29,500.63,498.53,503.88,506.52,516.20,509.91,511.43,535.45];
+const s25=[729.27,743.29,730.76,736.12,741.68,740.71,730.30,729.93,730.46,733.41,726.87,730.32,735.68,747.39,740.53,740.91,750.14,744.58,739.18,739.00,737.73,735.56,733.06,741.06,743.13,758.21,749.45,750.75,760.11];
+const s35=[882.64,905.01,887.79,898.01,907.39,905.77,893.89,893.32,892.69,898.28,890.17,895.47,905.00,919.28,911.46,910.78,925.42,916.31,909.67,906.53,904.98,903.47,899.57,910.59,913.62,929.33,920.68,921.39,964.45];
+const s45=[920.66,939.33,923.66,933.85,941.26,940.61,928.93,928.14,927.28,933.61,925.32,930.70,940.38,953.58,946.51,945.53,959.59,952.40,946.64,944.12,943.05,941.97,937.93,948.44,952.11,966.42,957.58,958.75,953.42];
+
+const gc='rgba(24,22,15,0.07)';
+const tc='#8a877e';
+const tf={family:"'DM Sans',sans-serif",size:11};
+const baseO={responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false}},scales:{x:{ticks:{font:tf,color:tc,autoSkip:true,maxTicksLimit:7,maxRotation:0},grid:{color:gc}},y:{ticks:{font:tf,color:tc},grid:{color:gc}}}};
+
+// Chart 1: total with reference line
+new Chart(document.getElementById('c1'),{type:'line',data:{labels:lbs,datasets:[
+  {label:'Empleo registrado',data:empT.map(v=>+(v/1000).toFixed(1)),borderColor:'#18160f',backgroundColor:'rgba(24,22,15,.06)',fill:true,tension:.35,pointRadius:0,borderWidth:2},
+  {label:'Referencia nov-23',data:Array(lbs.length).fill(+(empT[0]/1000).toFixed(1)),borderColor:'#b02020',fill:false,pointRadius:0,borderWidth:1.5,borderDash:[5,5]}
+]},options:{...baseO,scales:{...baseO.scales,y:{...baseO.scales.y,ticks:{...baseO.scales.y.ticks,callback:v=>v.toFixed(0)+'k'}}}}});
+
+// Chart 2: indexed sectors
+const idx=a=>a.map((v,i)=>Math.round(v/a[0]*100));
+new Chart(document.getElementById('c2'),{type:'line',data:{labels:lbs,datasets:[
+  {label:'Privado',data:idx(priv),borderColor:'#1a3f6e',fill:false,tension:.35,pointRadius:0,borderWidth:2},
+  {label:'Público',data:idx(pub),borderColor:'#b02020',fill:false,tension:.35,pointRadius:0,borderWidth:2},
+  {label:'ISSFA',data:idx(issfa),borderColor:'#7a4e00',fill:false,tension:.35,pointRadius:0,borderWidth:1.5,borderDash:[4,3]},
+  {label:'ISSPOL',data:idx(issp),borderColor:'#1a6040',fill:false,tension:.35,pointRadius:0,borderWidth:1.5,borderDash:[4,3]}
+]},options:{...baseO,scales:{...baseO.scales,y:{...baseO.scales.y,ticks:{...baseO.scales.y.ticks,callback:v=>v}}}}});
+
+// Chart 3: age
+const ageC=['#bfa030','#1a3f6e','#8b2252','#b02020','#1a6040'];
+const ageN=['15-24 años','25-34 años','35-44 años','45-64 años'];
+const ageS=[a15,a25,a35,a45];
+const legEdad=document.getElementById('leg-edad');
+ageN.forEach((n,i)=>{legEdad.innerHTML+=`<div class="l-item"><span class="l-dot" style="background:${ageC[i]};"></span>${n}</div>`;});
+new Chart(document.getElementById('c3'),{type:'line',data:{labels:lbs,datasets:ageS.map((d,i)=>({label:ageN[i],data:d.map(v=>+(v/1000).toFixed(1)),borderColor:ageC[i],fill:false,tension:.35,pointRadius:0,borderWidth:2}))},options:{...baseO,scales:{...baseO.scales,y:{...baseO.scales.y,ticks:{...baseO.scales.y.ticks,callback:v=>v.toFixed(0)+'k'}}}}});
+
+// Chart 4: sectors horizontal bar
+new Chart(document.getElementById('c4'),{type:'bar',data:{labels:aLabs,datasets:[{label:'Variación',data:aG,backgroundColor:aG.map(v=>v>=0?'rgba(26,96,64,.8)':'rgba(176,32,32,.8)'),borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.parsed.x>=0?'+':''}${ctx.parsed.x.toLocaleString('es-EC')} empleos`}}},scales:{x:{ticks:{font:tf,color:tc,callback:v=>(v>=0?'+':'')+v.toLocaleString('es-EC')},grid:{color:gc}},y:{ticks:{font:tf,color:tc},grid:{display:false}}}}});
+
+// Chart 5: salary by age
+const salN=['15-24 años','25-34 años','35-44 años','45-64 años'];
+const salS=[s15,s25,s35,s45];
+const legSal=document.getElementById('leg-sal');
+salN.forEach((n,i)=>{legSal.innerHTML+=`<div class="l-item"><span class="l-dot" style="background:${ageC[i]};"></span>${n}</div>`;});
+new Chart(document.getElementById('c5'),{type:'line',data:{labels:lbs,datasets:salS.map((d,i)=>({label:salN[i],data:d.map(v=>+v.toFixed(0)),borderColor:ageC[i],fill:false,tension:.35,pointRadius:0,borderWidth:2}))},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: $${ctx.parsed.y}`}}},scales:{x:{ticks:{font:tf,color:tc,autoSkip:true,maxTicksLimit:7,maxRotation:0},grid:{color:gc}},y:{ticks:{font:tf,color:tc,callback:v=>'$'+v},grid:{color:gc},min:460}}}});
+</script>
+</body>
+</html>
