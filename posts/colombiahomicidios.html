@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Juan Pablo Jaramillo-Ramón">
+<meta name="description" content="Treinta años de homicidios en Colombia: cómo la violencia migró, se asentó y reconfiguró el mapa territorial del país desde 1993 hasta 2025.">
+<title>Geografía de la muerte — Colombia, 1993–2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --ink: #1a1612;
+    --ink-soft: #3d3530;
+    --ink-muted: #7a6e68;
+    --paper: #f7f4ef;
+    --paper-warm: #ede8e0;
+    --rule: #d4c9bc;
+    --accent: #b5311a;
+    --accent-soft: #e8d5d0;
+    --accent-muted: #c97060;
+    --note: #2a4a6b;
+    --note-soft: #d0dcea;
+    --gold: #9a7b3a;
+    --gold-soft: #f0e8d4;
+    --serif: 'Source Serif 4', Georgia, serif;
+    --display: 'Playfair Display', 'Times New Roman', serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--serif);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 18px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  .masthead {
+    border-top: 4px solid var(--accent);
+    background: var(--paper);
+    padding: 2rem 0 0;
+  }
+  .masthead-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  .label-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--accent);
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+  }
+  .label.blue {
+    background: var(--note);
+  }
+  .label.gold {
+    background: var(--gold);
+  }
+  .label-text {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .sep { color: var(--rule); }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(2.4rem, 6vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .deck {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    max-width: 620px;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+
+  .byline {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 0;
+  }
+
+  /* ── KEY NUMBERS ── */
+  .keynums {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3rem 0;
+  }
+  .keynums-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 2rem;
+  }
+  .keynum {
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+  }
+  .keynum-value {
+    font-family: var(--display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--paper);
+    margin-bottom: 0.3rem;
+  }
+  .keynum-value.red { color: var(--accent-muted); }
+  .keynum-value.gold { color: #c9a84c; }
+  .keynum-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #a09080;
+    line-height: 1.4;
+  }
+
+  /* ── MAIN BODY ── */
+  .body-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 3.5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section:last-of-type { border-bottom: none; }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(1.5rem, 4vw, 2.1rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  h3 {
+    font-family: var(--display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin: 2rem 0 0.8rem;
+  }
+
+  p { margin-bottom: 1.25rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── PULLQUOTE ── */
+  .pullquote {
+    margin: 2.5rem 0;
+    padding: 1.5rem 1.75rem;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+  }
+  .pullquote p {
+    font-family: var(--display);
+    font-size: 1.2rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  /* ── CHARTS ── */
+  .chart-block {
+    margin: 2.5rem 0;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--ink);
+    padding: 1.75rem;
+  }
+  .chart-header {
+    margin-bottom: 1rem;
+  }
+  .chart-fig {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .chart-title-text {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+  .chart-subtitle {
+    font-family: var(--serif);
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    margin-top: 0.2rem;
+    font-style: italic;
+  }
+  .chart-canvas-wrap {
+    position: relative;
+    width: 100%;
+  }
+  .chart-source {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--ink-muted);
+    margin-top: 0.9rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ── DATA TABLE ── */
+  .data-table-wrap {
+    overflow-x: auto;
+    margin: 2rem 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+  }
+  thead tr {
+    border-bottom: 2px solid var(--ink);
+  }
+  th {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  .td-dept { font-weight: 500; color: var(--ink); }
+  .td-region {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+  }
+  .td-num { text-align: right; }
+  .pill {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+  .pill-red { background: var(--accent-soft); color: var(--accent); }
+  .pill-amber { background: var(--gold-soft); color: var(--gold); }
+  .pill-green { background: #deeee4; color: #2a6b45; }
+  .pill-blue { background: var(--note-soft); color: var(--note); }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    margin: 2.5rem 0;
+    padding: 1.5rem 1.75rem;
+    background: var(--gold-soft);
+    border-left: 3px solid var(--gold);
+  }
+  .highlight-box p {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+  .highlight-box strong { color: var(--ink); }
+
+  .note-box {
+    margin: 2.5rem 0;
+    padding: 1.5rem 1.75rem;
+    background: var(--note-soft);
+    border-left: 3px solid var(--note);
+  }
+  .note-box p {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    margin: 2.5rem 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.9rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--rule);
+  }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  .tl-dot {
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    margin-top: 0.15rem;
+  }
+  .tl-dot.blue { border-color: var(--note); }
+  .tl-dot.gold { border-color: var(--gold); }
+  .tl-dot-inner {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .tl-dot.blue .tl-dot-inner { background: var(--note); }
+  .tl-dot.gold .tl-dot-inner { background: var(--gold); }
+  .tl-content {}
+  .tl-year {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.2rem;
+  }
+  .tl-item .tl-dot.blue + .tl-content .tl-year { color: var(--note); }
+  .tl-item .tl-dot.gold + .tl-content .tl-year { color: var(--gold); }
+  .tl-head {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+  .tl-body {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── REGION CARDS ── */
+  .region-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin: 2rem 0;
+  }
+  .region-card {
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--rule);
+    background: #fff;
+  }
+  .region-card.danger { border-top-color: var(--accent); }
+  .region-card.high { border-top-color: var(--gold); }
+  .region-card.moderate { border-top-color: var(--note); }
+  .region-card.low { border-top-color: #4a9b6f; }
+
+  .rc-name {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .region-card.danger .rc-name { color: var(--accent); }
+  .region-card.high .rc-name { color: var(--gold); }
+  .region-card.moderate .rc-name { color: var(--note); }
+  .region-card.low .rc-name { color: #4a9b6f; }
+
+  .rc-title {
+    font-family: var(--display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+    line-height: 1.25;
+  }
+  .rc-stat {
+    font-family: var(--display);
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 0.15rem;
+  }
+  .region-card.danger .rc-stat { color: var(--accent); }
+  .region-card.high .rc-stat { color: var(--gold); }
+  .region-card.moderate .rc-stat { color: var(--note); }
+  .region-card.low .rc-stat { color: #4a9b6f; }
+
+  .rc-stat-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 0.75rem;
+  }
+  .rc-body {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ── FOOTER ── */
+  .footer-section {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3rem 0;
+    margin-top: 2rem;
+  }
+  .footer-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  .footer-head {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8a7a6a;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #3a3028;
+  }
+  .footer-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .footer-col h4 {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8a7a6a;
+    margin-bottom: 0.75rem;
+  }
+  .footer-col p, .footer-col li {
+    font-size: 0.83rem;
+    color: #b0a090;
+    line-height: 1.6;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li::before {
+    content: '— ';
+    color: #5a4a3a;
+  }
+  .footer-sig {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: #5a4a3a;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #3a3028;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    .footer-cols { grid-template-columns: 1fr; }
+    .region-grid { grid-template-columns: 1fr; }
+    .keynums-inner { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  }
+
+  /* ── PRINT / NO-JS graceful ── */
+  @media print {
+    .chart-block canvas { max-height: 250px !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════ MASTHEAD ════════════════════ -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="label-row">
+      <span class="label">Análisis de política pública</span>
+      <span class="label blue">Colombia</span>
+      <span class="label gold">Violencia &amp; Territorio</span>
+      <span class="label-text">Junio 2026 <span class="sep">·</span> Series 1993–2025</span>
+    </div>
+
+    <h1>Geografía de la <em>muerte</em>:<br>treinta años de homicidios en Colombia</h1>
+
+    <p class="deck">Colombia bajó de 78 homicidios diarios en 2002 a 33 en 2017. Luego el mapa volvió a encenderse. Un recorrido regional por la distribución territorial de la violencia letal desde los años noventa hasta el deterioro del gobierno Petro.</p>
+
+    <div class="byline">
+      Documento de análisis · Junio 2026 · Fuentes: INMLCF/Forensis, Policía Nacional/SIEDCO, DANE, Universidad Externado, FIP · Autor: Juan Pablo Jaramillo-Ramón
+    </div>
+  </div>
+</header>
+
+<!-- ════════════════════ KEY NUMBERS ════════════════════ -->
+<div class="keynums">
+  <div class="keynums-inner">
+    <div class="keynum">
+      <div class="keynum-value red">~80</div>
+      <div class="keynum-label">homicidios / 100k<br>pico 2002, tasa nacional</div>
+    </div>
+    <div class="keynum">
+      <div class="keynum-value">22</div>
+      <div class="keynum-label">homicidios / 100k<br>mínimo histórico 2017</div>
+    </div>
+    <div class="keynum">
+      <div class="keynum-value gold">+14,8%</div>
+      <div class="keynum-label">rebote acumulado<br>2018 a 2025</div>
+    </div>
+    <div class="keynum">
+      <div class="keynum-value red">187,5</div>
+      <div class="keynum-label">tasa en Tibú (Norte de<br>Santander) en 2025</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ BODY ════════════════════ -->
+<div class="body-wrap">
+
+  <!-- ── SECCIÓN 01 ── -->
+  <section class="section">
+    <span class="section-num">01</span>
+    <h2>El arco de la violencia: de la epidemia a la promesa de paz</h2>
+
+    <p>Colombia protagonizó uno de los descensos de homicidios más pronunciados del continente americano en el primer cuarto del siglo XXI. Pero para entender ese descenso —y el rebote que lo siguió— hay que comenzar desde el fondo del pozo.</p>
+
+    <p>Entre 1993 y 2002, el país vivió la fase más letal de su conflicto armado moderno. El narcoparamilitarismo, las FARC en su momento de mayor expansión territorial y las guerras entre carteles convergieron para producir tasas que en muchas subregiones superaban los 300 homicidios por cada 100.000 habitantes. El promedio nacional alcanzó su cima en 2002: <strong>28.363 homicidios, equivalentes a 78 muertes por día</strong>, una tasa de aproximadamente 70 por cada 100.000 habitantes. En ese año, la primera causa de muerte en Colombia, según la Organización Mundial de la Salud, era la violencia interpersonal.</p>
+
+    <div class="pullquote">
+      <p>"En 2002 ocurrieron 28.363 homicidios en Colombia —78 muertes al día. Fue el preludio de la Seguridad Democrática, que inauguró un descenso gradual. Esa caída duró catorce años consecutivos."</p>
+    </div>
+
+    <p>La llegada de Álvaro Uribe al poder ese mismo año marcó un punto de inflexión. La Política de Seguridad Democrática redujo los homicidios sostenidamente entre 2003 y 2012, aunque con costos humanitarios propios: desplazamiento masivo, falsos positivos y la desmovilización parcial de las AUC que dejó tras de sí las Bandas Criminales Emergentes (BACRIM). Entre 1998 y 2012, la tasa cruda promedio fue de 51,5 por 100.000 habitantes, con la mayoría de las víctimas siendo hombres (91,9%) y jóvenes de entre 20 y 29 años.</p>
+
+    <p>El segundo hito fue el Acuerdo de Paz con las FARC, firmado en noviembre de 2016. En 2017, Colombia registró 11.957 homicidios —la cifra más baja desde 1984— con una tasa que cayó a aproximadamente 22 por cada 100.000 habitantes. La paz, aunque incompleta, fue estadísticamente real. Lo que vino después no lo fue tanto.</p>
+
+    <!-- GRÁFICO 1: Línea temporal nacional -->
+    <div class="chart-block">
+      <div class="chart-header">
+        <div class="chart-fig">Figura 1</div>
+        <div class="chart-title-text">Tasa nacional de homicidios por 100.000 habitantes, Colombia 1990–2025</div>
+        <div class="chart-subtitle">El arco completo: epidemia, descenso, acuerdo de paz y rebote. Escala estimada para el período 1990–1997 con base en fuentes históricas.</div>
+      </div>
+      <div class="chart-canvas-wrap"><canvas id="chart-nacional" height="320"></canvas></div>
+      <div class="chart-source">Fuentes: INMLCF/Forensis (2002–2024), DANE estadísticas vitales (1998–2002 est.), Revista Biomédica (1998–2012), Statista/Policía Nacional (2014–2025), FIP 2025. Elaboración propia. Nota: 2025 preliminar.</div>
+    </div>
+
+  </section>
+
+  <!-- ── SECCIÓN 02 ── -->
+  <section class="section">
+    <span class="section-num">02</span>
+    <h2>El mapa no es uniforme: violencia como fenómeno territorial</h2>
+
+    <p>La tasa nacional es un promedio que encubre disparidades extremas. Colombia tiene departamentos cuya tasa en 2023 era de 6 por cada 100.000 habitantes —niveles europeos— y otros que superaban los 100. Entender la violencia colombiana es, ante todo, un ejercicio de geografía política.</p>
+
+    <p>Las cinco grandes regiones del país —Andina, Caribe, Pacífico, Orinoquía y Amazonía— presentaron trayectorias radicalmente distintas a lo largo de las últimas tres décadas. La violencia no se redistribuyó aleatoriamente: siguió los corredores del narcotráfico, las rutas de acceso al mar, las zonas de cultivo de coca y los vacíos institucionales del Estado.</p>
+
+    <div class="highlight-box">
+      <p><strong>El patrón estructural:</strong> la violencia letal en Colombia es fundamentalmente rural, masculina y joven. Ocho de cada diez víctimas han sido hombres; la mayoría, entre 18 y 34 años. Y si bien las grandes ciudades concentran el mayor número de casos, las tasas más altas se registran consistentemente en municipios pequeños con presencia de grupos armados ilegales.</p>
+    </div>
+
+    <!-- GRÁFICO 2: Tasas por región -->
+    <div class="chart-block">
+      <div class="chart-header">
+        <div class="chart-fig">Figura 2</div>
+        <div class="chart-title-text">Tasa de homicidios estimada por grandes regiones, años seleccionados 2002–2024</div>
+        <div class="chart-subtitle">Comparación transversal en los hitos clave del conflicto. Valores estimados con base en datos departamentales de Forensis y SIEDCO.</div>
+      </div>
+      <div class="chart-canvas-wrap"><canvas id="chart-regiones" height="320"></canvas></div>
+      <div class="chart-source">Fuentes: INMLCF Forensis (múltiples años), Policía Nacional/SIEDCO, Universidad Externado (2022–2024). Elaboración propia. Región Pacífico incluye Chocó, Cauca, Nariño y Valle del Cauca. Región Andina incluye Antioquia, Cundinamarca, Boyacá, Santanderes, Caldas, Risaralda, Quindío, Tolima, Huila.</div>
+    </div>
+
+  </section>
+
+  <!-- ── SECCIÓN 03 ── -->
+  <section class="section">
+    <span class="section-num">03</span>
+    <h2>La región Andina: el epicentro que se desinfló y el que persiste</h2>
+
+    <p>Antioquia y el Valle del Cauca concentraron históricamente el mayor número de homicidios en términos absolutos, con Medellín y Cali como epicentros urbanos de las guerras del narcotráfico. En 1991, Medellín registró tasas superiores a 380 homicidios por 100.000 habitantes durante el auge del cartel de Medellín —una cifra comparable a zonas de conflicto armado activo.</p>
+
+    <p>El descenso en Antioquia fue uno de los más espectaculares del país. Entre 2002 y 2017, el departamento redujo sus homicidios en más del 80%. Sin embargo, el Oriente antioqueño —San Carlos, San Luis, Granada— encarnó durante los años del conflicto uno de los patrones de violencia más concentrados: 56 de los 186 municipios del quintil más alto de tasas nacionales pertenecían a Antioquia.</p>
+
+    <h3>El Valle y Cali: la violencia urbana fragmentada</h3>
+    <p>Valle del Cauca mantuvo niveles altos durante toda la serie. Cali fue, junto con Medellín, la ciudad con mayor concentración de homicidios en términos absolutos entre 1998 y 2012. La transición del gran cartel de Cali hacia estructuras criminales fragmentadas no significó menos violencia, sino su redistribución en múltiples bandas locales. En 2021, la tasa del Valle alcanzaba 52,2 antes de bajar a 43,3 en 2022 y luego estabilizarse en torno a 33 en 2023. En 2025, Valle del Cauca lidera nuevamente el conteo nacional con 2.316 homicidios en 2023 y tendencia al alza.</p>
+
+    <!-- GRÁFICO 3: Departamentos Andinos clave -->
+    <div class="chart-block">
+      <div class="chart-header">
+        <div class="chart-fig">Figura 3</div>
+        <div class="chart-title-text">Tasa de homicidios en departamentos andinos clave, 2010–2024</div>
+        <div class="chart-subtitle">Antioquia y Valle del Cauca: las dos caras del descenso post-FARC y el rebote diferenciado.</div>
+      </div>
+      <div class="chart-canvas-wrap"><canvas id="chart-andina" height="320"></canvas></div>
+      <div class="chart-source">Fuentes: INMLCF Forensis 2010–2023, Policía Nacional SIEDCO, Universidad Externado 2024. Elaboración propia. Valores 2024–2025 estimados con base en conteos preliminares.</div>
+    </div>
+
+    <div class="note-box">
+      <p><strong>El dato que el promedio nacional oculta:</strong> en 2025, Tibú (Norte de Santander, región Andina oriental / Catatumbo) registró una tasa de 187,5 homicidios por cada 100.000 habitantes —la más alta del país— luego de que el ELN y las disidencias de las FARC rompieran su alianza y desataran una guerra territorial que dejó decenas de desplazamientos masivos.</p>
+    </div>
+
+  </section>
+
+  <!-- ── SECCIÓN 04 ── -->
+  <section class="section">
+    <span class="section-num">04</span>
+    <h2>El Pacífico: la violencia que no bajó</h2>
+
+    <p>Si hay una región donde el Acuerdo de Paz de 2016 no significó un descenso real de la violencia letal, esa es la región Pacífico. Chocó, Cauca y Nariño —territorios con presencia histórica de las FARC, del ELN y con economías estructuradas alrededor de la coca— vivieron la firma del acuerdo como el inicio de una guerra de sucesión territorial, no como la llegada de la paz.</p>
+
+    <p>El Cauca ha sido consistentemente el departamento con mayor número de homicidios de líderes sociales desde 2016 —84 asesinatos en el período post-acuerdo documentado, según Naciones Unidas— y uno de los de mayor tasa departamental. Nariño y Cauca concentran la doble presión del Estado Mayor Central (disidencias de Iván Mordisco) y del ELN en disputa por el corredor hacia el Pacífico.</p>
+
+    <p>Chocó representa el caso más persistente. Con indicadores de pobreza extrema, ausencia casi total de instituciones estatales en su interior y una ubicación estratégica para el narcotráfico (acceso a ríos y al océano Pacífico), el departamento ha mantenido tasas de homicidio por encima del doble del promedio nacional durante casi toda la serie histórica.</p>
+
+    <div class="pullquote">
+      <p>"El Pacífico colombiano ilustra con crudeza el argumento de la capacidad estatal: donde el Estado no llega, la violencia estructura el orden social. No su ausencia: su presencia alternativa, armada e ilegal."</p>
+    </div>
+
+    <!-- GRÁFICO 4: Pacífico -->
+    <div class="chart-block">
+      <div class="chart-header">
+        <div class="chart-fig">Figura 4</div>
+        <div class="chart-title-text">Tasa de homicidios en departamentos del Pacífico, 2010–2024</div>
+        <div class="chart-subtitle">La región que no vio la paz: Cauca, Nariño y Chocó mantienen tasas persistentemente elevadas post-acuerdo.</div>
+      </div>
+      <div class="chart-canvas-wrap"><canvas id="chart-pacifico" height="320"></canvas></div>
+      <div class="chart-source">Fuentes: INMLCF Forensis 2010–2023, Universidad Externado 2022–2024. Elaboración propia. Nota: Valle del Cauca se muestra para comparación aunque pertenece administrativamente a la región Andina/Pacífico.</div>
+    </div>
+
+  </section>
+
+  <!-- ── SECCIÓN 05 ── -->
+  <section class="section">
+    <span class="section-num">05</span>
+    <h2>El Caribe: de la calma al récord histórico</h2>
+
+    <p>La región Caribe tuvo, durante la mayor parte de los años noventa y la primera década del siglo, una percepción de violencia moderada en comparación con el interior. Esa percepción era en parte correcta —las tasas eran menores que en el Pacífico o Antioquia— pero ocultaba una presencia creciente del paramilitarismo que se expresaba en masacres y control territorial, más que en homicidios dispersos.</p>
+
+    <p>El quiebre llegó en 2022. Cartagena subió un 67% en sus casos de homicidio en un solo año. Montería pasó de 60 a 103 casos (71,67%). Santa Marta, Valledupar y Barranquilla se sumaron al alza. La hipótesis más respaldada por los analistas señala la consolidación del Clan del Golfo en el Caribe como la variable determinante: una estructura que disputó corredores del narcotráfico que antes controlaban las FARC y que encontró en el Caribe una base de expansión.</p>
+
+    <p>En 2024 y 2025, los datos confirman que el deterioro no fue coyuntural. Atlántico registra su tasa más alta en una década (32,8 homicidios por 100.000 habitantes). Bolívar asciende a categoría de "violencia alta" por primera vez en 12 años. Magdalena llega a 36,6. La región Caribe es hoy uno de los focos críticos del mapa de seguridad colombiano.</p>
+
+    <!-- GRÁFICO 5: Caribe -->
+    <div class="chart-block">
+      <div class="chart-header">
+        <div class="chart-fig">Figura 5</div>
+        <div class="chart-title-text">Tasa de homicidios en departamentos del Caribe, 2015–2024</div>
+        <div class="chart-subtitle">El ascenso reciente: Bolívar, Magdalena y Atlántico marcan nuevos máximos históricos recientes.</div>
+      </div>
+      <div class="chart-canvas-wrap"><canvas id="chart-caribe" height="320"></canvas></div>
+      <div class="chart-source">Fuentes: Policía Nacional/SIEDCO, Universidad Externado 2022–2024, Infobae/Externado 2025. Elaboración propia. Datos 2024–2025 preliminares.</div>
+    </div>
+
+  </section>
+
+  <!-- ── SECCIÓN 06 ── -->
+  <section class="section">
+    <span class="section-num">06</span>
+    <h2>Orinoquía y Amazonía: la violencia de frontera</h2>
+
+    <p>Los departamentos de la Orinoquía y la Amazonía —Arauca, Vichada, Vaupés, Putumayo, Caquetá— presentan el patrón más volátil de toda la serie histórica: períodos de relativa calma interrumpidos por explosiones de violencia extrema asociadas a disputas entre grupos armados por el control de economías ilícitas.</p>
+
+    <p>Arauca es el caso más dramático. En 2021 su tasa de homicidios era de 58,4 por cada 100.000 habitantes. En 2022 casi se duplicó a 105,3 —la cifra más alta de cualquier departamento del país en ese año— producto del enfrentamiento entre el ELN y las disidencias de las FARC por el control del corredor fronterizo con Venezuela. En 2023 bajó, pero continúa elevada.</p>
+
+    <p>Putumayo es el otro nodo crítico. Con condición fronteriza con Ecuador y Perú, una densa presencia de actores armados que se disputan el procesamiento y tránsito de estupefacientes, y una débil presencia estatal, el departamento supera frecuentemente el doble de la tasa nacional. San Andrés y Providencia, el archipiélago insular, registró en 2023 la tasa más alta de todo el territorio nacional: 57,81 homicidios por 100.000 habitantes, vinculados al narcotráfico en el Caribe.</p>
+
+    <!-- Tabla comparativa departamentos extremos -->
+    <div class="data-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Departamento</th>
+            <th>Región</th>
+            <th class="td-num">Tasa 2010</th>
+            <th class="td-num">Tasa 2017</th>
+            <th class="td-num">Tasa 2022</th>
+            <th class="td-num">Tasa 2023</th>
+            <th>Tendencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-dept">Arauca</td>
+            <td class="td-region">Orinoquía</td>
+            <td class="td-num">~45</td>
+            <td class="td-num">~30</td>
+            <td class="td-num">105,3</td>
+            <td class="td-num">~65</td>
+            <td><span class="pill pill-amber">Volátil</span></td>
+          </tr>
+          <tr>
+            <td class="td-dept">Valle del Cauca</td>
+            <td class="td-region">Pacífico/Andina</td>
+            <td class="td-num">~65</td>
+            <td class="td-num">~32</td>
+            <td class="td-num">43,3</td>
+            <td class="td-num">33,1</td>
+            <td><span class="pill pill-amber">Alto persistente</span></td>
+          </tr>
+          <tr>
+            <td class="td-dept">Cauca</td>
+            <td class="td-region">Pacífico</td>
+            <td class="td-num">~40</td>
+            <td class="td-num">~25</td>
+            <td class="td-num">~38</td>
+            <td class="td-num">~40</td>
+            <td><span class="pill pill-red">Crítico</span></td>
+          </tr>
+          <tr>
+            <td class="td-dept">San Andrés y Prov.</td>
+            <td class="td-region">Insular/Caribe</td>
+            <td class="td-num">~18</td>
+            <td class="td-num">~12</td>
+            <td class="td-num">~35</td>
+            <td class="td-num">57,8</td>
+            <td><span class="pill pill-red">Crítico</span></td>
+          </tr>
+          <tr>
+            <td class="td-dept">Antioquia</td>
+            <td class="td-region">Andina</td>
+            <td class="td-num">~55</td>
+            <td class="td-num">~18</td>
+            <td class="td-num">~20</td>
+            <td class="td-num">~18</td>
+            <td><span class="pill pill-green">Descenso sostenido</span></td>
+          </tr>
+          <tr>
+            <td class="td-dept">Bogotá D.C.</td>
+            <td class="td-region">Andina</td>
+            <td class="td-num">~18</td>
+            <td class="td-num">~10</td>
+            <td class="td-num">~12</td>
+            <td class="td-num">~12</td>
+            <td><span class="pill pill-green">Moderado estable</span></td>
+          </tr>
+          <tr>
+            <td class="td-dept">Magdalena</td>
+            <td class="td-region">Caribe</td>
+            <td class="td-num">~28</td>
+            <td class="td-num">~18</td>
+            <td class="td-num">31,3</td>
+            <td class="td-num">36,6</td>
+            <td><span class="pill pill-red">Alza acelerada</span></td>
+          </tr>
+          <tr>
+            <td class="td-dept">Bolívar</td>
+            <td class="td-region">Caribe</td>
+            <td class="td-num">~22</td>
+            <td class="td-num">~15</td>
+            <td class="td-num">25,1</td>
+            <td class="td-num">~28</td>
+            <td><span class="pill pill-amber">Alza sostenida</span></td>
+          </tr>
+          <tr>
+            <td class="td-dept">Nariño</td>
+            <td class="td-region">Pacífico</td>
+            <td class="td-num">~42</td>
+            <td class="td-num">~28</td>
+            <td class="td-num">~35</td>
+            <td class="td-num">~30</td>
+            <td><span class="pill pill-blue">Descenso reciente</span></td>
+          </tr>
+          <tr>
+            <td class="td-dept">Chocó</td>
+            <td class="td-region">Pacífico</td>
+            <td class="td-num">~55</td>
+            <td class="td-num">~40</td>
+            <td class="td-num">~48</td>
+            <td class="td-num">~45</td>
+            <td><span class="pill pill-red">Alto persistente</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-family:var(--mono);font-size:0.65rem;color:var(--ink-muted);margin-top:0.5rem;">Nota: valores con ~ son estimados a partir de conteos departamentales y proyecciones de población DANE. Cifras definitivas disponibles en Forensis INMLCF y SIEDCO-Policía Nacional.</p>
+
+  </section>
+
+  <!-- ── SECCIÓN 07 ── -->
+  <section class="section">
+    <span class="section-num">07</span>
+    <h2>El gobierno Petro y la "Paz Total": los datos contra el relato</h2>
+
+    <p>Desde agosto de 2022, la administración de Gustavo Petro ha sostenido que la política de "Paz Total" —negociaciones simultáneas con el ELN, las disidencias de las FARC y estructuras criminales— reduce la violencia. Los datos oficiales muestran una realidad más compleja.</p>
+
+    <p>El promedio anual de homicidios durante el gobierno Petro (agosto 2022–agosto 2025) es de 13.554 casos, superior a los 12.598 por año bajo Duque y a los 12.215 bajo el segundo mandato de Santos. Los 40.663 homicidios del trienio Petro representan 2.862 casos más que el trienio de Duque y 4.017 más que el segundo mandato de Santos.</p>
+
+    <div class="region-grid">
+      <div class="region-card low">
+        <div class="rc-name">Caso positivo</div>
+        <div class="rc-title">Antioquia</div>
+        <div class="rc-stat">−1.407</div>
+        <div class="rc-stat-label">homicidios menos vs. Duque</div>
+        <p class="rc-body">El caso paradigmático de descenso sostenido. La política de seguridad territorial en Medellín y la reducción de disputas entre bandas explican parte de la baja.</p>
+      </div>
+      <div class="region-card low">
+        <div class="rc-name">Caso positivo</div>
+        <div class="rc-title">Nariño</div>
+        <div class="rc-stat">−508</div>
+        <div class="rc-stat-label">homicidios menos vs. Duque</div>
+        <p class="rc-body">Reducción notable, posiblemente asociada a acuerdos locales de cese al fuego con el ELN en algunos municipios de la costa.</p>
+      </div>
+      <div class="region-card danger">
+        <div class="rc-name">Caso crítico</div>
+        <div class="rc-title">Norte de Santander</div>
+        <div class="rc-stat">+141</div>
+        <div class="rc-stat-label">homicidios adicionales vs. Duque</div>
+        <p class="rc-body">Tibú: de 29 homicidios en 2024 a 129 en 2025. La ruptura del ELN con las disidencias del Frente 33 desató una guerra territorial de consecuencias humanitarias graves.</p>
+      </div>
+      <div class="region-card danger">
+        <div class="rc-name">Caso crítico</div>
+        <div class="rc-title">Región Caribe</div>
+        <div class="rc-stat">Récords</div>
+        <div class="rc-stat-label">tasas máximas en una década</div>
+        <p class="rc-body">Atlántico (32,8), Bolívar ("violencia alta" primera vez en 12 años), Magdalena (36,6). El Clan del Golfo consolidó su expansión en la costa.</p>
+      </div>
+    </div>
+
+    <p>La Fundación Ideas para la Paz (FIP) resume la paradoja con precisión metodológica: <em>"La violencia letal se mantiene estable a nivel nacional, pero las cifras nacionales invisibilizan lo que pasa en varias regiones y ciudades. En algunos departamentos aumentan significativamente los homicidios y en otros hay reducciones destacadas."</em> La estabilidad del promedio nacional oculta una redistribución territorial de la violencia, no una reducción de ella.</p>
+
+    <!-- GRÁFICO 6: Comparación por gobiernos -->
+    <div class="chart-block">
+      <div class="chart-header">
+        <div class="chart-fig">Figura 6</div>
+        <div class="chart-title-text">Promedio anual de homicidios por período presidencial, Colombia 2006–2025</div>
+        <div class="chart-subtitle">El rebote post-Acuerdo de Paz: el promedio Petro supera al de Duque y al segundo mandato de Santos.</div>
+      </div>
+      <div class="chart-canvas-wrap"><canvas id="chart-gobiernos" height="260"></canvas></div>
+      <div class="chart-source">Fuentes: CAMBIO Colombia (investigación propia, abril 2026), Universidad Externado, Policía Nacional. Elaboración propia. El valor del gobierno Petro corresponde al trienio agosto 2022–agosto 2025.</div>
+    </div>
+
+  </section>
+
+  <!-- ── SECCIÓN 08 ── -->
+  <section class="section">
+    <span class="section-num">08</span>
+    <h2>Tres décadas en perspectiva: lo que el mapa aprendió</h2>
+
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+        <div class="tl-content">
+          <div class="tl-year">1993–2002 · La epidemia</div>
+          <div class="tl-head">El pico de la violencia narco-paramilitar</div>
+          <p class="tl-body">Las FARC en expansión, el narcoparamilitarismo de las AUC y los restos de los grandes carteles generaron un mapa de violencia concentrado en Antioquia, Valle del Cauca y los ejes cocaleros. Medellín llegó a 380/100k en 1991. La tasa nacional tocó el techo en 2002: ~70/100k.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+        <div class="tl-content">
+          <div class="tl-year">2003–2012 · El descenso Uribe</div>
+          <div class="tl-head">Seguridad Democrática y sus límites</div>
+          <p class="tl-body">La política de Seguridad Democrática redujo homicidios en Antioquia, Bogotá y los grandes centros urbanos. Pero la desmovilización parcial de las AUC generó BACRIM que mantuvieron el Caribe y el Pacífico en niveles altos. La tasa promedio 1998–2012 fue 51,5/100k.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot blue"><div class="tl-dot-inner"></div></div>
+        <div class="tl-content">
+          <div class="tl-year">2013–2017 · La paz y su mínimo</div>
+          <div class="tl-head">El Acuerdo de Paz produce resultados estadísticos reales</div>
+          <p class="tl-body">La negociación con las FARC y la reducción de operaciones militares llevaron la tasa nacional a ~22/100k en 2017 —el mínimo desde 1984. Bogotá cayó a ~10/100k. Medellín a ~20/100k. Pero Pacífico, Arauca y fronteras mostraron ya los primeros signos del vacío de poder.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot gold"><div class="tl-dot-inner"></div></div>
+        <div class="tl-content">
+          <div class="tl-year">2018–2021 · El rebote</div>
+          <div class="tl-head">Las disidencias llenan el vacío; el Caribe se enciende</div>
+          <p class="tl-body">La disidencia de las FARC se reorganizó más rápido de lo anticipado. El ELN expandió territorios. El Clan del Golfo consolidó el Caribe. Arauca explotó (105,3/100k en 2022). La tasa nacional subió a ~26/100k. El mapa se reconfiguró: Pacífico y fronteras reemplazaron a Antioquia como epicentro.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"><div class="tl-dot-inner"></div></div>
+        <div class="tl-content">
+          <div class="tl-year">2022–2025 · La paradoja Petro</div>
+          <div class="tl-head">Paz Total, datos mixtos y heterogeneidad territorial extrema</div>
+          <p class="tl-body">La política de negociaciones simultáneas produjo resultados mixtos: descensos en Antioquia y Nariño, pero alzas en el Caribe, Norte de Santander (Catatumbo), Valle del Cauca y el archipiélago. Los 40.663 homicidios del trienio superan a Duque. La tasa 2025: ~26/100k con tendencia al alza moderada.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ── SECCIÓN 09 ── -->
+  <section class="section">
+    <span class="section-num">09</span>
+    <h2>Por qué importa: el argumento de la capacidad estatal</h2>
+
+    <p>El patrón regional colombiano es consistente con la literatura sobre violencia y Estado. Cuando se superpone el mapa de homicidios con el mapa de presencia institucional estatal, la correlación es robusta: los departamentos con mayor ausencia estatal (medida por cobertura de justicia, salud, inversión pública o conectividad) presentan tasas persistentemente más altas, independientemente del nivel de actividad guerrillera en cada período.</p>
+
+    <p>Esto sugiere que el problema colombiano no es solo el conflicto armado —que puede negociarse— sino la ausencia estructural del Estado en territorios que el mercado ilegal sí ocupa. Cuando las FARC se desmovilizaron en 2016, el vacío que dejaron no lo llenó el Estado: lo llenaron el ELN, el Clan del Golfo y las disidencias. La pregunta que la política de "Paz Total" no ha respondido es quién llena el espacio institucional que los acuerdos, si tienen éxito, dejarían disponible.</p>
+
+    <div class="pullquote">
+      <p>"El mapa de la violencia colombiana en 2025 no es el mismo que en 2002 ni el mismo que en 2017. Pero sus determinantes estructurales —ausencia estatal, economías ilícitas, disputas territoriales— son sorprendentemente constantes."</p>
+    </div>
+
+    <p>La heterogeneidad territorial también tiene implicaciones de política pública directas. La tasa nacional de ~26/100k no describe la realidad de Tibú (187,5), ni la de San Andrés (57,8), ni la de Bogotá (~12). Un diseño de política de seguridad que responda al promedio nacional estará siempre subvalorado donde más hace falta y sobredimensionado donde menos se necesita.</p>
+
+    <p>La paradoja colombiana es que el país que redujo más dramáticamente su violencia en América Latina entre 2002 y 2017 también es el que más rápidamente la vio regresar cuando ese descenso no estuvo sostenido por una transformación equivalente en la presencia estatal territorial. Los treinta años de datos muestran, con claridad, que negociar con actores armados sin construir instituciones en los territorios que controlan produce victorias estadísticas temporales, no paz duradera.</p>
+
+  </section>
+
+</div><!-- /body-wrap -->
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer class="footer-section">
+  <div class="footer-inner">
+    <div class="footer-head">Nota metodológica · Geografía de la muerte: Colombia 1993–2025</div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Sobre los datos</h4>
+        <p>Este análisis combina tres familias de fuentes oficiales: (1) el Instituto Nacional de Medicina Legal y Ciencias Forenses (INMLCF), cuyos informes Forensis anuales contienen tasas de homicidio por municipio y departamento; (2) la Policía Nacional/SIEDCO, cuya base de microdatos está disponible en datos.gov.co (ID: m8fd-ahd9); y (3) el DANE, para proyecciones de población y estadísticas vitales. Las bases de la Policía y de Medicina Legal no siempre coinciden: difieren por definición y momento de corte. Este texto usa preferentemente los datos del INMLCF para las tasas por 100.000 habitantes. Los valores marcados con ~ son estimaciones del autor basadas en conteos y proyecciones de población. Cifras 2024–2025 son preliminares.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Fuentes principales</h4>
+        <ul>
+          <li>INMLCF — Forensis 2010–2023 (medicinalegal.gov.co)</li>
+          <li>Policía Nacional — SIEDCO/Estadística Delictiva</li>
+          <li>Universidad Externado — Centro de Paz y Seguridad, 2022–2025</li>
+          <li>Fundación Ideas para la Paz (FIP), diciembre 2025</li>
+          <li>Revista Biomédica — "Mortalidad por homicidios 1998–2012"</li>
+          <li>CAMBIO Colombia — Investigación homicidios 2026</li>
+          <li>Así Vamos en Salud / Ministerio de Justicia</li>
+          <li>DANE — Proyecciones municipales 2018–2035</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-sig">
+      Análisis de política pública · Geografía de la muerte: Colombia 1993–2025 · Junio 2026<br>
+      Autor: Juan Pablo Jaramillo-Ramón · Los datos están sujetos a revisión conforme se publiquen cifras definitivas de INMLCF y Policía Nacional.
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════ CHARTS JS ════════════════════ -->
+<script>
+Chart.defaults.font.family = "'DM Mono', 'Courier New', monospace";
+Chart.defaults.color = '#7a6e68';
+
+const RED   = '#b5311a';
+const GOLD  = '#9a7b3a';
+const BLUE  = '#2a4a6b';
+const MUTED = '#c97060';
+const GREEN = '#4a9b6f';
+const PAPER = '#f7f4ef';
+
+// ── Figura 1: Nacional 1990–2025 ──
+new Chart(document.getElementById('chart-nacional'), {
+  type: 'line',
+  data: {
+    labels: ['1990','1992','1994','1996','1998','2000','2002','2004','2006','2008','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025*'],
+    datasets: [{
+      label: 'Tasa nacional (hom./100k hab.)',
+      data: [71, 78, 73, 65, 58, 63, 70, 56, 42, 35, 38, 35, 34, 32, 29, 27, 25, 22, 25, 26, 24, 27, 26, 27, 25.4, 26],
+      borderColor: RED,
+      backgroundColor: 'rgba(181,49,26,0.08)',
+      borderWidth: 2.5,
+      pointRadius: 3,
+      pointBackgroundColor: RED,
+      fill: true,
+      tension: 0.3
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` ${ctx.parsed.y} hom./100k`
+        }
+      },
+      annotation: {}
+    },
+    scales: {
+      x: { grid: { color: '#e8e2da' }, ticks: { maxRotation: 45 } },
+      y: {
+        grid: { color: '#e8e2da' },
+        title: { display: true, text: 'Tasa por 100.000 hab.' },
+        min: 0
+      }
+    }
+  }
+});
+
+// ── Figura 2: Regiones ──
+new Chart(document.getElementById('chart-regiones'), {
+  type: 'bar',
+  data: {
+    labels: ['2002','2010','2017','2020','2022','2024'],
+    datasets: [
+      {
+        label: 'Región Andina',
+        data: [85, 48, 22, 20, 22, 20],
+        backgroundColor: 'rgba(42,74,107,0.75)',
+        borderColor: BLUE,
+        borderWidth: 1
+      },
+      {
+        label: 'Región Pacífico',
+        data: [55, 45, 35, 38, 45, 40],
+        backgroundColor: 'rgba(181,49,26,0.75)',
+        borderColor: RED,
+        borderWidth: 1
+      },
+      {
+        label: 'Región Caribe',
+        data: [38, 28, 18, 20, 28, 33],
+        backgroundColor: 'rgba(154,123,58,0.75)',
+        borderColor: GOLD,
+        borderWidth: 1
+      },
+      {
+        label: 'Orinoquía / Amazonía',
+        data: [35, 30, 22, 28, 50, 38],
+        backgroundColor: 'rgba(74,155,111,0.65)',
+        borderColor: GREEN,
+        borderWidth: 1
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: { padding: 16, boxWidth: 12 }
+      },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y} hom./100k`
+        }
+      }
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: {
+        grid: { color: '#e8e2da' },
+        title: { display: true, text: 'Tasa por 100.000 hab.' },
+        min: 0
+      }
+    }
+  }
+});
+
+// ── Figura 3: Andina departamentos ──
+const years10 = ['2010','2012','2014','2016','2017','2018','2019','2020','2021','2022','2023','2024*'];
+new Chart(document.getElementById('chart-andina'), {
+  type: 'line',
+  data: {
+    labels: years10,
+    datasets: [
+      {
+        label: 'Antioquia',
+        data: [55, 42, 32, 22, 18, 19, 18, 17, 18, 20, 18, 16],
+        borderColor: BLUE,
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        pointRadius: 3,
+        tension: 0.3
+      },
+      {
+        label: 'Valle del Cauca',
+        data: [65, 50, 42, 35, 32, 35, 38, 38, 42, 43, 33, 34],
+        borderColor: RED,
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        pointRadius: 3,
+        tension: 0.3
+      },
+      {
+        label: 'Norte de Santander',
+        data: [30, 28, 25, 20, 18, 20, 22, 22, 24, 24, 26, 35],
+        borderColor: GOLD,
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        pointRadius: 3,
+        tension: 0.3,
+        borderDash: [5,3]
+      },
+      {
+        label: 'Bogotá D.C.',
+        data: [18, 16, 14, 12, 10, 11, 12, 13, 14, 12, 12, 12],
+        borderColor: GREEN,
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        pointRadius: 3,
+        tension: 0.3
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { padding: 16, boxWidth: 12 } },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y} hom./100k` } }
+    },
+    scales: {
+      x: { grid: { color: '#e8e2da' } },
+      y: { grid: { color: '#e8e2da' }, title: { display: true, text: 'Tasa por 100.000 hab.' }, min: 0 }
+    }
+  }
+});
+
+// ── Figura 4: Pacífico ──
+new Chart(document.getElementById('chart-pacifico'), {
+  type: 'line',
+  data: {
+    labels: years10,
+    datasets: [
+      {
+        label: 'Cauca',
+        data: [38, 32, 28, 22, 25, 30, 32, 35, 38, 38, 40, 42],
+        borderColor: RED,
+        backgroundColor: 'rgba(181,49,26,0.06)',
+        fill: true,
+        borderWidth: 2.5,
+        pointRadius: 3,
+        tension: 0.3
+      },
+      {
+        label: 'Nariño',
+        data: [42, 38, 34, 28, 28, 30, 32, 30, 32, 35, 30, 28],
+        borderColor: GOLD,
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        pointRadius: 3,
+        tension: 0.3
+      },
+      {
+        label: 'Chocó',
+        data: [55, 50, 48, 38, 40, 42, 44, 45, 46, 48, 45, 44],
+        borderColor: BLUE,
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        pointRadius: 3,
+        tension: 0.3,
+        borderDash: [4,3]
+      },
+      {
+        label: 'Valle del Cauca',
+        data: [65, 50, 42, 35, 32, 35, 38, 38, 42, 43, 33, 34],
+        borderColor: '#8a6a5a',
+        backgroundColor: 'transparent',
+        borderWidth: 1.5,
+        pointRadius: 2,
+        tension: 0.3,
+        borderDash: [2,4]
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { padding: 16, boxWidth: 12 } },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y} hom./100k` } }
+    },
+    scales: {
+      x: { grid: { color: '#e8e2da' } },
+      y: { grid: { color: '#e8e2da' }, title: { display: true, text: 'Tasa por 100.000 hab.' }, min: 0 }
+    }
+  }
+});
+
+// ── Figura 5: Caribe ──
+const years15 = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024*'];
+new Chart(document.getElementById('chart-caribe'), {
+  type: 'line',
+  data: {
+    labels: years15,
+    datasets: [
+      {
+        label: 'Atlántico',
+        data: [20, 18, 15, 16, 18, 18, 20, 24, 26, 32.8],
+        borderColor: RED,
+        backgroundColor: 'rgba(181,49,26,0.07)',
+        fill: true,
+        borderWidth: 2.5,
+        pointRadius: 3,
+        tension: 0.3
+      },
+      {
+        label: 'Bolívar',
+        data: [18, 16, 14, 15, 16, 16, 16, 25, 28, 30],
+        borderColor: GOLD,
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        pointRadius: 3,
+        tension: 0.3
+      },
+      {
+        label: 'Magdalena',
+        data: [22, 20, 18, 20, 22, 22, 23, 31.3, 36.6, 38],
+        borderColor: BLUE,
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        pointRadius: 3,
+        tension: 0.3
+      },
+      {
+        label: 'Córdoba',
+        data: [28, 24, 20, 22, 24, 22, 24, 26, 24, 22],
+        borderColor: GREEN,
+        backgroundColor: 'transparent',
+        borderWidth: 1.5,
+        pointRadius: 2,
+        tension: 0.3,
+        borderDash: [4,3]
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { padding: 16, boxWidth: 12 } },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y} hom./100k` } }
+    },
+    scales: {
+      x: { grid: { color: '#e8e2da' } },
+      y: { grid: { color: '#e8e2da' }, title: { display: true, text: 'Tasa por 100.000 hab.' }, min: 0 }
+    }
+  }
+});
+
+// ── Figura 6: Comparación presidencial ──
+new Chart(document.getElementById('chart-gobiernos'), {
+  type: 'bar',
+  data: {
+    labels: ['Uribe II\n(2006–2010)', 'Santos I\n(2010–2014)', 'Santos II\n(2014–2018)', 'Duque\n(2018–2022)', 'Petro\n(2022–2025)'],
+    datasets: [{
+      label: 'Promedio anual de homicidios',
+      data: [15303, 15297, 12294, 12704, 13759],
+      backgroundColor: [
+        'rgba(154,123,58,0.7)',
+        'rgba(154,123,58,0.7)',
+        'rgba(42,74,107,0.75)',
+        'rgba(42,74,107,0.75)',
+        'rgba(181,49,26,0.8)'
+      ],
+      borderColor: [GOLD, GOLD, BLUE, BLUE, RED],
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` Promedio: ${ctx.parsed.y.toLocaleString('es-CO')} homicidios/año`
+        }
+      }
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: {
+        grid: { color: '#e8e2da' },
+        title: { display: true, text: 'Promedio anual de homicidios' },
+        min: 10000
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
