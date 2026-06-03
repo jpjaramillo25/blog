@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Juan Pablo Jaramillo-Ramón">
+<meta name="description" content="¿Valió la pena firmar la paz con las FARC? Evidencia cuantitativa de 1.079 municipios colombianos, 2013–2023.">
+<title>¿Fue una buena decisión firmar la paz? — Colombia 2016</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --ink:        #14110f;
+    --ink-soft:   #3a3330;
+    --ink-muted:  #7a6e68;
+    --paper:      #f7f4ef;
+    --paper-warm: #ede8e0;
+    --rule:       #d4c9bc;
+    --red:        #b5311a;
+    --red-soft:   #e8d5d0;
+    --red-mid:    #c97060;
+    --blue:       #2a4a6b;
+    --blue-soft:  #d0dcea;
+    --gold:       #9a7b3a;
+    --gold-soft:  #f0e8d4;
+    --green:      #2e6b45;
+    --green-soft: #d5ead9;
+    --serif:  'Source Serif 4', Georgia, serif;
+    --display:'Playfair Display', 'Times New Roman', serif;
+    --mono:   'DM Mono', 'Courier New', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--serif);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 18px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    border-top: 5px solid var(--red);
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3.5rem 0 3rem;
+  }
+  .masthead-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  .label-row {
+    display: flex; align-items: center; gap: .8rem; flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+  .label {
+    font-family: var(--mono); font-size: .68rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: .22rem .55rem; border-radius: 2px;
+  }
+  .label-red   { background: var(--red);  color: var(--paper); }
+  .label-gold  { background: var(--gold); color: var(--paper); }
+  .label-blue  { background: var(--blue); color: var(--paper); }
+  .label-text  { font-family: var(--mono); font-size: .68rem; letter-spacing: .07em;
+                 text-transform: uppercase; color: #a09080; }
+
+  h1 {
+    font-family: var(--display); font-weight: 900;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 1.07; letter-spacing: -.02em;
+    color: var(--paper); margin-bottom: 1.5rem;
+  }
+  h1 em { font-style: italic; color: var(--red-mid); }
+
+  .deck {
+    font-size: 1.1rem; font-weight: 300; font-style: italic;
+    color: #c0b0a0; line-height: 1.6; max-width: 640px;
+    margin-bottom: 2rem;
+  }
+  .byline {
+    font-family: var(--mono); font-size: .7rem; letter-spacing: .07em;
+    color: #6a5a4a;
+    padding-top: 1.25rem; border-top: 1px solid #3a3028;
+  }
+
+  /* ── WORKING PAPER BANNER ── */
+  .wp-banner {
+    background: var(--gold-soft);
+    border-left: 4px solid var(--gold);
+    padding: .9rem 1.5rem;
+    margin: 0;
+  }
+  .wp-banner p {
+    font-family: var(--mono); font-size: .72rem;
+    letter-spacing: .05em; color: var(--gold);
+    text-transform: uppercase;
+  }
+  .wp-banner a { color: var(--gold); font-weight: 500; }
+
+  /* ── RESPUESTA GRANDE ── */
+  .answer-block {
+    background: var(--ink);
+    padding: 3.5rem 0;
+  }
+  .answer-inner {
+    max-width: 820px; margin: 0 auto; padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .answer-verdict {
+    border-left: 3px solid var(--green);
+    padding-left: 1.5rem;
+  }
+  .answer-verdict .big {
+    font-family: var(--display);
+    font-size: clamp(3rem,7vw,5rem);
+    font-weight: 900; line-height: 1;
+    color: #4ac97a; margin-bottom: .4rem;
+  }
+  .answer-verdict .label-ans {
+    font-family: var(--mono); font-size: .7rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: #4ac97a; margin-bottom: 1rem;
+  }
+  .answer-verdict p {
+    font-size: .95rem; color: #b0a090;
+    line-height: 1.65;
+  }
+  .answer-caveat {
+    border-left: 3px solid var(--red);
+    padding-left: 1.5rem;
+  }
+  .answer-caveat .big {
+    font-family: var(--display);
+    font-size: clamp(2rem,5vw,3.5rem);
+    font-weight: 900; line-height: 1;
+    color: var(--red-mid); margin-bottom: .4rem;
+  }
+  .answer-caveat .label-ans {
+    font-family: var(--mono); font-size: .7rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--red-mid); margin-bottom: 1rem;
+  }
+  .answer-caveat p {
+    font-size: .95rem; color: #b0a090;
+    line-height: 1.65;
+  }
+  @media(max-width:620px){ .answer-inner { grid-template-columns:1fr; } }
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    background: var(--paper-warm);
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .stats-inner {
+    max-width: 820px; margin: 0 auto; padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+  }
+  .stat { border-left: 2px solid var(--rule); padding-left: 1rem; }
+  .stat-val {
+    font-family: var(--display); font-size: 2.2rem;
+    font-weight: 700; line-height: 1; margin-bottom: .25rem;
+  }
+  .stat-val.green { color: var(--green); }
+  .stat-val.red   { color: var(--red); }
+  .stat-val.gold  { color: var(--gold); }
+  .stat-val.blue  { color: var(--blue); }
+  .stat-label {
+    font-family: var(--mono); font-size: .65rem;
+    letter-spacing: .07em; text-transform: uppercase;
+    color: var(--ink-muted); line-height: 1.4;
+  }
+
+  /* ── BODY ── */
+  .body-wrap { max-width: 820px; margin: 0 auto; padding: 0 2rem; }
+  .section { padding: 3.5rem 0; border-bottom: 1px solid var(--rule); }
+  .section:last-of-type { border-bottom: none; }
+
+  .sec-num {
+    font-family: var(--mono); font-size: .68rem;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--red); display: block; margin-bottom: .5rem;
+  }
+  h2 {
+    font-family: var(--display); font-size: clamp(1.5rem, 4vw, 2.1rem);
+    font-weight: 700; letter-spacing: -.01em; line-height: 1.2;
+    color: var(--ink); margin-bottom: 1.5rem;
+  }
+  h3 {
+    font-family: var(--display); font-size: 1.15rem;
+    font-weight: 700; font-style: italic;
+    color: var(--ink-soft); margin: 2rem 0 .7rem;
+  }
+  p { margin-bottom: 1.25rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── PULLQUOTE ── */
+  .pq {
+    margin: 2.5rem 0;
+    padding: 1.5rem 1.75rem;
+    border-left: 3px solid var(--red);
+    background: var(--red-soft);
+  }
+  .pq p { font-family: var(--display); font-size: 1.2rem;
+          font-style: italic; line-height: 1.5; color: var(--ink); margin: 0; }
+
+  .pq-blue {
+    margin: 2.5rem 0;
+    padding: 1.5rem 1.75rem;
+    border-left: 3px solid var(--blue);
+    background: var(--blue-soft);
+  }
+  .pq-blue p { font-family: var(--display); font-size: 1.1rem;
+               font-style: italic; line-height: 1.5; color: var(--ink); margin: 0; }
+
+  /* ── CHART ── */
+  .chart-block {
+    margin: 2.5rem 0;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--ink);
+    padding: 1.75rem;
+  }
+  .chart-fig { font-family: var(--mono); font-size: .66rem;
+               letter-spacing: .08em; text-transform: uppercase;
+               color: var(--red); margin-bottom: .3rem; }
+  .chart-title { font-family: var(--serif); font-size: .95rem;
+                 font-weight: 600; color: var(--ink); margin-bottom: .2rem; }
+  .chart-sub { font-family: var(--serif); font-size: .82rem;
+               color: var(--ink-muted); font-style: italic; margin-bottom: .8rem; }
+  .chart-src { font-family: var(--mono); font-size: .63rem;
+               color: var(--ink-muted); margin-top: .9rem;
+               padding-top: .6rem; border-top: 1px solid var(--rule); }
+
+  /* ── GRADIENT BARS ── */
+  .gradient-table { margin: 2rem 0; }
+  .gt-header {
+    display: grid; grid-template-columns: 120px 1fr 80px 80px;
+    gap: .5rem; padding: .5rem 0;
+    border-bottom: 2px solid var(--ink);
+    font-family: var(--mono); font-size: .68rem;
+    letter-spacing: .07em; text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .gt-row {
+    display: grid; grid-template-columns: 120px 1fr 80px 80px;
+    gap: .5rem; padding: .5rem 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: center;
+  }
+  .gt-label { font-family: var(--mono); font-size: .75rem;
+              color: var(--ink-soft); }
+  .gt-bar-wrap { height: 18px; background: #eee; border-radius: 2px; overflow: hidden; }
+  .gt-bar { height: 100%; border-radius: 2px; transition: width .4s ease; }
+  .gt-val { font-family: var(--mono); font-size: .78rem;
+            text-align: right; color: var(--ink); }
+  .gt-pct { font-family: var(--mono); font-size: .75rem;
+            text-align: right; color: var(--ink-muted); }
+
+  /* ── HIGHLIGHT BOXES ── */
+  .hbox {
+    margin: 2.5rem 0; padding: 1.5rem 1.75rem;
+    background: var(--gold-soft); border-left: 3px solid var(--gold);
+  }
+  .hbox p { font-size: .93rem; color: var(--ink-soft); }
+  .hbox strong { color: var(--ink); }
+
+  .wbox {
+    margin: 2.5rem 0; padding: 1.5rem 1.75rem;
+    background: var(--red-soft); border-left: 3px solid var(--red-mid);
+  }
+  .wbox p { font-size: .93rem; color: var(--ink-soft); }
+
+  .gbox {
+    margin: 2.5rem 0; padding: 1.5rem 1.75rem;
+    background: var(--green-soft); border-left: 3px solid var(--green);
+  }
+  .gbox p { font-size: .93rem; color: var(--ink-soft); }
+
+  /* ── MAPA CONCEPTUAL ── */
+  .map-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem; margin: 2rem 0;
+  }
+  .mc {
+    padding: 1.2rem 1.4rem;
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--rule);
+    background: #fff;
+  }
+  .mc.ganador { border-top-color: var(--green); }
+  .mc.mixto   { border-top-color: var(--gold); }
+  .mc.perdedor{ border-top-color: var(--red); }
+
+  .mc-tag {
+    font-family: var(--mono); font-size: .65rem;
+    letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: .4rem;
+  }
+  .mc.ganador .mc-tag { color: var(--green); }
+  .mc.mixto   .mc-tag { color: var(--gold); }
+  .mc.perdedor.mc-tag { color: var(--red); }
+  .mc.perdedor .mc-tag { color: var(--red); }
+
+  .mc-title { font-family: var(--display); font-size: 1.05rem;
+              font-weight: 700; color: var(--ink); margin-bottom: .5rem; }
+  .mc-stat {
+    font-family: var(--display); font-size: 1.7rem;
+    font-weight: 900; line-height: 1; margin-bottom: .15rem;
+  }
+  .mc.ganador .mc-stat { color: var(--green); }
+  .mc.mixto   .mc-stat { color: var(--gold); }
+  .mc.perdedor .mc-stat { color: var(--red); }
+
+  .mc-desc { font-size: .85rem; color: var(--ink-soft); line-height: 1.55; }
+
+  /* ── FOOTER ── */
+  .foot {
+    background: var(--ink); color: var(--paper);
+    padding: 3rem 0; margin-top: 2rem;
+  }
+  .foot-inner { max-width: 820px; margin: 0 auto; padding: 0 2rem; }
+  .foot-head {
+    font-family: var(--mono); font-size: .68rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: #5a4a3a; margin-bottom: 1.5rem;
+    padding-bottom: 1rem; border-bottom: 1px solid #2a2018;
+  }
+  .foot-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .foot-col h4 { font-family: var(--mono); font-size: .66rem;
+                 letter-spacing: .1em; text-transform: uppercase;
+                 color: #6a5a4a; margin-bottom: .7rem; }
+  .foot-col p, .foot-col li { font-size: .82rem; color: #a09080; line-height: 1.6; }
+  .foot-col ul { list-style: none; }
+  .foot-col ul li::before { content: '— '; color: #4a3a28; }
+  .foot-sig {
+    font-family: var(--mono); font-size: .65rem; color: #4a3a28;
+    margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #2a2018;
+  }
+  @media(max-width:600px){ .foot-cols { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- ════════ MASTHEAD ════════ -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="label-row">
+      <span class="label label-red">Policy Brief</span>
+      <span class="label label-gold">Colombia</span>
+      <span class="label label-blue">Paz &amp; Violencia</span>
+      <span class="label-text">Junio 2026 · Basado en datos de 1.079 municipios</span>
+    </div>
+    <h1>¿Fue una buena decisión<br>firmar la <em>paz</em>?</h1>
+    <p class="deck">La pregunta más incómoda de la política colombiana tiene ahora una respuesta cuantitativa. Analizamos 11.869 observaciones municipio-año para responderla.</p>
+    <div class="byline">Policy brief · Junio 2026 · Juan Pablo Jaramillo-Ramón · FLACSO Ecuador · ORCID: 0000-0001-6161-4477</div>
+  </div>
+</header>
+
+<!-- ════════ WORKING PAPER BANNER ════════ -->
+<div class="wp-banner">
+  <p>📄 Este policy brief resume los resultados del working paper <strong>"Peace, Bullets, and Asymmetric Dividends: The Heterogeneous Effects of the 2016 FARC Peace Agreement on Municipal Homicides in Colombia"</strong> (Jaramillo-Ramón, 2026, borrador preliminar). El paper completo, los datos y el código de replicación están disponibles a solicitud del autor.</p>
+</div>
+
+<!-- ════════ RESPUESTA CENTRAL ════════ -->
+<div class="answer-block">
+  <div class="answer-inner">
+    <div class="answer-verdict">
+      <div class="big">Sí.</div>
+      <div class="label-ans">Para los municipios más afectados</div>
+      <p>Donde las FARC estaban presentes, la firma del acuerdo redujo los homicidios hasta en un 81%. Los municipios que más violencia tenían fueron también los que más se beneficiaron.</p>
+    </div>
+    <div class="answer-caveat">
+      <div class="big">Depende.</div>
+      <div class="label-ans">Para el resto del país</div>
+      <p>Para el 75% de los municipios colombianos —aquellos con baja exposición previa al conflicto FARC— el dividendo de paz fue menor al 6%. Y el vacío que dejaron las FARC lo llenaron el ELN, las disidencias y el Clan del Golfo.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ ESTADÍSTICAS CLAVE ════════ -->
+<div class="stats-row">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-val green">−81%</div>
+      <div class="stat-label">reducción máxima<br>municipios más expuestos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val red">−6%</div>
+      <div class="stat-label">reducción en el percentil 25<br>la mayoría silenciosa</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val gold">1.079</div>
+      <div class="stat-label">municipios analizados<br>panel 2013–2023</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val blue">β = −1.65</div>
+      <div class="stat-label">efecto TWFE<br>p &lt; 0.001</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ BODY ════════ -->
+<div class="body-wrap">
+
+  <!-- SECCIÓN 01 -->
+  <section class="section">
+    <span class="sec-num">01</span>
+    <h2>La pregunta que nadie quería hacer con rigor</h2>
+    <p>Desde el 24 de noviembre de 2016, Colombia ha debatido si el Acuerdo de Paz con las FARC fue una buena o mala decisión. El debate ha sido, mayoritariamente, ideológico. Los defensores del acuerdo citan el mínimo histórico de homicidios de 2017 —11.957, el más bajo desde 1984. Los críticos señalan que en 2025 hay más homicidios que bajo el gobierno Duque. Ambos tienen razón en lo que dicen y ninguno responde la pregunta correcta.</p>
+    <p>La pregunta correcta no es si el promedio nacional mejoró o empeoró. Es si la firma de la paz produjo una reducción <em>causal</em> de la violencia en los lugares donde el conflicto era real. Para responder eso hacen falta datos municipales, un diseño estadístico que separe el efecto de la paz de otras tendencias, y la honestidad de reconocer que Colombia tiene 1.122 municipios —y no todos vivían en guerra.</p>
+
+    <div class="pq">
+      <p>"Un promedio nacional puede bajar mientras la violencia se redistribuye hacia nuevos territorios. La paz estadística y la paz territorial son cosas distintas."</p>
+    </div>
+
+    <p>El working paper que resume este policy brief analiza un panel de 1.079 municipios durante 2013–2023, con datos de incidentes de homicidio de la Policía Nacional (SIEDCO), proyecciones de población del DANE, y un diseño de diferencias en diferencias continuo que usa como variable de tratamiento un índice de violencia previa al acuerdo construido sobre las tasas de homicidio de 2013–2015. El resultado es, en términos técnicos, robusto. En términos políticos, incómodo.</p>
+  </section>
+
+  <!-- SECCIÓN 02 -->
+  <section class="section">
+    <span class="sec-num">02</span>
+    <h2>El dividendo de paz existe. Pero no es para todos.</h2>
+    <p>El hallazgo central del análisis es que la firma del acuerdo produjo una reducción real y causalmente identificable de los homicidios —pero concentrada en los municipios que más violencia tenían antes del acuerdo. No fue una reducción uniforme que mejoró a todos. Fue un dividendo geográficamente graduado que benefició desproporcionadamente a los territorios donde las FARC eran el actor armado dominante.</p>
+
+    <p>Para medir esa gradación, construimos un índice de violencia previa que va de 0 a 1: el municipio con la tasa más alta en 2013–2015 (Policarpa, Nariño, con 217 homicidios por cada 100.000 habitantes) recibe valor 1; un municipio con cero homicidios recibe valor 0. La siguiente tabla muestra cuánto se redujo la violencia en función de dónde estabas en esa distribución:</p>
+
+    <!-- GRADIENT TABLE -->
+    <div class="gradient-table">
+      <div class="gt-header">
+        <div>Percentil</div><div>Reducción implícita</div>
+        <div style="text-align:right">Log-pts</div>
+        <div style="text-align:right">%</div>
+      </div>
+      <div class="gt-row">
+        <div class="gt-label">p25 — bajo</div>
+        <div class="gt-bar-wrap"><div class="gt-bar" style="width:7.4%;background:#4ac97a"></div></div>
+        <div class="gt-val">−0.062</div><div class="gt-pct">−6%</div>
+      </div>
+      <div class="gt-row">
+        <div class="gt-label">p50 — mediano</div>
+        <div class="gt-bar-wrap"><div class="gt-bar" style="width:15.7%;background:#4ac97a"></div></div>
+        <div class="gt-val">−0.136</div><div class="gt-pct">−13%</div>
+      </div>
+      <div class="gt-row">
+        <div class="gt-label">p75 — alto</div>
+        <div class="gt-bar-wrap"><div class="gt-bar" style="width:28.5%;background:#2e6b45"></div></div>
+        <div class="gt-val">−0.262</div><div class="gt-pct">−23%</div>
+      </div>
+      <div class="gt-row">
+        <div class="gt-label">p90 — muy alto</div>
+        <div class="gt-bar-wrap"><div class="gt-bar" style="width:45.1%;background:#2e6b45"></div></div>
+        <div class="gt-val">−0.460</div><div class="gt-pct">−37%</div>
+      </div>
+      <div class="gt-row">
+        <div class="gt-label">p95 — extremo</div>
+        <div class="gt-bar-wrap"><div class="gt-bar" style="width:56.8%;background:#1a4a30"></div></div>
+        <div class="gt-val">−0.580</div><div class="gt-pct">−44%</div>
+      </div>
+      <div class="gt-row" style="background:#f0f7f2">
+        <div class="gt-label" style="font-weight:600">máximo (Policarpa)</div>
+        <div class="gt-bar-wrap"><div class="gt-bar" style="width:100%;background:#0d2e1a"></div></div>
+        <div class="gt-val" style="font-weight:600">−1.648</div>
+        <div class="gt-pct" style="font-weight:600;color:#1a4a30">−81%</div>
+      </div>
+    </div>
+    <p style="font-family:var(--mono);font-size:.63rem;color:var(--ink-muted);margin-top:.4rem">Efectos implícitos: β̂_TWFE × Índice_p. SE por método delta. Todos significativos al 1% para p75 y superior. Fuente: SIEDCO/Policía Nacional + DANE, cálculos propios.</p>
+
+    <!-- CHART: EVENT STUDY -->
+    <div class="chart-block">
+      <div class="chart-fig">Figura 1</div>
+      <div class="chart-title">Estudio de eventos: efecto diferencial año a año del Acuerdo de Paz</div>
+      <div class="chart-sub">Coeficiente β_t de la interacción Índice_i × 1[año=t], relativo a 2015 = 0. FE municipio (within) + año. SE clusterizados por municipio.</div>
+      <canvas id="eventStudy" height="260"></canvas>
+      <div class="chart-src">Fuente: SIEDCO/Policía Nacional + DANE. Panel 2013–2023. N = 1.079 municipios. Outcome: ln(tasa+1) winsorizada p99. Working paper: Jaramillo-Ramón (2026).</div>
+    </div>
+
+    <p>El gráfico muestra tres cosas simultáneamente. Primero, en 2013 y 2014 —los dos años previos al año de referencia— los coeficientes son estadísticamente cero (p > 0.48), lo que confirma que los municipios más y menos violentos seguían tendencias paralelas antes del acuerdo. Segundo, en 2016, el año de la firma, el coeficiente cae abruptamente a −1.91: la reducción fue inmediata, no gradual. Tercero, los ocho coeficientes post-acuerdo son todos negativos y altamente significativos, sin señales de revertirse hasta 2023.</p>
+
+    <div class="gbox">
+      <p><strong>Prueba placebo:</strong> Para descartar que el resultado sea un artefacto estadístico, reasignamos aleatoriamente los valores del índice entre municipios 500 veces. En ninguna de las 500 permutaciones se obtiene un coeficiente tan negativo como el real (β = −1.648). El p-valor de permutación es 0.000. El patrón geográfico del índice no es reemplazable por un índice aleatorio.</p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 03 -->
+  <section class="section">
+    <span class="sec-num">03</span>
+    <h2>Quiénes ganaron, quiénes no, y por qué importa la geografía</h2>
+
+    <p>El mapa del dividendo de paz coincide, con una precisión que no deja mucho margen para la coincidencia, con el mapa territorial de las FARC al momento de la firma. Los municipios que más se beneficiaron están en el Bajo Cauca antioqueño (Briceño, Valdivia, Segovia), el corredor Pacífico (Policarpa, Corinto, San José del Palmar, Tumaco), el Catatumbo (Tibú, Teorama), y los Llanos Orientales (Mapiripán). Son exactamente los territorios de los frentes más activos de las FARC.</p>
+
+    <div class="map-cards">
+      <div class="mc ganador">
+        <div class="mc-tag">Ganador claro</div>
+        <div class="mc-title">Bajo Cauca antioqueño</div>
+        <div class="mc-stat">−44%</div>
+        <p class="mc-desc">Briceño, Valdivia, Segovia. El retiro de los frentes 18, 36 y 37 redujo drásticamente la violencia letal. El Estado aún no llega, pero el agresor principal se fue.</p>
+      </div>
+      <div class="mc ganador">
+        <div class="mc-tag">Ganador claro</div>
+        <div class="mc-title">Corredor Patía-Nariño</div>
+        <div class="mc-stat">−81%</div>
+        <p class="mc-desc">Policarpa, el municipio con la tasa más alta pre-acuerdo (217/100k), registró la mayor reducción en términos relativos de todo el país.</p>
+      </div>
+      <div class="mc mixto">
+        <div class="mc-tag">Resultado mixto</div>
+        <div class="mc-title">Cauca y Chocó</div>
+        <div class="mc-stat">−23 a −37%</div>
+        <p class="mc-desc">La reducción fue real, pero el ELN y las disidencias llenaron parcialmente el vacío. La violencia cayó menos que en zonas de dominio FARC más exclusivo.</p>
+      </div>
+      <div class="mc perdedor">
+        <div class="mc-tag">Perdedor neto</div>
+        <div class="mc-title">Región Caribe</div>
+        <div class="mc-stat">↑ récords</div>
+        <p class="mc-desc">Atlántico, Bolívar y Magdalena registran en 2024 sus máximos en una década. El Clan del Golfo expandió corredores que antes controlaban las FARC. El acuerdo creó oportunidades para actores que no firmaron.</p>
+      </div>
+    </div>
+
+    <p>La lección que estos patrones enseñan es estructural: el dividendo de paz fue inversamente proporcional a la diversidad de actores armados locales. Donde las FARC eran el actor dominante y relativamente exclusivo, su retiro generó un descenso claro de la violencia. Donde competían con el ELN, con grupos paramilitares reconfigurados o con economías criminales locales, la desmovilización generó guerras de sucesión territorial.</p>
+
+    <div class="pq-blue">
+      <p>"El problema no es que se haya firmado la paz. El problema es que nadie acordó qué llenar en los territorios que las FARC dejaron."</p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 04 -->
+  <section class="section">
+    <span class="sec-num">04</span>
+    <h2>El número que el debate político ignora</h2>
+
+    <!-- CHART: BARRAS COMPARACIÓN -->
+    <div class="chart-block">
+      <div class="chart-fig">Figura 2</div>
+      <div class="chart-title">Gradiente del dividendo de paz por percentil del índice de violencia previa</div>
+      <div class="chart-sub">Reducción implícita (%) en la tasa de homicidios post-acuerdo, relativa a municipio con índice = 0. Efectos: β̂_TWFE × Índice_p. N = 1.079 municipios.</div>
+      <canvas id="gradiente" height="240"></canvas>
+      <div class="chart-src">Fuente: SIEDCO/Policía Nacional + DANE. Cálculos propios. Working paper: Jaramillo-Ramón (2026).</div>
+    </div>
+
+    <p>El gráfico anterior hace visible lo que los promedios nacionales invisibilizan: el acuerdo fue, en términos de reducción de homicidios, extraordinariamente exitoso para quienes más lo necesitaban —y prácticamente irrelevante para la mayoría del país. Un municipio en el percentil 25 de violencia previa (el ciudadano colombiano promedio que vivía lejos del conflicto activo) experimentó apenas una reducción del 6%. Un municipio en el percentil 95 experimentó una reducción del 44%.</p>
+
+    <p>Esto tiene consecuencias directas para el debate político. Quienes viven en ciudades intermedias con baja exposición histórica al conflicto FARC —Manizales, Bucaramanga, Pereira, Neiva— tenían razones genuinas para no sentir el dividendo de paz. No es que el acuerdo no funcionara: es que no era para ellos, estadísticamente hablando. Su violencia tenía otras causas.</p>
+
+    <div class="hbox">
+      <p><strong>El problema del promedio nacional:</strong> Colombia pasó de 12.215 homicidios promedio anuales en el segundo gobierno Santos (pre-acuerdo) a 11.957 en 2017 (el mínimo). Pero ese agregado mezcla reducciones dramáticas en Policarpa y Briceño con estabilidad o aumento en Cartagena y Barranquilla. Debatir el acuerdo usando el total nacional es como evaluar si un medicamento funciona midiendo el peso promedio del hospital.</p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 05 -->
+  <section class="section">
+    <span class="sec-num">05</span>
+    <h2>¿Por qué la violencia no desapareció? La hipótesis del vacío territorial</h2>
+
+    <p>La crítica más frecuente al acuerdo no es que la desmovilización haya fallado donde las FARC estaban —los datos muestran que no falló—. La crítica más sólida es que nadie planificó adecuadamente qué pasaría con los territorios que las FARC dejaban. El acuerdo fue un proceso de desmovilización exitoso que ocurrió dentro de un Estado que no tenía capacidad de llegada territorial proporcional a la vacante que se creaba.</p>
+
+    <p>Las FARC no eran solo un grupo armado. En muchos de sus territorios históricos —Policarpa, Briceño, Mapiripán, San José del Palmar— funcionaban como el Estado de facto: cobraban impuestos, administraban disputas, regulaban la vida social. Su desmovilización creó un vacío institucional que el Estado colombiano tenía que llenar con policía, jueces, inversión social, presencia sanitaria. En varios casos, no lo hizo.</p>
+
+    <div class="wbox">
+      <p><strong>Lo que los datos no pueden descartar:</strong> El event study muestra que los coeficientes post-acuerdo no se atenúan sistemáticamente hasta 2023. Pero esto no prueba que el dividendo de paz sea permanente. Podría reflejar que la reorganización territorial de grupos armados toma tiempo en traducirse en homicidios, o que la mejora en zonas FARC-dominantes está siendo parcialmente compensada por deterioro en zonas adyacentes —un efecto spillover que este diseño no puede capturar.</p>
+    </div>
+
+    <p>La evidencia más perturbadora es geográfica: los departamentos del Caribe —Atlántico, Bolívar, Magdalena— que no eran epicentros del conflicto FARC registran en 2024 sus peores tasas en una década. El Clan del Golfo expandió su estructura hacia el litoral caribeño precisamente en el período post-acuerdo, ocupando corredores que las FARC controlaban como rutas de tráfico. La paz con un actor armado puede financiar la guerra de otro.</p>
+  </section>
+
+  <!-- SECCIÓN 06 -->
+  <section class="section">
+    <span class="sec-num">06</span>
+    <h2>Tres implicaciones de política que el debate ignora</h2>
+
+    <h3>1. La asignación de recursos de seguridad debe seguir la geografía del conflicto, no el promedio nacional</h3>
+    <p>Si el dividendo de paz fue mayor donde la violencia previa era mayor, los recursos de consolidación post-conflicto —policía rural, presencia judicial, inversión social— deberían haberse concentrado con la misma intensidad geográfica en que se concentraba el conflicto. Una política de seguridad que distribuye recursos uniformemente entre 1.122 municipios está sistemáticamente subsidiando la paz donde ya había paz y subinvirtiendo en territorios críticos.</p>
+
+    <h3>2. La desmovilización es rápida; la institucionalización es lenta</h3>
+    <p>El efecto más grande del acuerdo se observa en 2016, el año mismo de la firma. Esto sugiere que el mecanismo principal de reducción de la violencia fue directo: cesaron los combates y los homicidios directamente atribuibles a las FARC. El problema es que este efecto inmediato puede erosionarse a medida que otros actores ocupan el espacio. La velocidad de la desmovilización no puede superar a la velocidad de la presencia estatal sin crear vulnerabilidades.</p>
+
+    <h3>3. "Paz total" sin datos territoriales es una política ciega</h3>
+    <p>El gobierno Petro negocia simultáneamente con el ELN, las disidencias del EMC y estructuras criminales locales. El análisis presentado aquí sugiere que los efectos de esas negociaciones serán, de materializarse, igualmente heterogéneos: concentrados en las zonas de dominio efectivo de cada grupo, con potencial de desplazamiento de violencia hacia zonas adyacentes. Evaluar esas negociaciones con promedios nacionales sería repetir el error metodológico que ha dominado el debate desde 2016.</p>
+
+    <div class="pq">
+      <p>"La pregunta no es si firmar o no firmar. Es si el Estado colombiano tiene la capacidad territorial para llenar el espacio que un acuerdo de paz crea. En 2016, tenía esa capacidad en algunas partes. En otras, no."</p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 07 -->
+  <section class="section">
+    <span class="sec-num">07</span>
+    <h2>La respuesta final: sí, pero con una condición que nadie cumplió</h2>
+
+    <p>¿Fue una buena decisión firmar la paz con las FARC? La evidencia cuantitativa de 1.079 municipios y once años de datos sugiere la siguiente respuesta:</p>
+
+    <p><strong>Sí fue una buena decisión</strong> en el sentido de que produjo una reducción real, causalmente identificable y estadísticamente robusta de los homicidios en los municipios donde el conflicto era más intenso. El acuerdo salvó vidas —muchas vidas, no estadísticas— en Policarpa, en Briceño, en San José del Palmar, en Mapiripán. Para los colombianos que vivían en esos territorios, el 24 de noviembre de 2016 fue un punto de inflexión real.</p>
+
+    <p><strong>Fue una decisión incompleta</strong> en el sentido de que no estuvo acompañada de la capacidad estatal territorial necesaria para convertir la desmovilización armada en paz institucional. El acuerdo creó un vacío que el Estado solo llenó parcialmente, y que otros actores —ELN, disidencias, Clan del Golfo— llenaron con violencia. La reducción de homicidios en territorios FARC coexistió con el deterioro del Caribe, el Catatumbo y zonas de frontera.</p>
+
+    <p>La conclusión metodológica que este análisis ofrece es más incómoda que cualquier posición política: tanto quienes defienden el acuerdo como quienes lo critican tienen razón, porque están mirando poblaciones diferentes de municipios. El debate político colombiano sobre la paz ha sido, en buena medida, un debate entre personas que viven en partes distintas del mapa.</p>
+
+    <div class="gbox">
+      <p><strong>Nota metodológica:</strong> Los resultados son robustos a cuatro especificaciones alternativas (sin winsorización, municipios con población &gt; 5.000, conteo logarítmico de homicidios, excluir los 5 municipios con mayor índice). El diseño de diferencias en diferencias controla por efectos fijos municipales y anuales, elimina diferencias de nivel entre municipios y choques comunes a todos los municipios. Una prueba placebo de 500 permutaciones descarta que el resultado sea un artefacto de la distribución espacial preexistente de la violencia. El working paper completo está disponible a solicitud del autor.</p>
+    </div>
+  </section>
+
+</div><!-- /body-wrap -->
+
+<!-- ════════ FOOTER ════════ -->
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-head">Nota sobre el working paper y los datos</div>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <h4>Working paper</h4>
+        <p><strong>Jaramillo-Ramón, J.P. (2026).</strong> "Peace, Bullets, and Asymmetric Dividends: The Heterogeneous Effects of the 2016 FARC Peace Agreement on Municipal Homicides in Colombia." Borrador preliminar, FLACSO Ecuador. El paper incluye todas las especificaciones técnicas, tablas de coeficientes, prueba de tendencias paralelas, estudio de eventos completo, validación con UCDP GED y código de replicación en Python. Disponible a solicitud del autor.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Fuentes de datos</h4>
+        <ul>
+          <li>SIEDCO — Policía Nacional de Colombia (incidentes de homicidio 2013–2023)</li>
+          <li>DANE — Proyecciones municipales de población 2005–2042</li>
+          <li>UCDP GED v24.1 — Eventos de conflicto atribuidos a las FARC (validación)</li>
+          <li>Panel: 1.079 municipios × 11 años = 11.869 observaciones</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-sig">
+      Policy Brief · ¿Fue una buena decisión firmar la paz? · Junio 2026 · Autor: Juan Pablo Jaramillo-Ramón · FLACSO Ecuador · ecuanomica.blogspot.com
+    </div>
+  </div>
+</footer>
+
+<!-- ════════ CHARTS ════════ -->
+<script>
+Chart.defaults.font.family = "'DM Mono', monospace";
+Chart.defaults.color = "#7a6e68";
+
+// Event Study
+new Chart(document.getElementById("eventStudy"), {
+  type: "line",
+  data: {
+    labels: [2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023],
+    datasets: [{
+      label: "β_t (Índice × 1[año=t])",
+      data: [0.187, 0.113, 0.000, -1.914, -1.409, -1.158, -1.840, -1.216, -1.424, -1.832, -1.589],
+      borderColor: "#2a4a6b",
+      backgroundColor: "rgba(42,74,107,0.07)",
+      fill: true,
+      borderWidth: 2.2,
+      pointRadius: [5,5,7,5,5,5,5,5,5,5,5],
+      pointBackgroundColor: [
+        "#bbb","#bbb","#9a7b3a",
+        "#b5311a","#b5311a","#b5311a","#b5311a","#b5311a","#b5311a","#b5311a","#b5311a"
+      ],
+      tension: 0.25
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` β_${ctx.label} = ${ctx.parsed.y.toFixed(3)}`
+        }
+      },
+      annotation: {}
+    },
+    scales: {
+      x: { grid: { color: "#e8e2da" } },
+      y: {
+        grid: { color: "#e8e2da" },
+        title: { display: true, text: "Coeficiente β_t (relativo a 2015 = 0)" },
+      }
+    }
+  }
+});
+
+// Gradient bars
+new Chart(document.getElementById("gradiente"), {
+  type: "bar",
+  data: {
+    labels: ["p10","p25","p50","p75","p90","p95","p100\n(Policarpa)"],
+    datasets: [{
+      label: "Reducción implícita (%)",
+      data: [2.2, 6.0, 12.7, 23.1, 36.9, 44.0, 80.7],
+      backgroundColor: [
+        "rgba(46,107,69,0.3)",
+        "rgba(46,107,69,0.45)",
+        "rgba(46,107,69,0.6)",
+        "rgba(46,107,69,0.72)",
+        "rgba(46,107,69,0.85)",
+        "rgba(13,46,26,0.85)",
+        "rgba(13,46,26,1.0)",
+      ],
+      borderColor: "#2e6b45",
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` Reducción: ${ctx.parsed.y}%`
+        }
+      }
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: {
+        grid: { color: "#e8e2da" },
+        title: { display: true, text: "Reducción implícita en tasa de homicidios (%)" },
+        min: 0, max: 90
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
