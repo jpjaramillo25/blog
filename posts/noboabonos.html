@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Juan Pablo Jaramillo-Ramón">
+<meta name="description" content="¿La entrega de bonos electorales influyó sobre la reelección de Noboa? Evidencia cuantitativa del balotaje ecuatoriano de 2025.">
+<title>¿La entrega de bonos electorales influyeron sobre la reelección de Noboa? — Juan Pablo Jaramillo-Ramón</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300;1,6..72,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1611;
+    --paper: #faf8f4;
+    --warm: #f0ebe0;
+    --accent: #c84b2f;
+    --accent-muted: #e8a090;
+    --rule: #d4cfc5;
+    --muted: #7a7268;
+    --sans: 'DM Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+  }
+
+  /* ─── MASTHEAD ─── */
+  .masthead {
+    border-bottom: 2px solid var(--ink);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .masthead-label {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .masthead-tags {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--rule);
+    padding: 0.2em 0.6em;
+    border-radius: 2px;
+    color: var(--muted);
+  }
+  .tag.hot { border-color: var(--accent-muted); color: var(--accent); }
+
+  /* ─── HERO ─── */
+  .hero {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 4rem 2rem 3rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero-kicker {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+  }
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 640px;
+    line-height: 1.65;
+    margin-bottom: 2rem;
+  }
+  .byline {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    border-top: 1px solid var(--rule);
+    padding-top: 1rem;
+  }
+  .byline a { color: var(--accent); text-decoration: none; }
+  .byline a:hover { text-decoration: underline; }
+
+  /* ─── STAT STRIP ─── */
+  .stat-strip {
+    background: var(--ink);
+    color: var(--paper);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+  .stat-cell {
+    padding: 2rem 1.5rem;
+    border-right: 1px solid #3a3530;
+    text-align: center;
+  }
+  .stat-cell:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-num.accent { color: var(--accent-muted); }
+  .stat-desc {
+    font-family: var(--sans);
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #a09890;
+    line-height: 1.4;
+  }
+
+  /* ─── VERDICT BANNER ─── */
+  .verdict-strip {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    border-bottom: 2px solid var(--ink);
+  }
+  .verdict-cell {
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+  .verdict-cell:first-child { background: #fef5f3; }
+  .verdict-cell:last-child  { background: #f3f6fe; }
+  .verdict-divider { background: var(--ink); }
+  .verdict-label {
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .verdict-head {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .verdict-body {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ─── BODY ─── */
+  .body-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    padding: 4rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section:last-of-type { border-bottom: none; }
+
+  .section-num {
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 2.5rem 0 0.75rem;
+    color: var(--ink);
+  }
+
+  p {
+    margin-bottom: 1.25rem;
+    max-width: 660px;
+  }
+
+  /* ─── PULLQUOTE ─── */
+  blockquote {
+    border-left: 3px solid var(--accent);
+    margin: 2.5rem 0;
+    padding: 1.25rem 2rem;
+    background: var(--warm);
+    max-width: 580px;
+  }
+  blockquote p {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 0;
+  }
+
+  /* ─── TABLES ─── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 2.5rem 0;
+    border: 1px solid var(--rule);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  thead tr {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  thead th {
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.8rem 1rem;
+    text-align: left;
+    font-weight: 500;
+  }
+  tbody tr:nth-child(even) { background: var(--warm); }
+  tbody td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+  tbody td:first-child { font-weight: 400; color: var(--muted); }
+  .num { font-family: var(--sans); font-size: 0.85rem; }
+  .table-note {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    color: var(--muted);
+    padding: 0.6rem 1rem;
+    border-top: 1px solid var(--rule);
+    background: var(--warm);
+    line-height: 1.5;
+  }
+
+  /* ─── RESULT CARD GRID ─── */
+  .result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+  .result-card {
+    border: 1px solid var(--rule);
+    padding: 1.5rem;
+    background: white;
+  }
+  .rc-label {
+    font-family: var(--sans);
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .rc-value {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .rc-value.positive { color: #2a6e3f; }
+  .rc-value.reduced  { color: var(--accent); }
+  .rc-body {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ─── ROBUSTNESS TABLE ─── */
+  .robust-table { font-size: 0.82rem; }
+  .robust-table thead th { padding: 0.7rem 0.8rem; }
+  .robust-table tbody td { padding: 0.55rem 0.8rem; }
+  .highlight-row td { background: #fef5f3 !important; font-weight: 500; }
+  .sig { color: var(--accent); font-family: var(--sans); font-size: 0.75rem; }
+
+  /* ─── CROSSWALK BOX ─── */
+  .crosswalk {
+    margin: 2.5rem 0;
+    border: 2px solid var(--ink);
+    overflow: hidden;
+  }
+  .crosswalk-head {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.8rem 1.5rem;
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .crosswalk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-collapse: collapse;
+  }
+  .cw-cell {
+    padding: 1.25rem 1rem;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    text-align: center;
+  }
+  .cw-cell:nth-child(3n) { border-right: none; }
+  .cw-label {
+    font-family: var(--sans);
+    font-size: 0.55rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .cw-big {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .cw-big.up { color: #2a6e3f; }
+  .cw-big.down { color: var(--accent); }
+  .cw-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .cw-header {
+    background: var(--warm);
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.5rem 1rem;
+    grid-column: 1/-1;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ─── IMPLICATION BOXES ─── */
+  .implication-box {
+    border-left: 4px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    background: var(--warm);
+  }
+  .ib-num {
+    font-family: var(--sans);
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+    display: block;
+  }
+  .ib-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .ib-body {
+    font-size: 0.9rem;
+    color: #4a4540;
+    line-height: 1.6;
+    margin-bottom: 0;
+    max-width: 100%;
+  }
+
+  /* ─── NOTE / WORKING PAPER BOX ─── */
+  .wp-box {
+    border: 1px solid var(--rule);
+    background: white;
+    padding: 1.5rem 2rem;
+    margin-top: 3rem;
+    font-size: 0.88rem;
+  }
+  .wp-box-head {
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .wp-box p { color: var(--muted); max-width: 100%; margin-bottom: 0.6rem; }
+  .wp-box p:last-child { margin-bottom: 0; }
+  .wp-box strong { color: var(--ink); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink);
+    color: #a09890;
+    padding: 2.5rem;
+    text-align: center;
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+  }
+  footer a { color: var(--accent-muted); text-decoration: none; }
+
+  /* ─── ANIMATION ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero h1, .hero .hero-sub, .hero .byline {
+    animation: fadeUp 0.7s ease both;
+  }
+  .hero h1      { animation-delay: 0.05s; }
+  .hero .hero-sub { animation-delay: 0.15s; }
+  .hero .byline { animation-delay: 0.25s; }
+
+  @media (max-width: 600px) {
+    .verdict-strip { grid-template-columns: 1fr; }
+    .verdict-divider { display: none; }
+    .crosswalk-grid { grid-template-columns: 1fr 1fr; }
+    .stat-strip { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<nav class="masthead">
+  <span class="masthead-label">Juan Pablo Jaramillo-Ramón</span>
+  <div class="masthead-tags">
+    <span class="tag hot">Working Paper</span>
+    <span class="tag">Ecuador</span>
+    <span class="tag">Política Distributiva</span>
+    <span class="tag">Junio 2026</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <p class="hero-kicker">Policy Brief · Balotaje presidencial Ecuador 2025 · N = 1.200 encuestados</p>
+  <h1>¿La entrega de bonos electorales influyeron sobre la reelección de <em>Noboa</em>?</h1>
+  <p class="hero-sub">
+    Con una encuesta de 1.200 casos entre la primera y segunda vuelta de 2025, encontré que el 12,6% de los encuestados no votó por Noboa en primera vuelta, pero confió en que el gobierno entregaría los bonos. De ese grupo, el 42,4% lo votó en el balotaje. Sin esos votos, Noboa cae del 47,3% al 42,0% en votos brutos sin contar blancos y nulos —debajo de González. Este post determina cuánto fue la ventaja electoral comprada con recursos del Estado.
+  </p>
+</header>
+
+<!-- STAT STRIP -->
+<div class="stat-strip">
+  <div class="stat-cell">
+    <span class="stat-num accent">69,8%</span>
+    <span class="stat-desc">evaluó la situación nacional como<br>"mala" o "muy mala"</span>
+  </div>
+  <div class="stat-cell">
+    <span class="stat-num accent">1.200</span>
+    <span class="stat-desc">encuestados, muestra<br>representativa nacional</span>
+  </div>
+  <div class="stat-cell">
+    <span class="stat-num accent">0,302</span>
+    <span class="stat-desc">AME ingenuo<br>(brecha en probabilidad de voto)</span>
+  </div>
+  <div class="stat-cell">
+    <span class="stat-num accent">0,114</span>
+    <span class="stat-desc">AME residualizado<br>(tras parcializar predisposiciones)</span>
+  </div>
+</div>
+
+<!-- VERDICT STRIP -->
+<div class="verdict-strip">
+  <div class="verdict-cell">
+    <span class="verdict-label">Hallazgo 1: Razonamiento motivado</span>
+    <p class="verdict-head">Dos tercios son racionalización</p>
+    <p class="verdict-body">La estimación ingenua de 30 pp en la brecha de apoyo colapsa a ~11 pp al parcializar el componente predecible desde predisposiciones partidistas previas. Eso significa que la mayor parte de la asociación bruta refleja que los simpatizantes del incumbente simplemente racionalizan su voto.</p>
+  </div>
+  <div class="verdict-divider"></div>
+  <div class="verdict-cell">
+    <span class="verdict-label">Hallazgo 2: Expectativas residuales</span>
+    <p class="verdict-head">El tercio restante es real y robusto</p>
+    <p class="verdict-body">Después de residualizar, permanece una asociación significativa (β = 0,678, p &lt; 0,001) que sobrevive seis pruebas de robustez incluyendo un placebo de 200 permutaciones donde <em>ninguna</em> alcanza el valor observado. No es un artefacto estadístico.</p>
+  </div>
+</div>
+
+<!-- SECTION 1 -->
+<div class="body-wrap">
+<section class="section">
+  <span class="section-num">01</span>
+  <h2>El enigma: crisis doble, reelección igual</h2>
+  <p>Las teorías del voto retrospectivo son brutalmente directas: cuando las cosas van mal, el gobierno pierde. En América Latina eso suele ocurrir. El balotaje ecuatoriano de 2025 es el tipo de caso que hace que los politólogos pidan otro café.</p>
+  <p>Ecuador enfrentaba dos crisis al mismo tiempo. Una <strong>crisis de seguridad</strong> sin precedentes en su historia reciente: grupos criminales organizados controlando territorios, motines carcelarios, tasas de homicidio que pusieron al país entre los más violentos de la región en menos de tres años. Y una <strong>crisis económica</strong> acumulada: crecimiento estancado, aumento de la pobreza, los apagones de 2024 que cortaron la luz por horas todos los días durante semanas.</p>
+  <p>En la encuesta analizada aquí, el 27,7% describió la situación nacional como "muy mala" y el 42,1% como "mala". Casi el 70% en contra. Bajo esas condiciones, la teoría predice derrota electoral clara. Lo que ocurrió fue una reelección con 56,6% de los votos válidos.</p>
+
+  <blockquote>
+    <p>"El problema no es que los ecuatorianos no vieran la crisis. La veían y votaron igual. Eso no se explica solo con miedo a la oposición."</p>
+  </blockquote>
+
+  <p>Una explicación posible: entre rondas, la administración de Noboa anunció y desembolsó bonos vinculados directamente a la campaña —Decretos Ejecutivos 578, 583 y 587— dirigidos a poblaciones vulnerables, policías y militares, por un total estimado de <strong>USD 518 millones</strong>. Si los votantes <em>creían</em> que el gobierno cumpliría esas promesas, ese componente prospectivo pudo haber amortiguado el castigo que la crisis debería haber generado.</p>
+  <p>Pero hay un problema de fondo: ¿cómo distinguir a quienes votan por Noboa <em>porque</em> creen en los bonos, de quienes creen en los bonos <em>porque</em> ya iban a votar por Noboa de todas formas? Ese es exactamente el problema que intenta resolver este análisis.</p>
+</section>
+
+<!-- SECTION 2 -->
+<section class="section">
+  <span class="section-num">02</span>
+  <h2>El problema: encuestar sobre bonos a gente que ya decidió su voto no sirve de mucho</h2>
+
+  <p>Encuestar a alguien sobre si cree que Noboa va a entregar los bonos y luego preguntarle por quién va a votar suena razonable. El problema es que las dos respuestas no son independientes. Las mismas preferencias subyacentes las estructuran a ambas.</p>
+  <p>Un votante que ya apoya a Noboa —por anticorreísmo, por miedo a González, por alineamiento con la derecha— va a tender naturalmente a expresar confianza en que el gobierno cumple. No porque haya evaluado la capacidad fiscal del Estado o la probabilidad de ejecución presupuestaria. Sino porque sus creencias y sus actitudes están organizadas en torno a los mismos referentes identitarios. La literatura llama a esto <strong>razonamiento motivado</strong>: no mentimos sobre lo que creemos, pero lo que creemos está filtrado por quién somos políticamente.</p>
+  <p>El resultado práctico: una regresión de voto sobre expectativas de cumplimiento mezcla dos historias que producen exactamente la misma correlación. Historia A — los bonos convencieron a gente que de otro modo no hubiera votado por Noboa. Historia B — los que ya iban a votar por Noboa simplemente dijeron que confían en los bonos como parte del mismo paquete de lealtad. Sin un experimento, sin un panel, sin un instrumento, la regresión no puede distinguirlas.</p>
+
+  <blockquote>
+    <p>"La pregunta no es si los que creen en los bonos votan más por Noboa. Es si los que creen en los bonos <em>por razones que no son puro partidismo</em> votan más por Noboa. Esa es una pregunta completamente diferente."</p>
+  </blockquote>
+
+  <p>La solución: tomar la lógica del <em>double machine learning</em> y usarla como bisturí diagnóstico. Primero, predecir cuánta confianza en los bonos explicarían las predisposiciones políticas y demográficas de cada encuestado. Segundo, restar esa predicción de lo que declararon: el residuo es lo que no era predecible. Tercero, usar ese residuo para predecir el voto. Si el residuo sigue siendo significativo, hay algo más que racionalización operando.</p>
+  <p>El residuo no es un efecto causal. Puede contener evaluación prospectiva genuina, anticipación de beneficio personal, optimismo político difuso o confusión no observada. Pero al menos no es —por construcción— simple racionalización partidista.</p>
+</section>
+
+<!-- SECTION 3 -->
+<section class="section">
+  <span class="section-num">03</span>
+  <h2>Los datos: 1.200 encuestados, toda la tensión del momento</h2>
+
+  <p>El análisis usa una encuesta presencial, nacionalmente representativa, aplicada el 29 y 30 de marzo de 2025 —exactamente en la ventana entre las dos rondas de la elección. Ese momento importa: permite capturar el recuerdo del voto de primera vuelta y la intención de segunda vuelta al mismo tiempo, con la campaña de bonos activa y las expectativas todavía en movimiento.</p>
+  <p>La encuesta acertó: estimó 56,7% para Noboa y 43,3% para González; el resultado oficial fue 55,6% / 44,4%. Una diferencia de un punto porcentual. Eso da confianza en que la muestra captura la distribución real del electorado.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>Categoría principal</th>
+          <th>%</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Intención de voto (balotaje)</td>
+          <td>Incumbente</td>
+          <td class="num">47,3%</td>
+        </tr>
+        <tr>
+          <td>Expectativas de cumplimiento</td>
+          <td>Cumplirá</td>
+          <td class="num">47,7%</td>
+        </tr>
+        <tr>
+          <td>Situación nacional</td>
+          <td>Mala o muy mala</td>
+          <td class="num">69,8%</td>
+        </tr>
+        <tr>
+          <td>Evaluación de Correa</td>
+          <td>Mala o muy mala</td>
+          <td class="num">51,6%</td>
+        </tr>
+        <tr>
+          <td>Miedo a la candidata opositora</td>
+          <td>Sí</td>
+          <td class="num">40,5%</td>
+        </tr>
+        <tr>
+          <td>Voto de primera vuelta</td>
+          <td>Partido del incumbente</td>
+          <td class="num">43,1%</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="table-note">Fuente: encuesta presencial original, 29–30 de marzo de 2025. N = 1.200. Porcentajes no ponderados.</p>
+  </div>
+
+  <p>El dato más llamativo: la muestra estaba casi exactamente dividida en sus expectativas. El 47,7% creía que el gobierno cumpliría los bonos, el 43,8% no lo creía. Una diferencia de cuatro puntos. Esa distribución casi pareja es ideal para el análisis: hay variación real en ambos lados para trabajar.</p>
+</section>
+
+<!-- SECTION 4 -->
+<section class="section">
+  <span class="section-num">04</span>
+  <h2>La estrategia: residualizar para aislar el componente inesperado</h2>
+
+  <p>La lógica del procedimiento es simple aunque el detalle técnico es preciso. En lugar de usar las expectativas declaradas directamente, se construye un residuo en tres pasos:</p>
+
+  <div class="implication-box">
+    <span class="ib-num">Paso 1 — Primera etapa</span>
+    <p class="ib-title">Predecir las expectativas desde predisposiciones</p>
+    <p class="ib-body">Se estima un modelo probit que predice las expectativas de cumplimiento a partir de: voto de primera vuelta por el incumbente, anticorreísmo, miedo a la candidata opositora, percepciones económicas nacionales y variables sociodemográficas (región, sector, sexo, edad, educación, estatus). La predicción se hace con validación cruzada de 5 pliegues: cada observación se predice fuera de muestra.</p>
+  </div>
+
+  <div class="implication-box">
+    <span class="ib-num">Paso 2 — Residuo</span>
+    <p class="ib-title">Construir el componente inesperado</p>
+    <p class="ib-body">El residuo es la diferencia entre la expectativa declarada y la predicción fuera de muestra: r<sub>i</sub> = D<sub>i</sub> − p̂(X<sub>i</sub>). Siguiendo a Gelman (2008), se reescala dividiendo por dos desviaciones estándar, ubicándolo en una escala comparable a un indicador binario 0/1.</p>
+  </div>
+
+  <div class="implication-box">
+    <span class="ib-num">Paso 3 — Segunda etapa</span>
+    <p class="ib-title">Predecir el voto desde el residuo</p>
+    <p class="ib-body">Se regresa la intención de voto de segunda vuelta sobre el residuo reescalado y los controles. El coeficiente sobre el residuo captura la asociación entre el componente <em>inesperado</em> de las expectativas y el voto, neto de predisposiciones observadas.</p>
+  </div>
+
+  <p>El procedimiento <strong>no</strong> resuelve la endogeneidad por completo: no es un estimador DML canónico, no parcializa el resultado, y no elimina la confusión no observada. Lo que hace es aislar la porción de las expectativas que no es linealmente predecible desde predisposiciones observadas, y reportar la asociación de ese componente residual con el voto. La comparación entre el modelo ingenuo y el residualizado hace visible la magnitud del sesgo de racionalización.</p>
+</section>
+
+<!-- SECTION 5 -->
+<section class="section">
+  <span class="section-num">05</span>
+  <h2>Resultados: la estimación ingenua era el doble de lo real</h2>
+
+  <div class="result-grid">
+    <div class="result-card">
+      <span class="rc-label">Modelo ingenuo — AME</span>
+      <p class="rc-value">0,302</p>
+      <p class="rc-body">β = 1,445 (p &lt; 0,001). 30 puntos porcentuales de brecha entre quienes creen en los bonos y quienes no. Un número grande, llamativo, y casi con seguridad inflado.</p>
+    </div>
+    <div class="result-card">
+      <span class="rc-label">Modelo residualizado — AME</span>
+      <p class="rc-value reduced">0,114</p>
+      <p class="rc-body">β = 0,678 (p &lt; 0,001). Una vez que se retira el componente predecible desde predisposiciones, la brecha cae a 11 pp. Dos tercios de la asociación bruta era racionalización.</p>
+    </div>
+    <div class="result-card">
+      <span class="rc-label">Modelo ponderado — AME</span>
+      <p class="rc-value reduced">0,110</p>
+      <p class="rc-body">β = 0,684 (p &lt; 0,001). Recalibrar el recuerdo del voto de primera vuelta al resultado oficial no mueve prácticamente nada. El resultado es robusto a ese tipo de sesgo.</p>
+    </div>
+  </div>
+
+  <p>La primera etapa lo confirma: las expectativas de cumplimiento están fuertemente estructuradas por predisposiciones. El predictor más potente es el voto previo por Noboa (β = 1,007, p &lt; 0,001), con ~25 puntos porcentuales más de probabilidad de creer en los bonos entre votantes del oficialismo de primera vuelta. El anticorreísmo y las percepciones económicas positivas también predicen con fuerza. El pseudo-R² de la primera etapa es 0,356: más de un tercio de la variación en expectativas es simplemente predisposición.</p>
+  <p>Pero no toda. Después de retirar esa capa, el tercio residual sigue asociado con el voto, y esa asociación no se desvanece bajo ninguna de las seis pruebas de robustez.</p>
+
+  <blockquote>
+    <p>"Un desplazamiento de dos desviaciones estándar en el componente inesperado de las expectativas equivale a aproximadamente la mitad del efecto del miedo a González y a una quinta parte del efecto del anticorreísmo. No es el mecanismo dominante. Pero está ahí."</p>
+  </blockquote>
+</section>
+
+<!-- SECTION 6 -->
+<section class="section">
+  <span class="section-num">06</span>
+  <h2>Robustez: seis pruebas, todos los coeficientes en el mismo rango</h2>
+
+  <div class="table-wrap">
+    <table class="robust-table">
+      <thead>
+        <tr>
+          <th>Especificación</th>
+          <th>β</th>
+          <th>AME</th>
+          <th>Notas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>M1: ingenuo (D bruta)</td>
+          <td class="num">1,445***</td>
+          <td class="num">0,302***</td>
+          <td>Punto de referencia</td>
+        </tr>
+        <tr class="highlight-row">
+          <td>M2: VC, primera etapa probit, no ponderado</td>
+          <td class="num">0,678***</td>
+          <td class="num">0,114***</td>
+          <td><strong>Principal</strong></td>
+        </tr>
+        <tr class="highlight-row">
+          <td>M3: VC, primera etapa probit, ponderado</td>
+          <td class="num">0,684***</td>
+          <td class="num">0,110***</td>
+          <td><strong>Recuerdo recalibrado</strong></td>
+        </tr>
+        <tr>
+          <td>R1: M2 + voto de 1ª vuelta en 2ª etapa</td>
+          <td class="num">0,916***</td>
+          <td class="num">0,091***</td>
+          <td>Control más estricto</td>
+        </tr>
+        <tr>
+          <td>R1w: M3 + voto de 1ª vuelta en 2ª etapa</td>
+          <td class="num">0,909***</td>
+          <td class="num">0,088***</td>
+          <td>Control estricto + ponderación</td>
+        </tr>
+        <tr>
+          <td>R2: primera etapa logit</td>
+          <td class="num">0,670***</td>
+          <td class="num">0,113***</td>
+          <td>Función de enlace alternativa</td>
+        </tr>
+        <tr>
+          <td>R3: primera etapa con interacciones</td>
+          <td class="num">0,688***</td>
+          <td class="num">0,115***</td>
+          <td>Primera etapa no lineal</td>
+        </tr>
+        <tr>
+          <td>R4a: K = 2 pliegues</td>
+          <td class="num">0,689***</td>
+          <td class="num">0,116***</td>
+          <td>Partición mínima</td>
+        </tr>
+        <tr>
+          <td>R4b: K = 10 pliegues</td>
+          <td class="num">0,678***</td>
+          <td class="num">0,114***</td>
+          <td>Partición más fina</td>
+        </tr>
+        <tr>
+          <td>R6: DML estilo Robinson (MCO res-sobre-res)</td>
+          <td class="num">0,158***</td>
+          <td class="num">—</td>
+          <td>Escala lineal; Y y D residualizados</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="table-note">*** p &lt; 0,001. Coeficientes sobre el residuo reescalado de Gelman en filas M2–R4b; indicador binario en M1; coeficiente MCO en R6. Fuente: encuesta original, 29–30 de marzo de 2025. N = 1.200.</p>
+  </div>
+
+  <h3>La prueba más limpia: el placebo de permutación</h3>
+  <p>La prueba de permutación es quizás el diagnóstico más directo. El procedimiento fue repetir el análisis completo 200 veces reasignando aleatoriamente las expectativas declaradas entre encuestados, manteniendo el resultado y los controles en sus posiciones originales.</p>
+
+  <div class="crosswalk">
+    <div class="crosswalk-head">Distribución placebo — 200 permutaciones (semilla = 31415)</div>
+    <div class="crosswalk-grid">
+      <div class="cw-cell">
+        <span class="cw-label">Coeficiente observado</span>
+        <span class="cw-big up">0,678</span>
+        <span class="cw-sub">M2 — residuo reescalado de Gelman</span>
+      </div>
+      <div class="cw-cell">
+        <span class="cw-label">Media placebo</span>
+        <span class="cw-big">0,0005</span>
+        <span class="cw-sub">DE = 0,081 · Rango (−0,20; 0,21)</span>
+      </div>
+      <div class="cw-cell">
+        <span class="cw-label">Desviación sobre la media</span>
+        <span class="cw-big down">8,4 DE</span>
+        <span class="cw-sub">p-valor placebo &lt; 1/200 = 0,005</span>
+      </div>
+    </div>
+  </div>
+
+  <p>Ninguna de las 200 permutaciones produjo un coeficiente en valor absoluto tan grande como el observado. El patrón de asociación entre expectativas residualizadas y voto no es replicable con asignaciones aleatorias del tratamiento. No es un artefacto del procedimiento de validación cruzada.</p>
+</section>
+
+<!-- SECTION 7 -->
+<section class="section">
+  <span class="section-num">07</span>
+  <h2>Los "creyentes inesperados": 151 personas que cambiaron el análisis</h2>
+
+  <p>La tabulación cruzada por voto de primera vuelta y expectativa declarada muestra exactamente dónde trabaja el modelo. El 79,3% de la muestra cae en las celdas predecibles: los que votaron por Noboa en primera vuelta y creen en los bonos, o los que no votaron por él y no creen. Esos grupos tienen residuos pequeños. El modelo no aprende nada interesante de ellos.</p>
+  <p>Las dos celdas fuera de la diagonal son donde ocurre todo:</p>
+
+  <div class="crosswalk">
+    <div class="crosswalk-head">Voto de primera vuelta × Expectativa de cumplimiento</div>
+    <div class="crosswalk-grid">
+      <div class="cw-header">No votó por el incumbente en 1ª vuelta</div>
+      <div class="cw-cell">
+        <span class="cw-label">No cree en cumplimiento (n=532)</span>
+        <span class="cw-big">3,2%</span>
+        <span class="cw-sub">votan al incumbente en balotaje · Residuo medio: −0,19</span>
+      </div>
+      <div class="cw-cell">
+        <span class="cw-label">"Creyentes inesperados" (n=151)</span>
+        <span class="cw-big up">42,4%</span>
+        <span class="cw-sub">votan al incumbente en balotaje · Residuo medio: +0,66</span>
+      </div>
+      <div class="cw-cell">
+        <span class="cw-label">Total fila</span>
+        <span class="cw-big">56,9%</span>
+        <span class="cw-sub">de la muestra</span>
+      </div>
+      <div class="cw-header">Sí votó por el incumbente en 1ª vuelta</div>
+      <div class="cw-cell">
+        <span class="cw-label">"No creyentes inesperados" (n=96)</span>
+        <span class="cw-big">81,3%</span>
+        <span class="cw-sub">votan al incumbente en balotaje · Residuo medio: −0,76</span>
+      </div>
+      <div class="cw-cell">
+        <span class="cw-label">Cree en cumplimiento (n=421)</span>
+        <span class="cw-big up">97,1%</span>
+        <span class="cw-sub">votan al incumbente en balotaje · Residuo medio: +0,18</span>
+      </div>
+      <div class="cw-cell">
+        <span class="cw-label">Total fila</span>
+        <span class="cw-big">43,1%</span>
+        <span class="cw-sub">de la muestra</span>
+      </div>
+    </div>
+  </div>
+
+  <p>Los 151 <strong>"creyentes inesperados"</strong> son la evidencia más directa del mecanismo: encuestados que no votaron por Noboa en primera vuelta pero creen que el gobierno va a cumplir los bonos. Su probabilidad de votarlo en el balotaje es 42,4% —más de trece veces la de sus contrapartes que tienen el mismo historial de primera vuelta pero no creen. Residuo medio: +0,66, el más alto de la tabla.</p>
+  <p>Simétricamente, los 96 <strong>"no creyentes inesperados"</strong> —votantes de Noboa en primera vuelta que no creen en el cumplimiento— siguen votándolo en 81,3% de los casos, pero eso es notablemente menor que el 97,1% de quienes sí creen. La incredulidad en los bonos erosiona incluso la lealtad de los propios.</p>
+  <p>Qué mecanismo opera exactamente dentro del grupo de creyentes inesperados —evaluación genuina de la capacidad estatal, anticipación de beneficio personal, conversión tardía, o algo más difuso— no puede determinarse con esta encuesta. Sería el paso siguiente.</p>
+</section>
+
+<!-- SECTION 8 -->
+<section class="section">
+  <span class="section-num">08</span>
+  <h2>Tres implicaciones para entender la supervivencia incumbente en crisis</h2>
+
+  <div class="implication-box">
+    <span class="ib-num">Implicación 1 — Teoría del voto</span>
+    <p class="ib-title">La rendición de cuentas retrospectiva tiene condiciones límite</p>
+    <p class="ib-body">El caso ecuatoriano muestra que la predicción estándar del voto retrospectivo puede fallar cuando la competencia polarizada basada en identidades se combina con promesas programáticas salientes. Los votantes pueden descontar el mal desempeño no solo porque temen a la oposición, sino porque sostienen creencias prospectivas de mejora. La rendición de cuentas está condicionada por la estructura de alternativas disponibles y por la credibilidad de los compromisos.</p>
+  </div>
+
+  <div class="implication-box">
+    <span class="ib-num">Implicación 2 — Política distributiva</span>
+    <p class="ib-title">Las expectativas importan, no solo la recepción</p>
+    <p class="ib-body">La mayor parte de la literatura mide si los <em>beneficiarios</em> de transferencias apoyan al incumbente. Este caso sugiere que las creencias sobre cumplimiento futuro pueden asociarse con el comportamiento electoral incluso cuando la recepción efectiva está pendiente. La dimensión prospectiva de la política distributiva —quién cree que recibirá— puede ser tan electoralmente relevante como la dimensión ex post —quién ya recibió.</p>
+  </div>
+
+  <div class="implication-box">
+    <span class="ib-num">Implicación 3 — Metodología</span>
+    <p class="ib-title">La residualización con validación cruzada es portable</p>
+    <p class="ib-body">Cuando no hay panel, experimento ni instrumento, la estrategia propuesta aquí —parcializar el regresor central mediante validación cruzada K-fold, reescalar por 2 DE de Gelman y reportar el punto de referencia ingenuo junto con la estimación residualizada— hace visible la magnitud del sesgo de racionalización sin pretender resolver la endogeneidad. La misma arquitectura puede adoptarse en cualquier encuesta electoral de corte transversal donde expectativas y voto se midan contemporáneamente.</p>
+  </div>
+</section>
+
+<!-- SECTION 9 -->
+<section class="section">
+  <span class="section-num">09</span>
+  <h2>La aritmética que nadie quiso hacer: sin los bonos, Noboa no alcanzaba</h2>
+
+  <p>Hagamos el cálculo directamente. En la encuesta, el 12,6% de los encuestados —151 personas— no votó por Noboa en primera vuelta pero creyó que el gobierno cumpliría los bonos. De ese grupo, el 42,4% lo votó en el balotaje. Eso es 64 encuestados que, por razones que van más allá de su alineamiento partidista previo, cruzaron hacia Noboa en segunda vuelta.</p>
+
+  <p>64 personas sobre 1.200 es el 5,3% de la muestra total. Pero sobre los 568 votos que recibió Noboa en la encuesta, esos 64 representan el <strong>11,3% de su caudal</strong>. Si los retiramos, Noboa cae del 47,3% al 42,0% —y es González quien gana.</p>
+
+  <div class="crosswalk">
+    <div class="crosswalk-head">Simulación: ¿qué pasa si los bonos no hubieran inclinado ese voto?</div>
+    <div class="crosswalk-grid">
+      <div class="cw-cell">
+        <span class="cw-label">Noboa en la encuesta</span>
+        <span class="cw-big up">47,3%</span>
+        <span class="cw-sub">con el voto de creyentes inesperados</span>
+      </div>
+      <div class="cw-cell">
+        <span class="cw-label">Noboa sin ese voto</span>
+        <span class="cw-big down">42,0%</span>
+        <span class="cw-sub">por debajo de González (52,7%)</span>
+      </div>
+      <div class="cw-cell">
+        <span class="cw-label">Votos en juego</span>
+        <span class="cw-big">~527k</span>
+        <span class="cw-sub">extrapolando al universo de votos válidos del balotaje</span>
+      </div>
+    </div>
+  </div>
+
+  <p>La extrapolación al universo real es aproximada —la encuesta no es el único instrumento, y el diseño no permite recuperar un efecto causal limpio. Pero la dirección es inequívoca: las expectativas de cumplimiento de los bonos, en el segmento donde son independientes del partidismo, inclinaron votos que Noboa no hubiera tenido de otra manera. Y lo hicieron en una magnitud que supera el margen que separa una reelección cómoda de un resultado ajustado.</p>
+
+  <blockquote>
+    <p>"USD 518 millones en bonos desembolsados entre rondas, bajo decretos ejecutivos firmados durante la campaña. Si el análisis es correcto, esa inversión movió aproximadamente uno de cada nueve votos que recibió Noboa. Eso no es política social. Es financiamiento estatal de una campaña."</p>
+  </blockquote>
+
+  <p>El problema democrático es preciso: en un balotaje, el gobierno en funciones puede usar el aparato del Estado —presupuesto, decretos ejecutivos, maquinaria de desembolso— para generar expectativas que inclinen el voto de segmentos que de otro modo no lo apoyarían. La oposición no tiene esa palanca. La evidencia presentada aquí sugiere que esa asimetría tuvo efectos electorales reales, que sobreviven a los controles más rigurosos disponibles con este diseño, y que fueron suficientes para desequilibrar la competencia en una dirección que favorecía al titular del poder.</p>
+
+  <p>Noboa ganó. Pero los datos sugieren que una parte de esa victoria la pagaron todos los ecuatorianos con sus impuestos, antes de votar.</p>
+</section>
+
+<!-- WORKING PAPER BOX -->
+<div class="wp-box">
+  <p class="wp-box-head">📄 Sobre el working paper</p>
+  <p><strong>Jaramillo-Ramón, J.P. (2026).</strong> "Expectativas inesperadas de cumplimiento programático y apoyo al incumbente en el balotaje presidencial ecuatoriano de 2025." <em>Working paper</em>, FLACSO Ecuador.</p>
+  <p>El paper incluye todas las especificaciones técnicas (Tabla 5 completa con 10 especificaciones), tablas de coeficientes de primera y segunda etapa, tabulación cruzada diagnóstica, código de replicación en Stata (do-files con validación cruzada de 5 pliegues, reescalamiento de Gelman, esttab y seis ejercicios de robustez). Disponible a solicitud del autor.</p>
+  <p><strong>Fuentes de datos:</strong> Encuesta CIEES (N = 1.200, 29–30 de marzo de 2025). Decretos Ejecutivos 578, 583 y 587. Resultados oficiales CNE 2025.</p>
+</div>
+</div><!-- end body-wrap -->
+
+<footer>
+  Policy Brief · Expectativas programáticas y balotaje Ecuador 2025 · Junio 2026 · Autor: Juan Pablo Jaramillo-Ramón · FLACSO Ecuador ·
+  <a href="https://orcid.org/0000-0001-6161-4477">ORCID: 0000-0001-6161-4477</a> ·
+  <a href="https://jpjaramillo25.github.io">jpjaramillo25.github.io</a>
+</footer>
+
+</body>
+</html>
