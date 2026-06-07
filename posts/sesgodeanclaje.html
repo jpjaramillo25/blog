@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="¿Por qué fallaron las encuestas en el balotaje 2025? El sesgo de ponderación de primera vuelta y el caso ecuatoriano.">
+<meta name="author" content="Carolina Curvale · Juan Pablo Jaramillo-Ramón">
+<title>¿Por qué fallaron las encuestas en el balotaje? — jpjaramillo25</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #16143a;
+    --muted: #5c5880;
+    --accent: #3d2f8f;
+    --accent-light: #eeeaf8;
+    --accent2: #c0392b;
+    --accent2-light: #fdf0ef;
+    --rule: #cdc9e2;
+    --bg: #f9f8f4;
+    --card: #ffffff;
+    --mono: 'JetBrains Mono', monospace;
+    --serif: 'Source Serif 4', Georgia, serif;
+    --display: 'Playfair Display', Georgia, serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.78;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Header: limpio y mínimo ── */
+  .site-header {
+    border-bottom: 1px solid var(--rule);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-name {
+    font-family: var(--serif);
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .site-name a { color: var(--muted); text-decoration: none; }
+  .site-name a:hover { color: var(--ink); }
+  .header-tags {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--rule);
+  }
+
+  /* ── Layout ── */
+  .container { max-width: 740px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+  /* ── Hero ── */
+  .hero { padding: 3.2rem 0 2.2rem; border-bottom: 2px solid var(--ink); margin-bottom: 2.5rem; }
+  .hero-kicker {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(1.9rem, 4.5vw, 3rem);
+    line-height: 1.13;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin-bottom: 1.3rem;
+  }
+  .hero h1 em { font-style: italic; font-weight: 400; }
+  .hero-deck {
+    font-size: 1.05rem;
+    color: #3a3a3a;
+    max-width: 640px;
+    border-left: 3px solid var(--accent);
+    padding-left: 1.1rem;
+    line-height: 1.65;
+    margin-bottom: 1.8rem;
+  }
+  .hero-byline {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .hero-byline strong { color: var(--ink); font-weight: 500; }
+
+  /* ── Stats bar ── */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 2rem 0 2.5rem;
+  }
+  .stat-cell { background: var(--card); padding: 1.1rem 0.9rem; text-align: center; }
+  .stat-num {
+    font-family: var(--display);
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.35rem;
+    display: block;
+    line-height: 1.4;
+  }
+
+  /* ── Hallazgos ── */
+  .findings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 1.5rem 0 2.5rem;
+  }
+  .finding-box { background: var(--card); padding: 1.3rem 1.1rem; }
+  .finding-label {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .finding-title {
+    font-family: var(--display);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.25;
+  }
+  .finding-body { font-size: 0.83rem; color: #444; line-height: 1.58; }
+
+  /* ── Secciones ── */
+  .section { margin-bottom: 3.2rem; }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    color: #c8c0b8;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .section h2 {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.22;
+    margin-bottom: 1.2rem;
+  }
+  .section h2 em { font-style: italic; font-weight: 400; }
+  p { margin-bottom: 1.15rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── Blockquote ── */
+  blockquote {
+    border-left: 3px solid var(--accent);
+    margin: 1.8rem 0;
+    padding: 0.75rem 1.3rem;
+    background: var(--accent-light);
+    font-style: italic;
+    color: #16143a;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+  blockquote p { margin: 0; }
+
+  /* ── Callout par ── */
+  .callout-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 2rem 0;
+  }
+  .callout-half { background: var(--card); padding: 1.5rem; text-align: center; }
+  .callout-half.dark { background: var(--ink); }
+  .callout-big {
+    font-family: var(--display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+  }
+  .callout-half p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    font-family: var(--mono);
+    line-height: 1.45;
+  }
+  .callout-half.dark p { color: #888; }
+
+  /* ── Callout dark full ── */
+  .callout-dark {
+    background: #16143a;
+    color: #ede9f8;
+    padding: 1.8rem 2rem;
+    margin: 2rem 0;
+  }
+  .callout-dark .cn { font-family: var(--display); font-size: 2.8rem; font-weight: 700; color: #e8d5f5; display: block; line-height: 1; }
+  .callout-dark .cl { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: #7a76aa; margin-top: 0.3rem; display: block; }
+  .callout-dark .cd { margin-top: 0.9rem; font-size: 0.88rem; color: #9d99c8; line-height: 1.6; }
+
+  /* ── Tablas ── */
+  .table-wrap { overflow-x: auto; margin: 2rem 0; border: 1px solid var(--rule); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  thead tr { background: var(--ink); color: #f0ebe2; }
+  thead th {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  tbody tr { border-bottom: 1px solid var(--rule); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--accent-light); }
+  tbody td { padding: 0.6rem 0.85rem; color: #2a2830; }
+  .tm { font-family: var(--mono); font-size: 0.76rem; }
+  .tg { color: var(--accent2); font-family: var(--mono); }
+  .tn { color: #2a6b4a; font-family: var(--mono); }
+  .table-note { font-size: 0.72rem; color: var(--muted); margin-top: 0.4rem; font-family: var(--mono); }
+
+  /* ── Mecanismo ── */
+  .mechanism { background: var(--card); border: 1px solid var(--rule); padding: 1.8rem 1.5rem; margin: 2rem 0; }
+  .mech-title { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.1rem; }
+  .mech-step { display: flex; align-items: flex-start; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px dashed var(--rule); }
+  .mech-step:last-child { border-bottom: none; }
+  .mech-icon { width: 1.9rem; height: 1.9rem; background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.65rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .mech-text strong { display: block; font-size: 0.86rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .mech-text span { font-size: 0.8rem; color: var(--muted); }
+  .mech-arr { text-align: center; color: var(--accent); font-size: 1rem; padding: 0.2rem 0; font-family: var(--mono); }
+
+  /* ── Barras de sensibilidad ── */
+  .sens-bars { margin: 1.5rem 0; }
+  .sens-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.65rem; }
+  .sens-label { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); width: 130px; flex-shrink: 0; line-height: 1.3; }
+  .sens-bar-wrap { flex: 1; height: 22px; background: #dddaf0; }
+  .sens-bar { height: 100%; background: var(--accent); display: flex; align-items: center; justify-content: flex-end; padding-right: 0.4rem; }
+  .sens-val { font-family: var(--mono); font-size: 0.65rem; font-weight: 500; color: #fff; }
+
+  /* ── Grid CIEES ── */
+  .wg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 1.8rem 0; }
+  .wg-cell { background: var(--card); padding: 1.1rem 0.8rem; text-align: center; }
+  .wg-cell.hl { background: var(--accent2-light); }
+  .wg-scheme { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.7rem; line-height: 1.4; }
+  .wg-n { font-family: var(--display); font-size: 1.35rem; font-weight: 700; color: var(--accent); display: block; }
+  .wg-g { font-family: var(--display); font-size: 1.35rem; font-weight: 700; color: var(--accent2); display: block; margin-top: 0.5rem; }
+  .wg-sub { font-family: var(--mono); font-size: 0.56rem; color: var(--muted); margin-top: 0.15rem; display: block; }
+
+  /* ── Implicaciones ── */
+  .impl-card { border-left: 3px solid var(--accent); padding: 1rem 1.2rem; background: var(--card); margin-bottom: 0.9rem; }
+  .impl-n { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.35rem; }
+  .impl-title { font-weight: 600; font-size: 0.93rem; margin-bottom: 0.35rem; display: block; }
+  .impl-body { font-size: 0.84rem; color: #444; line-height: 1.58; }
+
+  .rule { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+
+  /* ── Footer ── */
+  .post-footer { border-top: 2px solid var(--ink); padding-top: 2rem; margin-top: 4rem; }
+  .pf-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; display: block; }
+  .pf-cite { font-size: 0.86rem; line-height: 1.7; margin-bottom: 1rem; }
+  .pf-cite strong { font-weight: 600; }
+  .pf-sources { font-size: 0.76rem; color: var(--muted); font-family: var(--mono); margin-bottom: 1rem; line-height: 1.6; }
+  .pf-sig { font-size: 0.74rem; color: var(--muted); font-family: var(--mono); border-top: 1px solid var(--rule); padding-top: 1rem; margin-top: 1rem; letter-spacing: 0.02em; }
+  .pf-sig a { color: var(--muted); }
+
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    .findings-grid { grid-template-columns: 1fr; }
+    .callout-pair { grid-template-columns: 1fr; }
+    .wg { grid-template-columns: 1fr 1fr; }
+    .sens-label { width: 90px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <span class="site-name"><a href="https://jpjaramillo25.github.io">Juan Pablo Jaramillo-Ramón</a></span>
+  <span class="header-tags">Encuestas · Balotaje 2025 · Metodología</span>
+</header>
+
+<div class="container">
+
+  <div class="hero">
+    <span class="hero-kicker">Working Paper · Sesgo de ponderación de primera vuelta</span>
+    <h1>¿Por qué fallaron las encuestas<br>en el <em>balotaje</em> 2025?</h1>
+    <p class="hero-deck">Once de doce encuestas proyectaron una victoria de González o empate técnico. Noboa ganó por once puntos. El error no fue aleatorio ni fue de firma: fue estructural, sembrado por la práctica de calibrar encuestas de segunda vuelta con el recuerdo del voto de primera ronda.</p>
+    <div class="hero-byline">
+      <strong>Carolina Curvale</strong> &amp; <strong>Juan Pablo Jaramillo-Ramón</strong> &nbsp;·&nbsp; Working paper, 2026
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <span class="stat-num">11/12</span>
+      <span class="stat-label">encuestas fallaron en la misma dirección</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">11 pp</span>
+      <span class="stat-label">margen real de Noboa, no previsto por nadie</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">~10 pp</span>
+      <span class="stat-label">sesgo generado solo por calibración de 1ª vuelta</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">86%</span>
+      <span class="stat-label">del error compartido entre firmas (I²)</span>
+    </div>
+  </div>
+
+  <div class="findings-grid">
+    <div class="finding-box">
+      <span class="finding-label">Hallazgo 1 · Meta-análisis</span>
+      <div class="finding-title">Las 12 encuestas sobreestimaron a González en 7,5 pp</div>
+      <div class="finding-body">El promedio ponderado proyectó 51,84% para González. El CNE registró 44,37%. Un error sistemático que supera más del doble del margen de error declarado por cualquier firma.</div>
+    </div>
+    <div class="finding-box">
+      <span class="finding-label">Hallazgo 2 · Modelo contrafactual</span>
+      <div class="finding-title">La ponderación de 1ª vuelta sola revierte el resultado</div>
+      <div class="finding-body">Con datos perfectos del CNE, aplicar calibración de primera vuelta convierte una ventaja de Noboa del 59,6% en una proyección de 54,2% para González. El sesgo mecánico supera el 142% del error observado.</div>
+    </div>
+    <div class="finding-box">
+      <span class="finding-label">Hallazgo 3 · Microdata CIEES</span>
+      <div class="finding-title">Una sola decisión metodológica destruye la única encuesta acertada</div>
+      <div class="finding-body">CIEES predijo el resultado sin calibrar en primera vuelta. Al aplicarle retroactivamente ese ajuste, su estimación de Noboa cae de 56,4% a 50,8% — idéntica al consenso erróneo.</div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- S01 -->
+  <div class="section">
+    <span class="section-num">01</span>
+    <h2>El enigma: ¿por qué fallaron las encuestas en el balotaje 2025?</h2>
+
+    <p>Hay elecciones en que las encuestas fallan. Y hay elecciones en que fallan de una manera que exige explicación. El balotaje ecuatoriano del 13 de abril de 2025 es del segundo tipo: once de doce firmas independientes, usando metodologías distintas, en distintos momentos del período intercampaña, apuntaron todas en la misma dirección incorrecta.</p>
+
+    <p>Daniel Noboa derrotó a Luisa González por 11,26 puntos. El consenso encuestador proyectaba una ventaja de 3,68 pp para González. Esa brecha de casi 15 puntos entre lo que se esperaba y lo que ocurrió no cabe en ningún margen de error razonable. Tampoco puede explicarse por mala suerte distribucional. Cuando once encuestas cometen el mismo error en la misma dirección, el problema no está en las muestras: está en la receta.</p>
+
+    <blockquote><p>La uniformidad del error —en dirección, magnitud y momento— es la huella digital de un sesgo metodológico compartido. No un accidente colectivo: una trampa colectiva.</p></blockquote>
+
+    <p>La receta en cuestión es la calibración por recuerdo de primera vuelta. Una práctica estándar —casi universal— en encuestas de balotaje latinoamericanas: se le pregunta al entrevistado por quién votó en la primera ronda, y se ajusta la muestra para que esa distribución replique el resultado oficial. Razonable en contextos estables. Devastador cuando el electorado que votó en primera vuelta ya no es el mismo que decidirá en segunda.</p>
+  </div>
+
+  <!-- S02 -->
+  <div class="section">
+    <span class="section-num">02</span>
+    <h2>El mecanismo: cómo una corrección se vuelve el error</h2>
+
+    <p>Imaginemos que una firma encuesta después de la primera vuelta y encuentra que un 30% de sus entrevistados recuerda haber votado por González, cuando el resultado oficial fue 44%. La firma pondera: sube el peso de los gonzalistas hasta representar el 44% de la muestra corregida. Parece razonable. El problema es que ese ajuste asume dos cosas que en Ecuador 2025 resultaron falsas.</p>
+
+    <p>Primera: que el recuerdo del voto es exacto. No lo es. En contextos polarizados —y pocos son más polarizados que el correísmo/anticorreísmo ecuatoriano— los votantes sistemáticamente subreportan el apoyo a candidatos estigmatizados. Selb y Munzert (2013) estiman que entre el 15% y el 20% de los entrevistados reporta mal su voto previo, con un patrón que favorece al candidato socialmente deseable. En Ecuador, eso significa que el recuerdo de González estaba inflado.</p>
+
+    <p>Segunda: que el electorado de primera vuelta predice el de segunda. No necesariamente. Entre rondas, los votantes procesan nueva información, responden a campañas, se mueven por votación estratégica. El electorado que fue a las urnas el 9 de febrero no es idéntico al que votó el 13 de abril.</p>
+
+    <div class="mechanism">
+      <div class="mech-title">Secuencia del sesgo de anclaje temporal</div>
+      <div class="mech-step">
+        <div class="mech-icon">A</div>
+        <div class="mech-text">
+          <strong>Polarización + candidato estigmatizado</strong>
+          <span>En un electorado polarizado, el recuerdo del voto de primera vuelta no es un espejo fiel: quienes apoyaron a González tienden a declararlo con mayor convicción identitaria, mientras los votantes más ambivalentes —muchos de los cuales terminaron votando a Noboa en segunda vuelta— subreportan o difuminan su preferencia previa. Al usar ese recuerdo como ancla de calibración, la ponderación asigna más peso al bloque gonzalista del que realmente corresponde en el nuevo electorado, distorsionando la proyección antes de que empiece.</span>
+        </div>
+      </div>
+      <div class="mech-arr">↓</div>
+      <div class="mech-step">
+        <div class="mech-icon">B</div>
+        <div class="mech-text">
+          <strong>Recuerdo distorsionado como ancla</strong>
+          <span>El encuestador calibra la muestra de segunda vuelta para replicar esos recuerdos sesgados. Con eso, los gonzalistas —sobrereportados— reciben pesos más altos; los votantes de Noboa, más bajos.</span>
+        </div>
+      </div>
+      <div class="mech-arr">↓</div>
+      <div class="mech-step">
+        <div class="mech-icon">C</div>
+        <div class="mech-text">
+          <strong>La corrección invierte la distorsión</strong>
+          <span>El mecanismo de ajuste, diseñado para reducir el sesgo muestral, lo amplifica: sobrerepresenta al grupo cuyo recuerdo ya estaba inflado y subrerepresenta al grupo que gana votos entre rondas.</span>
+        </div>
+      </div>
+      <div class="mech-arr">↓</div>
+      <div class="mech-step">
+        <div class="mech-icon">D</div>
+        <div class="mech-text">
+          <strong>Sesgo sistemático de ~10 pp en contra de Noboa</strong>
+          <span>La proyección de segunda vuelta refleja la distribución de primera ronda —ya superada— en lugar de la dinámica real del electorado intercampaña.</span>
+        </div>
+      </div>
+    </div>
+
+    <p>La condición formal es elegante: el sesgo surge cuando el error en el recuerdo del voto para un candidato <em>c</em> covaria positivamente con el cambio de votos hacia ese candidato entre rondas. Es decir, cuando el candidato que más gana votos es también el más subreportado en los recuerdos. En Ecuador 2025, ese candidato era Noboa en ambas dimensiones.</p>
+  </div>
+
+  <!-- S03 -->
+  <div class="section">
+    <span class="section-num">03</span>
+    <h2>Las doce encuestas: 59.551 observaciones, un solo error</h2>
+
+    <p>Para documentar el patrón, recopilamos doce encuestas publicadas entre el 13 de febrero y el 3 de abril de 2025, producidas por siete firmas —varias con más de una medición en el período intercampaña. La tabla de abajo cuenta la historia: una sola encuesta proyectó a Noboa ganador con claridad. El resto se movía entre el empate técnico y la victoria cómoda de González.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Firma</th>
+            <th>Cierre campo</th>
+            <th>Noboa %</th>
+            <th>González %</th>
+            <th>N</th>
+            <th>Proyección</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Comunicaliza</td><td class="tm">03-abr</td><td class="tm">50,24</td><td class="tm">49,76</td><td class="tm">4.763</td><td class="tg">Empate</td></tr>
+          <tr><td>Telcodata</td><td class="tm">03-abr</td><td class="tm">49,80</td><td class="tm">50,20</td><td class="tm">13.583</td><td class="tg">Empate</td></tr>
+          <tr><td>Tino Electoral</td><td class="tm">02-abr</td><td class="tm">53,74</td><td class="tm">46,26</td><td class="tm">1.500</td><td class="tn">Noboa ✓</td></tr>
+          <tr><td>Trespuntozero</td><td class="tm">01-abr</td><td class="tm">47,13</td><td class="tm">52,87</td><td class="tm">1.180</td><td class="tg">González</td></tr>
+          <tr><td>Pedro Cango</td><td class="tm">30-mar</td><td class="tm">48,10</td><td class="tm">51,90</td><td class="tm">5.420</td><td class="tg">González</td></tr>
+          <tr><td>Tino Electoral</td><td class="tm">25-mar</td><td class="tm">52,63</td><td class="tm">47,37</td><td class="tm">800</td><td class="tg">Empate</td></tr>
+          <tr><td>Negocios y Estrategias</td><td class="tm">25-mar</td><td class="tm">48,55</td><td class="tm">51,45</td><td class="tm">3.000</td><td class="tg">Empate</td></tr>
+          <tr><td>MR Analítica</td><td class="tm">20-mar</td><td class="tm">46,29</td><td class="tm">53,71</td><td class="tm">15.000</td><td class="tg">González</td></tr>
+          <tr><td>Trespuntozero</td><td class="tm">12-mar</td><td class="tm">46,08</td><td class="tm">53,92</td><td class="tm">1.500</td><td class="tg">González</td></tr>
+          <tr><td>Negocios y Estrategias</td><td class="tm">03-mar</td><td class="tm">48,91</td><td class="tm">51,09</td><td class="tm">1.800</td><td class="tg">Empate</td></tr>
+          <tr><td>MR Analítica</td><td class="tm">22-feb</td><td class="tm">46,79</td><td class="tm">53,21</td><td class="tm">10.005</td><td class="tg">González</td></tr>
+          <tr><td>Trespuntozero</td><td class="tm">13-feb</td><td class="tm">47,89</td><td class="tm">52,11</td><td class="tm">1.000</td><td class="tg">González</td></tr>
+          <tr style="background:#e8e4f5;font-weight:600;">
+            <td colspan="2">Agregado ponderado</td>
+            <td class="tm">48,16%</td>
+            <td class="tm tg">51,84%</td>
+            <td class="tm">59.551</td>
+            <td class="tg">González</td>
+          </tr>
+          <tr style="background:#edf7f0;">
+            <td colspan="2"><strong>Resultado oficial CNE</strong></td>
+            <td class="tm tn"><strong>55,63%</strong></td>
+            <td class="tm">44,37%</td>
+            <td>—</td>
+            <td class="tn"><strong>Noboa +11,26 pp</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Fuente: elaboración propia a partir de CELAG (2025) y CNE (2025). El error de muestreo bajo efectos fijos es ±0,20 pp — irrelevante frente a la discrepancia observada.</p>
+
+    <p>La prueba de heterogeneidad es igualmente reveladora. Si el error fuera idiosincrático —cada firma fallando por sus propias razones—, esperaríamos alta homogeneidad en la dirección del error pero baja en la magnitud. Lo que encontramos es lo opuesto: Q = 80,43 (p &lt; 0,001) e I² = 86,3%. Más del 86% de la varianza entre encuestas refleja diferencias reales entre firmas, no ruido muestral. Diez firmas fallando hacia el mismo lado de maneras ligeramente distintas: la firma digital de un sesgo estructural compartido, con expresión variable en cada muestra.</p>
+  </div>
+
+  <!-- S04 -->
+  <div class="section">
+    <span class="section-num">04</span>
+    <h2>El modelo contrafactual: cuánto genera la ponderación de primera vuelta, sola</h2>
+
+    <p>Para aislar el efecto mecánico de calibrar sobre primera vuelta —sin confundirlo con otros factores— construimos un experimento numérico. Tomamos los resultados oficiales del CNE por provincia, generamos 1.000 observaciones ficticias por cada uno de los 27 distritos electorales, y aplicamos exactamente el procedimiento de calibración que usan las firmas. Datos perfectos. Sin error muestral. Sin recuerdo distorsionado. Solo la ponderación.</p>
+
+    <div class="callout-pair">
+      <div class="callout-half" style="background:var(--accent-light);">
+        <span class="callout-big">59,6%</span>
+        <p>Noboa · datos brutos del CNE<br><span style="font-size:0.58rem;color:#9b96c8;">sin ninguna ponderación</span></p>
+      </div>
+      <div class="callout-half" style="background:var(--accent2-light);">
+        <span class="callout-big" style="color:var(--accent2);">54,2%</span>
+        <p>González · tras calibración de 1ª vuelta<br><span style="font-size:0.58rem;color:#c9a09a;">el mismo resultado, invertido</span></p>
+      </div>
+    </div>
+
+    <p>La calibración, aplicada sobre datos sin ningún error, invierte el ganador. El sesgo mecánico alcanza 9,83 puntos —el 142% del error observado en el meta-análisis. Eso implica que las firmas, paradójicamente, se equivocaron menos de lo que la mecánica pura predice: alguna corrección parcial o característica muestral compensó parte de la distorsión.</p>
+
+    <p>Esa robustez se confirma bajo cinco supuestos de migración entre rondas:</p>
+
+    <div class="sens-bars">
+      <div class="sens-row">
+        <span class="sens-label">0% migración<br>(base)</span>
+        <div class="sens-bar-wrap"><div class="sens-bar" style="width:100%;"><span class="sens-val">9,83 pp</span></div></div>
+      </div>
+      <div class="sens-row">
+        <span class="sens-label">3,4% empírico<br>(CIEES)</span>
+        <div class="sens-bar-wrap"><div class="sens-bar" style="width:97%;"><span class="sens-val">9,53 pp</span></div></div>
+      </div>
+      <div class="sens-row">
+        <span class="sens-label">10% bajo</span>
+        <div class="sens-bar-wrap"><div class="sens-bar" style="width:91%;"><span class="sens-val">8,95 pp</span></div></div>
+      </div>
+      <div class="sens-row">
+        <span class="sens-label">20% moderado</span>
+        <div class="sens-bar-wrap"><div class="sens-bar" style="width:82%;"><span class="sens-val">8,09 pp</span></div></div>
+      </div>
+      <div class="sens-row">
+        <span class="sens-label">30% alto</span>
+        <div class="sens-bar-wrap"><div class="sens-bar" style="width:73%;"><span class="sens-val">7,21 pp</span></div></div>
+      </div>
+    </div>
+    <p class="table-note">Sesgo residual por escenario de migración. Con el 30% de los electores cambiando de candidato —volatilidad muy superior a la observada— el sesgo sigue superando los 7 puntos.</p>
+
+    <blockquote><p>El sesgo no desaparece cuando el electorado se mueve más. Solo mengua. La ponderación de primera vuelta es estructuralmente distorsionante, no accidentalmente.</p></blockquote>
+  </div>
+
+  <!-- S05 -->
+  <div class="section">
+    <span class="section-num">05</span>
+    <h2>El caso CIEES: la única encuesta correcta, destruida retrospectivamente</h2>
+
+    <p>CIEES aplicó una encuesta presencial a 1.200 hogares el 29 y 30 de marzo. Proyectó 56,36% para Noboa. El resultado oficial fue 55,63%. Un punto de diferencia —la más precisa de todas las firmas por amplio margen. ¿Qué hizo diferente? No calibró sobre recuerdo de primera vuelta.</p>
+
+    <p>Los microdatos de CIEES permiten un experimento que ningún otro dataset posibilita: aplicar las cuatro estrategias de ponderación al mismo conjunto de entrevistados, con el mismo cuestionario, en el mismo momento. Todo constante excepto la metodología de ajuste. El resultado es inequívoco.</p>
+
+    <div class="wg">
+      <div class="wg-cell">
+        <span class="wg-scheme">Datos brutos</span>
+        <span class="wg-n">56,4%</span>
+        <span class="wg-sub">Noboa</span>
+        <span class="wg-g">43,6%</span>
+        <span class="wg-sub">González</span>
+      </div>
+      <div class="wg-cell">
+        <span class="wg-scheme">Pond. geográfica</span>
+        <span class="wg-n">56,4%</span>
+        <span class="wg-sub">Noboa · sin cambio</span>
+        <span class="wg-g">43,6%</span>
+        <span class="wg-sub">González · sin cambio</span>
+      </div>
+      <div class="wg-cell hl">
+        <span class="wg-scheme">Calibración 1ª vuelta</span>
+        <span class="wg-n" style="color:var(--accent2);">50,8%</span>
+        <span class="wg-sub">Noboa (−5,6 pp)</span>
+        <span class="wg-g" style="color:var(--accent);">49,2%</span>
+        <span class="wg-sub">González (+5,6 pp)</span>
+      </div>
+      <div class="wg-cell hl">
+        <span class="wg-scheme">Peso combinado</span>
+        <span class="wg-n" style="color:var(--accent2);">50,8%</span>
+        <span class="wg-sub">Noboa (−5,7 pp)</span>
+        <span class="wg-g" style="color:var(--accent);">49,2%</span>
+        <span class="wg-sub">González (+5,7 pp)</span>
+      </div>
+    </div>
+
+    <p>La ponderación geográfica no mueve nada: la muestra ya estaba bien distribuida. Solo la calibración de primera vuelta desplaza ~5,6 puntos a González, llevando a Noboa de 56,4% a 50,8%. Esa estimación post-calibración (49,2% González) cae dentro del intervalo de confianza del meta-análisis erróneo (50,09%–52,50%): una sola decisión metodológica arrastra la única encuesta acertada al rango del consenso equivocado.</p>
+
+    <p>El mecanismo tiene nombre: los votantes que recordaban a González recibieron un factor de expansión de 1,31; los de Noboa, de 1,04. La muestra —que capturaba correctamente la realidad— fue forzada a parecerse a una primera vuelta que el electorado ya había dejado atrás.</p>
+
+    <blockquote><p>No fue el modo presencial lo que hizo a CIEES precisa: Negocios y Estrategias también usó encuesta cara a cara y sobreestimó a González de todas formas. La diferencia era metodológica, no logística.</p></blockquote>
+  </div>
+
+  <!-- S06 -->
+  <div class="section">
+    <span class="section-num">06</span>
+    <h2>Implicaciones: cuatro cosas que deberían cambiar</h2>
+
+    <div class="impl-card">
+      <span class="impl-n">Implicación 1 · Metodología</span>
+      <span class="impl-title">El recuerdo de primera vuelta no es una ancla — es una hipótesis que hay que testar</span>
+      <div class="impl-body">Usarlo como variable de calibración asume que es exacto y estable. Esos supuestos deben declararse explícitamente y evaluarse antes de cada elección. En contextos polarizados, el recuerdo es sistémicamente sesgado y el uso automático del ancla amplifica ese sesgo en lugar de corregirlo.</div>
+    </div>
+    <div class="impl-card">
+      <span class="impl-n">Implicación 2 · Alternativas</span>
+      <span class="impl-title">Demografía estructural antes que comportamiento electoral reciente</span>
+      <div class="impl-body">Variables como educación, región, sector y cohorte generacional son más estables que el recuerdo del voto. Los modelos bayesianos dinámicos (Jackman, 2005) permiten incorporar información previa de forma probabilística —dejando espacio para que las preferencias evolucionen— en lugar de anclarlas rígidamente.</div>
+    </div>
+    <div class="impl-card">
+      <span class="impl-n">Implicación 3 · Alcance comparado</span>
+      <span class="impl-title">El sesgo viaja donde viaja la práctica</span>
+      <div class="impl-body">Las condiciones de posibilidad —primera vuelta cerrada, alta volatilidad estructural, calibración por recuerdo— están presentes en Perú, Brasil y otros sistemas con segunda vuelta. El sesgo debería covariar con la volatilidad electoral. La evidencia comparativa está por hacerse, pero el mecanismo es portable.</div>
+    </div>
+    <div class="impl-card">
+      <span class="impl-n">Implicación 4 · Transparencia</span>
+      <span class="impl-title">La industria encuestadora necesita protocolos públicos</span>
+      <div class="impl-body">Solo tres de siete firmas divulgaron su metodología de calibración. La uniformidad del error implica que el resto usó la misma práctica sin documentarla. Sin protocolos preregistrados —incluida la estrategia de ponderación—, el debate público no puede distinguir cuándo una proyección es robusta y cuándo es un artefacto metodológico.</div>
+    </div>
+  </div>
+
+  <!-- S07 -->
+  <div class="section">
+    <span class="section-num">07</span>
+    <h2>Conclusión: cuando la solución es el problema</h2>
+
+    <p>La calibración de encuestas por recuerdo de primera vuelta es una herramienta de precisión. En el balotaje ecuatoriano de 2025, esa herramienta se convirtió en la fuente principal del error que pretendía evitar. No porque las firmas la usaran mal: porque la usaron exactamente como se supone que se usa, en un contexto donde sus supuestos no se sostenían.</p>
+
+    <p>La evidencia que presentamos converge desde tres frentes distintos. El meta-análisis de doce encuestas documenta un error sistemático de 7,5 pp que no cabe en ningún margen de error. El modelo contrafactual muestra que la mecánica pura de la ponderación genera 9,83 pp de sesgo incluso con datos perfectos. Y el análisis dentro de la encuesta CIEES demuestra que una sola decisión —calibrar o no calibrar en primera vuelta— es suficiente para mover una proyección acertada al rango del consenso erróneo.</p>
+
+    <blockquote><p>El problema no es que las firmas hicieran algo inusual. El problema es que hicieron exactamente lo que la industria prescribe — en un contexto donde eso las llevó a todas, coordinadamente, a la misma conclusión equivocada.</p></blockquote>
+
+    <p>La lección no es abandonar la calibración. Es dejar de tratarla como un procedimiento automático y empezar a tratarla como lo que es: una apuesta sobre la estabilidad del electorado y la fiabilidad de la memoria. Una apuesta que, en Ecuador 2025, resultó perdida.</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="post-footer">
+    <span class="pf-label">📄 Sobre el artículo</span>
+    <p class="pf-cite"><strong>Curvale, C. &amp; Jaramillo-Ramón, J.P. (2026).</strong> "Anchoring Bias in Runoff Polls: Evidence from the 2025 Ecuadorian Election." <em>Working paper.</em> El artículo incluye: meta-análisis con efectos fijos y aleatorios, prueba de Egger, modelo contrafactual provincial (n = 27.000 observaciones simuladas), análisis de sensibilidad bajo cinco escenarios de migración, cuatro esquemas de ponderación sobre microdata CIEES, y matriz de lealtad de voto (n = 890).</p>
+    <p class="pf-sources">Fuentes · 12 encuestas compiladas por CELAG (2025) · Microdata CIEES (n = 1.200, 29–30 de marzo de 2025) · Resultados oficiales CNE 2025</p>
+    <div class="pf-sig">
+      Working Paper · Encuestas y balotaje Ecuador 2025 · 2026 · Carolina Curvale &amp; Juan Pablo Jaramillo-Ramón
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
