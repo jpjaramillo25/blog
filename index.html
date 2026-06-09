@@ -1,79 +1,432 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Blog de Juan Pablo Jaramillo-Ramón</title>
-  <meta name="description" content="Policy briefs y análisis sobre estadísticas sociales en Ecuador">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --ink:#211c17; --paper:#f4efe5; --paper2:#ebe3d3; --card:#faf6ec;
-      --rule:#ccc2ac; --red:#9c3018; --slate:#2f4858; --ochre:#946514;
-      --muted:#6b6356; --teal:#2f6b5e;
-      --sans:'IBM Plex Sans',-apple-system,Segoe UI,sans-serif;
-      --serif:'Spectral',Georgia,serif;
-      --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0}
-    body{
-      background:var(--paper); color:var(--ink);
-      font-family:var(--sans); font-size:16.5px; line-height:1.68;
-      -webkit-font-smoothing:antialiased;
-    }
-    .wrap{max-width:920px;margin:0 auto;padding:0 32px 90px}
-    
-    .top-rule{height:6px;background:var(--ink)}
-    .top-rule .seg{height:100%;width:18%;background:var(--red);float:right}
-    header.mast{padding:34px 0 26px;border-bottom:1px solid var(--rule)}
-    .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;
-      text-transform:uppercase;color:var(--red);font-weight:500}
-    h1.title{font-family:var(--serif);font-weight:600;font-size:54px;
-      line-height:1.04;letter-spacing:-.015em;margin:14px 0 6px}
-    .dek{font-family:var(--serif);font-style:italic;font-size:21px;
-      color:var(--slate);line-height:1.4;max-width:38em;margin:10px 0 0}
-    
-    .posts-grid{display:grid;gap:24px;margin:40px 0}
-    .post-card{border:1px solid var(--rule);border-radius:3px;padding:28px;
-      background:var(--card);transition:all .2s ease}
-    .post-card:hover{border-color:var(--red);box-shadow:0 4px 12px rgba(156,48,24,0.1)}
-    .post-meta{font-family:var(--mono);font-size:12px;color:var(--muted);
-      letter-spacing:.04em;margin-bottom:12px}
-    .post-meta .category{color:var(--red);font-weight:500}
-    .post-title{font-family:var(--serif);font-weight:600;font-size:28px;
-      margin:8px 0 12px;line-height:1.25}
-    .post-title a{color:var(--ink);text-decoration:none}
-    .post-title a:hover{color:var(--red)}
-    .post-excerpt{font-size:15.5px;color:var(--slate);line-height:1.6;margin:0}
-    .post-link{display:inline-block;margin-top:16px;font-family:var(--mono);
-      font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--red);
-      text-decoration:none;font-weight:600}
-    .post-link:hover{text-decoration:underline}
-    
-    @media (max-width:680px){
-      .wrap{padding:0 18px 60px}
-      h1.title{font-size:36px}
-      .post-title{font-size:22px}
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Juan Pablo Jaramillo-Ramón</title>
+<meta name="description" content="Análisis de política pública, economía política y estadísticas sociales en Ecuador y América Latina">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:     #1A1A18;
+    --bg:      #F7F7F5;
+    --bg2:     #EFEFEC;
+    --rule:    #D8D8D2;
+    --rule-lt: #E8E8E3;
+    --navy:    #1E3A5F;
+    --amber:   #C4851A;
+    --muted:   #6B6B63;
+    --tag-bg:  #EAE9E4;
+
+    --serif: 'Libre Baskerville', Georgia, serif;
+    --sans:  'Inter', -apple-system, sans-serif;
+    --mono:  'JetBrains Mono', ui-monospace, monospace;
+
+    --max:      1100px;
+    --col-side: 210px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15.5px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* stripe */
+  .id-stripe { height: 3px; background: var(--navy); position: relative; }
+  .id-stripe::after {
+    content: ''; position: absolute; right: 0; top: 0;
+    width: 72px; height: 100%; background: var(--amber);
+  }
+
+  /* masthead */
+  .masthead {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 52px 40px 44px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .mast-eyebrow {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+  .mast-title {
+    font-family: var(--serif);
+    font-size: clamp(34px, 5vw, 56px);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -.025em;
+  }
+  .mast-sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--muted);
+    margin-top: 12px;
+    max-width: 460px;
+    line-height: 1.55;
+  }
+
+
+  /* layout */
+  .body-wrap {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 40px 100px;
+    display: grid;
+    grid-template-columns: var(--col-side) 1fr;
+    gap: 0 56px;
+    align-items: start;
+  }
+
+  /* sidebar */
+  .sidebar {
+    padding-top: 40px;
+    position: sticky;
+    top: 24px;
+  }
+  .sidebar-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .filter-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+  .filter-btn {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--sans); font-size: 13px;
+    color: var(--muted); text-align: left;
+    padding: 7px 10px; border-radius: 4px;
+    width: 100%; display: flex;
+    justify-content: space-between; align-items: center;
+    transition: background .15s, color .15s;
+  }
+  .filter-btn:hover { background: var(--bg2); color: var(--ink); }
+  .filter-btn.active { background: var(--navy); color: #fff; font-weight: 500; }
+  .filter-btn .ct { font-family: var(--mono); font-size: 11px; opacity: .7; }
+  .filter-btn.active .ct { opacity: .85; }
+
+  .about-block {
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .about-block p { font-size: 12.5px; color: var(--muted); line-height: 1.65; }
+  .about-block a { color: var(--navy); text-decoration: none; font-weight: 500; }
+  .about-block a:hover { text-decoration: underline; }
+
+  /* posts column */
+  .posts-col {
+    padding-top: 40px;
+    border-left: 1px solid var(--rule);
+    padding-left: 56px;
+  }
+  .feed-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .feed-count {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .06em;
+  }
+
+  /* post card */
+  .post-item {
+    padding: 30px 0;
+    border-bottom: 1px solid var(--rule-lt);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0 28px;
+    align-items: start;
+  }
+  .post-item.hidden { display: none; }
+
+  .post-meta-row {
+    display: flex; align-items: center;
+    gap: 10px; margin-bottom: 10px; flex-wrap: wrap;
+  }
+  .post-cat {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 500; padding: 3px 8px; border-radius: 3px;
+  }
+  /* category colors */
+  .cat-policy    { background: #E3EAF2; color: #1E3A5F; }
+  .cat-economia  { background: #FDF0DC; color: #8B5C0A; }
+  .cat-seguridad { background: #F0EAF5; color: #4A2B6B; }
+  .cat-metodo    { background: #E4EFE9; color: #1F5C34; }
+
+  .post-type {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); border: 1px solid var(--rule);
+    padding: 2px 7px; border-radius: 3px;
+  }
+  .post-date {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--muted); letter-spacing: .04em;
+  }
+  .post-title {
+    font-family: var(--serif); font-size: 22px;
+    font-weight: 700; line-height: 1.25;
+    letter-spacing: -.015em; margin-bottom: 10px;
+  }
+  .post-title a { color: var(--ink); text-decoration: none; }
+  .post-title a:hover { color: var(--navy); }
+
+  .post-excerpt {
+    font-size: 14.5px; color: var(--muted);
+    line-height: 1.65; max-width: 56ch;
+  }
+  .post-link-arrow {
+    display: inline-flex; align-items: center; gap: 5px;
+    margin-top: 14px; font-family: var(--mono);
+    font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--navy);
+    text-decoration: none; font-weight: 500;
+    transition: gap .15s;
+  }
+  .post-link-arrow:hover { gap: 9px; }
+
+  .post-number {
+    font-family: var(--serif); font-size: 42px;
+    font-weight: 700; color: var(--rule);
+    line-height: 1; letter-spacing: -.03em;
+    flex-shrink: 0; padding-top: 4px;
+    min-width: 48px; text-align: right;
+    user-select: none;
+  }
+
+  .empty-state {
+    padding: 60px 0; text-align: center;
+    color: var(--muted); font-style: italic; display: none;
+  }
+
+  /* footer */
+  footer {
+    border-top: 1px solid var(--rule);
+    max-width: var(--max); margin: 0 auto;
+    padding: 28px 40px;
+    display: flex; justify-content: space-between;
+    align-items: center; gap: 20px; flex-wrap: wrap;
+  }
+  footer .f-name { font-family: var(--serif); font-size: 13px; color: var(--muted); }
+  footer .f-links { display: flex; gap: 20px; }
+  footer .f-links a {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+  }
+  footer .f-links a:hover { color: var(--navy); }
+
+  /* responsive */
+  @media (max-width: 800px) {
+    .masthead { padding: 36px 24px 32px; grid-template-columns: 1fr; }
+    .mast-counter { text-align: left; }
+    .body-wrap { padding: 0 24px 80px; grid-template-columns: 1fr; }
+    .sidebar { position: static; padding-top: 28px; border-bottom: 1px solid var(--rule); padding-bottom: 28px; }
+    .filter-list { flex-direction: row; flex-wrap: wrap; }
+    .posts-col { border-left: none; padding-left: 0; padding-top: 28px; }
+    .post-item { grid-template-columns: 1fr; }
+    .post-number { display: none; }
+    footer { padding: 24px; }
+  }
+</style>
 </head>
 <body>
 
-<div class="top-rule"><div class="seg"></div></div>
-<div class="wrap">
+<div class="id-stripe"></div>
 
-<header class="mast">
-  <div class="kicker">Blog</div>
-  <h1 class="title">Juan Pablo Jaramillo-Ramón</h1>
-  <p class="dek">Policy briefs y análisis sobre estadísticas sociales, política pública y desarrollo en Ecuador.</p>
+<header class="masthead">
+  <div>
+    <div class="mast-eyebrow">Política · Economía · Datos</div>
+    <h1 class="mast-title">Juan Pablo<br>Jaramillo-Ramón</h1>
+    <p class="mast-sub">Análisis de política pública, economía política y estadísticas sociales en Ecuador y América Latina.</p>
+  </div>
+
 </header>
 
-<div class="posts-grid"> <article class="post-card"> <div class="post-meta"> <span class="category">Policy Brief</span> · 26 de mayo, 2026 </div> <h2 class="post-title"> <a href="posts/2026-05-26-medir-la-pobreza-a-ciegas.html">Medir la pobreza a ciegas</a> </h2> <p class="post-excerpt"> Las cifras oficiales de pobreza del Ecuador dejaron de ser confiables para medir el progreso. </p> <a href="posts/2026-05-26-medir-la-pobreza-a-ciegas.html" class="post-link">Leer artículo →</a> </article> <article class="post-card"> <div class="post-meta"> <span class="category">Análisis</span> · 28 de mayo, 2026 </div> <h2 class="post-title"> <a href="posts/empleo.html">Empleo</a> </h2> <p class="post-excerpt"> Análisis sobre empleo, mercado laboral y estadísticas sociales en Ecuador. </p> <a href="posts/empleo.html" class="post-link">Leer artículo →</a> </article> <article class="post-card"> <div class="post-meta"> <span class="category">Análisis</span> · 28 de mayo, 2026 </div> <h2 class="post-title"> <a href="posts/tercer-post.html">Título del tercer post</a> </h2> <p class="post-excerpt"> Breve resumen del tercer artículo del blog. </p> <a href="posts/tercer-post.html" class="post-link">Leer artículo →</a> </article> </div>
+<div class="body-wrap">
 
+  <aside class="sidebar">
+    <div class="sidebar-label">Categorías</div>
+    <ul class="filter-list" role="list">
+      <li><button class="filter-btn active" data-cat="all" onclick="filterPosts('all',this)">Todos <span class="ct" id="ct-all">7</span></button></li>
+      <li><button class="filter-btn" data-cat="policy" onclick="filterPosts('policy',this)">Política pública <span class="ct">3</span></button></li>
+      <li><button class="filter-btn" data-cat="seguridad" onclick="filterPosts('seguridad',this)">Seguridad & violencia <span class="ct">2</span></button></li>
+      <li><button class="filter-btn" data-cat="economia" onclick="filterPosts('economia',this)">Economía política <span class="ct">1</span></button></li>
+      <li><button class="filter-btn" data-cat="metodo" onclick="filterPosts('metodo',this)">Métodos <span class="ct">1</span></button></li>
+    </ul>
+
+    <div class="about-block">
+      <p>Economista y politólogo ecuatoriano. Investigador en política comparada, economía política y métodos cuantitativos.<br><br>
+      <a href="https://orcid.org/0000-0001-6161-4477" target="_blank" rel="noopener">ORCID →</a>
+      </p>
+    </div>
+  </aside>
+
+  <main class="posts-col">
+    <div class="feed-controls">
+      <span class="feed-count" id="feed-count">7 artículos</span>
+    </div>
+
+    <!-- 1 -->
+    <article class="post-item" data-cat="policy">
+      <div>
+        <div class="post-meta-row">
+          <span class="post-cat cat-policy">Política pública</span>
+          <span class="post-type">Policy Brief</span>
+          <span class="post-date">Mayo 2026</span>
+        </div>
+        <h2 class="post-title"><a href="posts/2026-05-26-medir-la-pobreza-a-ciegas.html">Medir la pobreza a ciegas</a></h2>
+        <p class="post-excerpt">Las cifras oficiales de pobreza del Ecuador dejaron de ser confiables para medir el progreso. La causa de fondo: un marco muestral anclado al censo de 2010, cuya actualización es urgente.</p>
+        <a href="posts/2026-05-26-medir-la-pobreza-a-ciegas.html" class="post-link-arrow">Leer artículo <span>→</span></a>
+      </div>
+      <div class="post-number" aria-hidden="true">01</div>
+    </article>
+
+    <!-- 2 -->
+    <article class="post-item" data-cat="economia">
+      <div>
+        <div class="post-meta-row">
+          <span class="post-cat cat-economia">Economía política</span>
+          <span class="post-type">Policy Brief</span>
+          <span class="post-date">Mayo 2026</span>
+        </div>
+        <h2 class="post-title"><a href="posts/empleoformalestancado.html">Empleo formal estancado</a></h2>
+        <p class="post-excerpt">En 28 meses de gobierno, Noboa apenas sumó 85.730 afiliados al IESS. Los datos del REESS-INEC no muestran recuperación: muestran estancamiento con anestesia estadística.</p>
+        <a href="posts/empleoformalestancado.html" class="post-link-arrow">Leer artículo <span>→</span></a>
+      </div>
+      <div class="post-number" aria-hidden="true">02</div>
+    </article>
+
+    <!-- 3 -->
+    <article class="post-item" data-cat="policy">
+      <div>
+        <div class="post-meta-row">
+          <span class="post-cat cat-policy">Política pública</span>
+          <span class="post-type">Working Paper</span>
+          <span class="post-date">Junio 2026</span>
+        </div>
+        <h2 class="post-title"><a href="posts/noboabonos.html">¿La entrega de bonos electorales influyó sobre la reelección de Noboa?</a></h2>
+        <p class="post-excerpt">El 12,6% de los encuestados no votó por Noboa en primera vuelta pero confió en que el gobierno entregaría los bonos. De ese grupo, el 42,4% lo votó en el balotaje. Sin esos votos, Noboa cae por debajo de González.</p>
+        <a href="posts/noboabonos.html" class="post-link-arrow">Leer artículo <span>→</span></a>
+      </div>
+      <div class="post-number" aria-hidden="true">03</div>
+    </article>
+
+    <!-- 4 -->
+    <article class="post-item" data-cat="seguridad">
+      <div>
+        <div class="post-meta-row">
+          <span class="post-cat cat-seguridad">Seguridad & violencia</span>
+          <span class="post-type">Análisis de datos</span>
+          <span class="post-date">Mayo 2026</span>
+        </div>
+        <h2 class="post-title"><a href="posts/violencia-ecuador.html">¿Cuándo la violencia partió a Ecuador en dos?</a></h2>
+        <p class="post-excerpt">Ecuador no pasó de isla de paz a país violento por casualidad. Un event study mensual con 3.456 observaciones fecha la fractura: abril de 2021, un mes antes de que Lasso asumiera. Los homicidios en la Costa subieron 400% entre 2020 y 2023.</p>
+        <a href="posts/violencia-ecuador.html" class="post-link-arrow">Leer artículo <span>→</span></a>
+      </div>
+      <div class="post-number" aria-hidden="true">04</div>
+    </article>
+
+    <!-- 5 -->
+    <article class="post-item" data-cat="seguridad">
+      <div>
+        <div class="post-meta-row">
+          <span class="post-cat cat-seguridad">Seguridad & violencia</span>
+          <span class="post-type">Análisis de datos</span>
+          <span class="post-date">Junio 2026</span>
+        </div>
+        <h2 class="post-title"><a href="posts/colombiahomicidios.html">Geografía de la muerte: treinta años de homicidios en Colombia</a></h2>
+        <p class="post-excerpt">Colombia bajó de 78 homicidios diarios en 2002 a 33 en 2017. Luego el mapa volvió a encenderse. Un recorrido por la distribución territorial de la violencia letal desde los noventa hasta el deterioro del gobierno Petro.</p>
+        <a href="posts/colombiahomicidios.html" class="post-link-arrow">Leer artículo <span>→</span></a>
+      </div>
+      <div class="post-number" aria-hidden="true">05</div>
+    </article>
+
+    <!-- 6 -->
+    <article class="post-item" data-cat="policy">
+      <div>
+        <div class="post-meta-row">
+          <span class="post-cat cat-policy">Política pública</span>
+          <span class="post-type">Policy Brief</span>
+          <span class="post-date">Junio 2026</span>
+        </div>
+        <h2 class="post-title"><a href="posts/pazfarc.html">¿Fue una buena decisión firmar la paz con las FARC?</a></h2>
+        <p class="post-excerpt">La pregunta más incómoda de la política colombiana tiene ahora una respuesta cuantitativa. Donde las FARC estaban presentes, la firma del acuerdo redujo los homicidios hasta en un 81%. Un análisis de 1.079 municipios.</p>
+        <a href="posts/pazfarc.html" class="post-link-arrow">Leer artículo <span>→</span></a>
+      </div>
+      <div class="post-number" aria-hidden="true">06</div>
+    </article>
+
+    <!-- 7 -->
+    <article class="post-item" data-cat="metodo">
+      <div>
+        <div class="post-meta-row">
+          <span class="post-cat cat-metodo">Métodos</span>
+          <span class="post-type">Working Paper</span>
+          <span class="post-date">2026</span>
+        </div>
+        <h2 class="post-title"><a href="posts/sesgodeanclaje.html">¿Por qué fallaron las encuestas en el balotaje?</a></h2>
+        <p class="post-excerpt">Once de doce encuestas proyectaron victoria de González o empate técnico. Noboa ganó por once puntos. El error no fue aleatorio ni fue de firma: fue estructural, sembrado por calibrar encuestas de segunda vuelta con el recuerdo del voto de primera ronda.</p>
+        <a href="posts/sesgodeanclaje.html" class="post-link-arrow">Leer artículo <span>→</span></a>
+      </div>
+      <div class="post-number" aria-hidden="true">07</div>
+    </article>
+
+    <div class="empty-state" id="empty-state">No hay artículos en esta categoría todavía.</div>
+  </main>
 </div>
 
+<footer>
+  <span class="f-name">Juan Pablo Jaramillo-Ramón</span>
+  <nav class="f-links">
+    <a href="https://orcid.org/0000-0001-6161-4477" target="_blank" rel="noopener">ORCID</a>
+    <a href="https://github.com/jpjaramillo25/blog" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+</footer>
+
+<script>
+  const posts = document.querySelectorAll('.post-item');
+  const feedCount = document.getElementById('feed-count');
+  const emptyState = document.getElementById('empty-state');
+
+  function filterPosts(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    let visible = 0;
+    posts.forEach(p => {
+      const match = cat === 'all' || p.dataset.cat === cat;
+      p.classList.toggle('hidden', !match);
+      if (match) visible++;
+    });
+    feedCount.textContent = visible === posts.length
+      ? `${visible} artículos`
+      : `${visible} de ${posts.length} artículos`;
+    emptyState.style.display = visible === 0 ? 'block' : 'none';
+  }
+</script>
 </body>
 </html>
