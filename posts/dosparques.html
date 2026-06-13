@@ -359,28 +359,35 @@
             <defs><pattern id="g2" width="22" height="22" patternUnits="userSpaceOnUse">
               <path d="M22 0 L0 0 0 22" fill="none" stroke="rgba(42,111,151,0.12)" stroke-width="0.5"/>
             </pattern></defs>
-            <polygon points="52,46 260,66 236,196 44,172"
+            <!-- Forma real (según mapa): polígono alargado de lados RECTOS,
+                 eje N-S; lado oriental (Shyris/Eloy Alfaro) en diagonal,
+                 estrechándose hacia el sur. Sin curvas. -->
+            <polygon points="118,34 196,40 232,170 150,212 104,196 86,70"
                      fill="rgba(42,111,151,0.08)" stroke="#2A6F97" stroke-width="2.5"/>
-            <polygon points="52,46 260,66 236,196 44,172"
+            <polygon points="118,34 196,40 232,170 150,212 104,196 86,70"
                      fill="none" stroke="#2A6F97" stroke-width="6" opacity="0.16"/>
-            <text x="100" y="38" fill="#2A6F97" font-family="JetBrains Mono, monospace" font-size="7">N. Unidas</text>
-            <text x="248" y="140" fill="#2A6F97" font-family="JetBrains Mono, monospace" font-size="7" transform="rotate(80 248 140)">Shyris</text>
-            <text x="92" y="196" fill="#2A6F97" font-family="JetBrains Mono, monospace" font-size="7">República</text>
-            <text x="30" y="120" fill="#2A6F97" font-family="JetBrains Mono, monospace" font-size="7" transform="rotate(-82 30 120)">Amazonas</text>
+            <!-- avenidas perimetrales -->
+            <text x="120" y="28" fill="#2A6F97" font-family="JetBrains Mono, monospace" font-size="7">N. Unidas</text>
+            <text x="232" y="105" fill="#2A6F97" font-family="JetBrains Mono, monospace" font-size="7" transform="rotate(74 232 105)">Shyris / E. Alfaro</text>
+            <text x="150" y="226" fill="#2A6F97" font-family="JetBrains Mono, monospace" font-size="7" text-anchor="middle">República</text>
+            <text x="74" y="120" fill="#2A6F97" font-family="JetBrains Mono, monospace" font-size="7" transform="rotate(-84 74 120)">Amazonas</text>
+            <!-- flechas de acceso continuo por todo el contorno -->
             <g fill="#2A6F97">
-              <path d="M150,54 l-4,-8 l8,0 z"/><path d="M200,60 l-4,-8 l8,0 z"/>
-              <path d="M246,110 l8,-4 l0,8 z"/><path d="M242,160 l8,-4 l0,8 z"/>
-              <path d="M140,186 l-4,8 l8,0 z"/><path d="M190,190 l-4,8 l8,0 z"/>
-              <path d="M50,100 l-8,-4 l0,8 z"/><path d="M46,150 l-8,-4 l0,8 z"/>
+              <path d="M150,42 l-4,-8 l8,0 z"/><path d="M178,44 l-4,-8 l8,0 z"/>
+              <path d="M214,100 l8,-3 l-2,8 z"/><path d="M226,150 l8,-3 l-2,8 z"/>
+              <path d="M168,202 l-3,8 l8,-1 z"/><path d="M122,200 l-3,8 l8,-1 z"/>
+              <path d="M92,100 l-8,-2 l1,8 z"/><path d="M98,150 l-8,-2 l1,8 z"/>
             </g>
           </svg>
           <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=-0.1841235,-78.4846376" target="_blank" rel="noopener">↗ Ver en Google Maps</a>
         </div>
       </div>
       <figcaption>
-        Esquemas a partir de las coordenadas reales de cada parque. En el Bicentenario los puntos rojos marcan los accesos peatonales
-        habilitados, concentrados al noreste; el flanco sureste queda sin ingresos cercanos. En La Carolina las flechas indican que el
-        acceso ocurre de forma continua por las cuatro avenidas perimetrales.
+        Esquemas a partir de las coordenadas y la forma real de cada parque. El Bicentenario conserva la silueta diagonal de la antigua pista
+        de aterrizaje; los puntos rojos marcan los accesos peatonales habilitados, concentrados al noreste, y el flanco sureste queda sin
+        ingresos cercanos. La Carolina es un polígono alargado de lados rectos, estirado en sentido norte-sur, con su flanco oriental
+        (Shyris / Eloy Alfaro) en diagonal; las flechas indican
+        que el acceso ocurre de forma continua a lo largo de todo su contorno.
       </figcaption>
     </figure>
 
