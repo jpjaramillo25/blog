@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Juan Pablo Jaramillo-Ramón">
+<meta name="category" content="comentario urbano">
+<meta name="date" content="2026-06-13">
+<meta name="description" content="Dos parques, dos modelos de ciudad: el cerramiento del Bicentenario y el borde abierto de La Carolina determinan quién puede usar el espacio público. La intervención vial municipal podría cerrar parte de esa brecha.">
+<meta property="og:description" content="Por qué La Carolina funciona mejor para sus vecinos que el Bicentenario, y qué cambia con la prolongación de la Av. Amazonas.">
+<meta property="og:locale" content="es_EC">
+<meta property="og:title" content="Dos parques, dos ciudades">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dos parques, dos ciudades">
+<meta name="twitter:description" content="Por qué La Carolina funciona mejor para sus vecinos que el Bicentenario, y qué cambia con la prolongación de la Av. Amazonas.">
+<title>Dos parques, dos ciudades — Comentario urbano</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
+
+  :root{
+    --paper:#FBF8F1;
+    --cream:#F4EFE4;
+    --ink:#1F2A24;
+    --muted:#5C685F;
+    --rule:#D8CDB4;
+    --bicent:#C1432A;
+    --carol:#2A6F97;
+    --green:#1B4332;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.68;
+    font-size:1.06rem;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:0 1.4rem;}
+
+  /* kicker + header */
+  .kicker{
+    font-family:'JetBrains Mono', monospace;
+    font-size:.72rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--bicent);
+    margin:3.5rem 0 1rem;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(2.3rem, 6vw, 3.5rem);
+    line-height:1.04;
+    letter-spacing:-0.015em;
+    margin-bottom:1.1rem;
+  }
+  .standfirst{
+    font-size:1.22rem;
+    color:var(--muted);
+    line-height:1.55;
+    max-width:58ch;
+    margin-bottom:1.2rem;
+  }
+  .byline{
+    font-family:'JetBrains Mono', monospace;
+    font-size:.78rem;
+    color:#8A8275;
+    padding-bottom:1.6rem;
+    border-bottom:1px solid var(--rule);
+    margin-bottom:2.6rem;
+  }
+
+  article p{margin-bottom:1.3rem;}
+  article h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.7rem;
+    margin:2.8rem 0 1rem;
+    line-height:1.15;
+  }
+  .secnum{
+    font-family:'JetBrains Mono', monospace;
+    font-size:.78rem;
+    color:var(--bicent);
+    display:block;
+    margin-bottom:.2rem;
+  }
+  article a{color:var(--carol); text-decoration:underline; text-underline-offset:2px;}
+  em{font-style:italic;}
+  strong{font-weight:600;}
+
+  .lead-drop::first-letter{
+    font-family:'Fraunces', serif;
+    font-size:3.6rem;
+    float:left;
+    line-height:.82;
+    padding:.08em .12em 0 0;
+    color:var(--bicent);
+    font-weight:600;
+  }
+
+  /* pull stat row */
+  .statrow{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1px;
+    background:var(--rule);
+    border:1px solid var(--rule);
+    border-radius:12px;
+    overflow:hidden;
+    margin:2.2rem 0;
+  }
+  .stat{background:var(--paper); padding:1.2rem 1.3rem;}
+  .stat .n{font-family:'Fraunces', serif; font-size:2rem; font-weight:700; line-height:1;}
+  .stat.bic .n{color:var(--bicent);}
+  .stat.car .n{color:var(--carol);}
+  .stat .l{font-size:.82rem; color:var(--muted); margin-top:.35rem;}
+
+  /* map figure */
+  figure{margin:2.4rem 0;}
+  .fig-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:.72rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--bicent);
+    margin-bottom:.5rem;
+  }
+  .maps{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1rem;
+  }
+  @media(max-width:620px){.maps{grid-template-columns:1fr;}}
+  .map-card{
+    background:#FDFBF6;
+    border:1px solid var(--rule);
+    border-radius:12px;
+    padding:.9rem;
+  }
+  .map-card h4{
+    font-family:'Fraunces', serif;
+    font-size:1.05rem;
+    margin-bottom:.15rem;
+  }
+  .map-card .coord{
+    font-family:'JetBrains Mono', monospace;
+    font-size:.66rem;
+    color:#9a917e;
+    display:block;
+    margin-bottom:.5rem;
+  }
+  .map-link{
+    display:inline-block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:.68rem;
+    text-decoration:none;
+    border:1px solid currentColor;
+    border-radius:999px;
+    padding:.22rem .7rem;
+    margin-top:.5rem;
+  }
+  .map-card.bic .map-link{color:var(--bicent);}
+  .map-card.car .map-link{color:var(--carol);}
+  figcaption{
+    font-size:.84rem;
+    color:var(--muted);
+    font-style:italic;
+    margin-top:.7rem;
+    line-height:1.4;
+  }
+
+  /* review comparison block */
+  .reviews{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+    border:1px solid var(--rule);
+    border-radius:12px;
+    overflow:hidden;
+    margin:2rem 0;
+  }
+  @media(max-width:620px){.reviews{grid-template-columns:1fr;}}
+  .rev-col{padding:1.3rem 1.4rem; background:var(--paper);}
+  .rev-col.car{border-left:1px solid var(--rule);}
+  @media(max-width:620px){.rev-col.car{border-left:none; border-top:1px solid var(--rule);}}
+  .rev-col h4{
+    font-family:'Fraunces', serif;
+    font-size:1.15rem;
+    margin-bottom:.2rem;
+  }
+  .rev-col.bic h4{color:var(--bicent);}
+  .rev-col.car h4{color:var(--carol);}
+  .rev-rating{
+    font-family:'JetBrains Mono', monospace;
+    font-size:.72rem;
+    color:var(--muted);
+    margin-bottom:1rem;
+  }
+  blockquote{
+    font-size:.92rem;
+    line-height:1.5;
+    color:#3A453E;
+    border-left:3px solid var(--rule);
+    padding:.3rem 0 .3rem .9rem;
+    margin:0 0 .9rem;
+    font-style:italic;
+  }
+  .rev-col.bic blockquote{border-left-color:var(--bicent);}
+  .rev-col.car blockquote{border-left-color:var(--carol);}
+  blockquote cite{
+    display:block;
+    font-style:normal;
+    font-size:.7rem;
+    font-family:'JetBrains Mono', monospace;
+    color:#9a917e;
+    margin-top:.3rem;
+  }
+
+  /* intervention callout */
+  .callout{
+    background:var(--green);
+    color:var(--cream);
+    border-radius:14px;
+    padding:1.8rem;
+    margin:2.4rem 0;
+  }
+  .callout h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.3rem;
+    margin-bottom:.7rem;
+  }
+  .callout p{color:#D7E4DB; margin-bottom:.8rem;}
+  .callout p:last-child{margin-bottom:0;}
+  .callout strong{color:var(--cream);}
+
+  .endmark{
+    text-align:center;
+    color:var(--bicent);
+    font-family:'Fraunces', serif;
+    font-size:1.4rem;
+    margin:2.5rem 0;
+  }
+
+  footer{
+    border-top:1px solid var(--rule);
+    margin-top:2rem;
+    padding:2rem 0 4rem;
+    font-size:.82rem;
+    color:#8A8275;
+  }
+  footer .meta{font-family:'JetBrains Mono', monospace; margin-bottom:1rem;}
+  footer h4{font-size:.9rem; color:var(--ink); margin-bottom:.5rem; font-weight:600;}
+  footer ul{list-style:none; font-size:.78rem; line-height:1.6;}
+  footer li{margin-bottom:.3rem;}
+  .note{font-size:.82rem; color:var(--muted); font-style:italic;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="kicker">Comentario urbano · Quito · Espacio público</p>
+  <h1>Dos parques, dos ciudades</h1>
+  <p class="standfirst">
+    La Carolina y el Bicentenario tienen casi la misma superficie y la misma vocación —correr, pasear, llevar al perro—,
+    pero ofrecen dos respuestas opuestas a una pregunta urbana elemental: ¿quién puede entrar, y cuándo? El diseño de sus bordes
+    decide más sobre su utilidad cotidiana que cualquier metro cuadrado de césped.
+  </p>
+  <p class="byline">Juan Pablo Jaramillo-Ramón · 13 de junio de 2026</p>
+
+  <article>
+
+    <p class="lead-drop">
+      Hay una pregunta que casi nunca se hace cuando se discute un parque, porque parece demasiado obvia para merecer respuesta:
+      ¿se puede entrar? El relato público sobre los grandes parques de Quito se construye sobre superficie —hectáreas, árboles, canchas,
+      lagunas— como si el tamaño bastara para medir la utilidad. La Carolina y el Bicentenario invitan a desconfiar de esa métrica.
+      Tienen escala comparable y equipamiento parecido, pero funcionan de manera radicalmente distinta para quien vive a una cuadra,
+      y la diferencia no está en lo que contienen, sino en cómo se cruza su perímetro.
+    </p>
+
+    <p>
+      El Bicentenario, levantado sobre las 105 hectáreas del antiguo aeropuerto Mariscal Sucre, es un parque <em>cerrado</em>:
+      un recinto con horario —de 05:00 a 19:00— y un puñado de accesos peatonales concentrados en su flanco noreste. La Carolina, en cambio,
+      es un parque <em>abierto</em>: sin cerramiento ni puertas, se ingresa desde cualquier punto de las cuatro avenidas que lo rodean,
+      a cualquier hora. Esa distinción —recinto con horario frente a borde permeable— es la variable que organiza todo lo demás.
+    </p>
+
+    <div class="statrow">
+      <div class="stat bic">
+        <div class="n">3 accesos</div>
+        <div class="l">Bicentenario · puntos peatonales concentrados al noreste</div>
+      </div>
+      <div class="stat car">
+        <div class="n">24/7</div>
+        <div class="l">La Carolina · acceso continuo en todo el perímetro</div>
+      </div>
+      <div class="stat bic">
+        <div class="n">05:00–19:00</div>
+        <div class="l">Bicentenario · cerrado de noche; puertas secundarias hasta 17:00</div>
+      </div>
+      <div class="stat car">
+        <div class="n">4 avenidas</div>
+        <div class="l">La Carolina · Naciones Unidas, Shyris, República/Eloy Alfaro, Amazonas</div>
+      </div>
+      <div class="stat bic">
+        <div class="n">2,2 km</div>
+        <div class="l">Bicentenario · prolongación Amazonas, eje del nuevo anillo vial (USD 7 M)</div>
+      </div>
+      <div class="stat car">
+        <div class="n">★ 4,5 vs 4,4</div>
+        <div class="l">Calificación casi idéntica: la brecha no está en el promedio, sino en el miedo nocturno</div>
+      </div>
+    </div>
+
+    <h2><span class="secnum">01</span>El borde como política pública</h2>
+
+    <p>
+      Conviene mirar la geografía real antes que la abstracción. El Bicentenario hereda la forma de una pista de aterrizaje:
+      un eje alargado en diagonal noreste-suroeste, con sus ingresos peatonales agrupados en torno a las intersecciones del norte
+      —Tufiño y Gualaquiza— y a la antigua terminal sobre la Av. Amazonas. Su flanco sureste, en cambio, queda prácticamente sin puertas.
+      La Carolina ocupa un polígono delimitado por cuatro grandes avenidas, y como no tiene cerramiento, cada una de esas avenidas
+      funciona como un acceso lineal continuo: no hay un punto de entrada, hay un borde entero de entrada.
+    </p>
+
+    <figure>
+      <p class="fig-label">Figura 1 · Geometría y accesos</p>
+      <div class="maps">
+        <div class="map-card bic">
+          <h4>Parque Bicentenario</h4>
+          <span class="coord">−0.1404, −78.4883 · cerrado, 05:00–19:00</span>
+          <svg viewBox="0 0 300 240" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <rect width="300" height="240" fill="url(#g1)"/>
+            <defs><pattern id="g1" width="22" height="22" patternUnits="userSpaceOnUse">
+              <path d="M22 0 L0 0 0 22" fill="none" stroke="rgba(193,67,42,0.10)" stroke-width="0.5"/>
+            </pattern></defs>
+            <polygon points="36,188 72,208 256,72 266,42 240,32 52,168"
+                     fill="rgba(193,67,42,0.06)" stroke="#C1432A" stroke-width="2.5" stroke-dasharray="6 4"/>
+            <text x="110" y="142" fill="#A77" font-family="JetBrains Mono, monospace" font-size="8"
+                  transform="rotate(-34 110 142)">EJE / PISTA</text>
+            <circle cx="252" cy="48" r="5" fill="#C1432A" stroke="#FDFBF6" stroke-width="2"/>
+            <text x="200" y="34" fill="#7A5246" font-family="JetBrains Mono, monospace" font-size="7">Tufiño/Gualaquiza</text>
+            <circle cx="162" cy="128" r="5" fill="#C1432A" stroke="#FDFBF6" stroke-width="2"/>
+            <text x="168" y="124" fill="#7A5246" font-family="JetBrains Mono, monospace" font-size="7">Cap. Ramos</text>
+            <circle cx="54" cy="178" r="5" fill="#C1432A" stroke="#FDFBF6" stroke-width="2"/>
+            <text x="60" y="192" fill="#7A5246" font-family="JetBrains Mono, monospace" font-size="7">Ex-terminal</text>
+            <text x="150" y="200" fill="#B08" font-family="JetBrains Mono, monospace" font-size="7" opacity="0.7"
+                  transform="rotate(-34 150 200)">flanco sin acceso</text>
+          </svg>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=-0.1403883,-78.4882852" target="_blank" rel="noopener">↗ Ver en Google Maps</a>
+        </div>
+        <div class="map-card car">
+          <h4>Parque La Carolina</h4>
+          <span class="coord">−0.1841, −78.4846 · abierto 24/7</span>
+          <svg viewBox="0 0 300 240" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <rect width="300" height="240" fill="url(#g2)"/>
+            <defs><pattern id="g2" width="22" height="22" patternUnits="userSpaceOnUse">
+              <path d="M22 0 L0 0 0 22" fill="none" stroke="rgba(42,111,151,0.12)" stroke-width="0.5"/>
+            </pattern></defs>
+            <polygon points="52,46 260,66 236,196 44,172"
+                     fill="rgba(42,111,151,0.08)" stroke="#2A6F97" stroke-width="2.5"/>
+            <polygon points="52,46 260,66 236,196 44,172"
+                     fill="none" stroke="#2A6F97" stroke-width="6" opacity="0.16"/>
+            <text x="100" y="38" fill="#2A6F97" font-family="JetBrains Mono, monospace" font-size="7">N. Unidas</text>
+            <text x="248" y="140" fill="#2A6F97" font-family="JetBrains Mono, monospace" font-size="7" transform="rotate(80 248 140)">Shyris</text>
+            <text x="92" y="196" fill="#2A6F97" font-family="JetBrains Mono, monospace" font-size="7">República</text>
+            <text x="30" y="120" fill="#2A6F97" font-family="JetBrains Mono, monospace" font-size="7" transform="rotate(-82 30 120)">Amazonas</text>
+            <g fill="#2A6F97">
+              <path d="M150,54 l-4,-8 l8,0 z"/><path d="M200,60 l-4,-8 l8,0 z"/>
+              <path d="M246,110 l8,-4 l0,8 z"/><path d="M242,160 l8,-4 l0,8 z"/>
+              <path d="M140,186 l-4,8 l8,0 z"/><path d="M190,190 l-4,8 l8,0 z"/>
+              <path d="M50,100 l-8,-4 l0,8 z"/><path d="M46,150 l-8,-4 l0,8 z"/>
+            </g>
+          </svg>
+          <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=-0.1841235,-78.4846376" target="_blank" rel="noopener">↗ Ver en Google Maps</a>
+        </div>
+      </div>
+      <figcaption>
+        Esquemas a partir de las coordenadas reales de cada parque. En el Bicentenario los puntos rojos marcan los accesos peatonales
+        habilitados, concentrados al noreste; el flanco sureste queda sin ingresos cercanos. En La Carolina las flechas indican que el
+        acceso ocurre de forma continua por las cuatro avenidas perimetrales.
+      </figcaption>
+    </figure>
+
+    <p>
+      Pensar el borde como política pública —y no como mero límite físico— cambia la pregunta de evaluación. No interesa cuántas hectáreas
+      tiene un parque, sino a cuántos vecinos los acerca y durante cuántas horas del día. Bajo ese criterio, un parque cerrado con tres puertas
+      al noreste no atiende por igual a quien vive al sur o al oeste: la entrada más próxima puede quedar a varias cuadras, y el portón se cierra
+      cuando empieza la vida nocturna de quien trabaja en horario extendido. El borde permeable de La Carolina, por el contrario, reparte el acceso
+      de manera casi equitativa entre los cuatro costados y no impone reloj.
+    </p>
+
+    <h2><span class="secnum">02</span>Lo que dicen quienes los usan</h2>
+
+    <p>
+      La distinción de diseño no es una abstracción de urbanista: aparece, casi intacta, en lo que escriben los propios usuarios. Recogí las
+      reseñas públicas de ambos parques en Google Maps y TripAdvisor, y las contrasté con los testimonios de vecinos que recoge la prensa local.
+      Los dos parques tienen calificaciones altas y parecidas —La Carolina <strong>4,5</strong> sobre casi 50.000 reseñas; el Bicentenario
+      <strong>4,4</strong> sobre algo más de 23.000—, de modo que la diferencia no está en el promedio, sino en <em>qué</em> elogian y
+      <em>qué</em> temen los usuarios de cada uno.
+    </p>
+
+    <div class="reviews">
+      <div class="rev-col bic">
+        <h4>Bicentenario</h4>
+        <p class="rev-rating">★ 4,4 · 23.507 reseñas (Google Maps)</p>
+        <blockquote>
+          Buena idea convertir un viejo aeropuerto en parque, pero no lo han cuidado y el pavimento luce muy mal; la parte norte da miedo y está abandonada.
+          <cite>Reseña en Google Maps (traducida)</cite>
+        </blockquote>
+        <blockquote>
+          En el día hay gente, pero en la noche no se puede caminar; se han visto extorsiones y chulqueros.
+          <cite>Vecina del sector, en <a href="https://www.primicias.ec/quito/amazonas-prensa-aeropuerto-bicentenario-abandono-inseguridad-parque-101512/" target="_blank" rel="noopener">Primicias</a>, julio 2025</cite>
+        </blockquote>
+        <blockquote>
+          Falta iluminación y seguridad. Aquí han asaltado hasta hace una semana.
+          <cite>Pablo Yépez, visitante, en <a href="https://www.primicias.ec/quito/parque-bicentenario-aeropuerto-zona-contrastes-norte-chatarra-seguridad-juegos-verano-102570/" target="_blank" rel="noopener">Primicias</a>, agosto 2025</cite>
+        </blockquote>
+      </div>
+      <div class="rev-col car">
+        <h4>La Carolina</h4>
+        <p class="rev-rating">★ 4,5 · 49.560 reseñas (Google Maps)</p>
+        <blockquote>
+          Parque súper moderno, limpio, seguro y funcional. ¡Visita obligada!
+          <cite>Reseña en Google Maps (traducida)</cite>
+        </blockquote>
+        <blockquote>
+          Casi no hay rincones sin luz y la seguridad es omnipresente; me sorprende que incluso la ciudad más grande de Canadá no tenga un parque urbano tan desarrollado.
+          <cite>Reseña de turista en Google Maps (traducida)</cite>
+        </blockquote>
+        <blockquote>
+          Un parque muy iluminado donde incluso de noche hay mucha gente haciendo ejercicio y paseando perros; da la impresión de ser un lugar seguro.
+          <cite>Reseña en <a href="https://www.tripadvisor.es/ShowUserReviews-g294308-d590820-r268203046-Parque_La_Carolina-Quito_Pichincha_Province.html" target="_blank" rel="noopener">TripAdvisor</a></cite>
+        </blockquote>
+      </div>
+    </div>
+
+    <p>
+      El patrón es difícil de pasar por alto. En La Carolina, las reseñas que mencionan la noche lo hacen para destacar que el parque
+      <em>sigue vivo</em> después del atardecer: gente corriendo, perros, iluminación, presencia policial. El Ministerio de Gobierno la incluye
+      entre los parques con patrullaje permanente, y la <a href="https://www.ministeriodegobierno.gob.ec/la-carolina-forma-parte-de-los-181-parques-seguros-de-quito/" target="_blank" rel="noopener">UPC La Carolina</a>
+      organiza turnos desde las 05:00 precisamente para resguardar a los deportistas madrugadores. En el Bicentenario, la noche aparece en las
+      reseñas y los testimonios como el momento en que el parque <em>se apaga</em> —literalmente, cuando fallan las luminarias— y la inseguridad
+      se apodera del entorno. La diferencia de diseño se traduce en una diferencia de uso: el borde abierto y vigilado mantiene una masa crítica
+      de usuarios que se protegen entre sí; el recinto cerrado, vaciado a las 19:00, deja un perímetro desierto.
+    </p>
+
+    <p>
+      Es pertinente diferenciar, no obstante, lo que es atribuible al diseño y lo que responde al entorno. Buena parte del temor en torno al
+      Bicentenario no nace dentro del parque, sino en las avenidas que lo rodean —La Prensa, Amazonas—, marcadas por la <a href="https://www.primicias.ec/quito/amazonas-prensa-aeropuerto-bicentenario-abandono-inseguridad-parque-101512/" target="_blank" rel="noopener">transición urbana inconclusa</a>
+      que dejó el cierre del aeropuerto en 2013: locales vacíos, baja densidad residencial, ausencia de actividad comercial. Un parque cerrado que da
+      la espalda a un entorno deprimido amplifica ese vacío; un parque abierto rodeado de torres, oficinas y centros comerciales —como La Carolina—
+      se beneficia de la vigilancia informal que produce el simple tránsito de gente. El borde no es solo una decisión arquitectónica: es lo que
+      conecta —o desconecta— al parque de la vida de su barrio.
+    </p>
+
+    <h2><span class="secnum">03</span>La intervención que podría cerrar la brecha</h2>
+
+    <p>
+      Aquí entra la obra municipal. El 2 de junio de 2026, la Secretaría de Hábitat y Ordenamiento, junto con la EPMMOP,
+      <a href="https://www.elcomercio.com/actualidad/quito/prolongacion-avenidas-circundan-parque-bicentenario/" target="_blank" rel="noopener">anunció</a>
+      la prolongación de la Av. Amazonas y de las avenidas Real Audiencia y Rafael Aulestria, las tres vías que circundan el Bicentenario.
+      No es un retoque cosmético: el eje occidental —la prolongación de la Amazonas, desde el Centro de Convenciones Metropolitano hasta la
+      cabecera norte del antiguo aeropuerto— suma unos <strong>2,2 kilómetros</strong>, costará alrededor de <strong>USD 7 millones</strong>,
+      y está concebido como parte de un <em>anillo vial</em> que rodeará el parque por completo. La pregunta relevante no es de ingeniería de
+      tránsito sino de uso urbano: ¿qué le hace ese anillo a quien vive alrededor?
+    </p>
+
+    <p>
+      La respuesta está en la letra fina del diseño. Las nuevas vías no son solo carriles: contarán con parterre central, un carril de
+      estacionamiento, <strong>ciclovía y un bulevar adyacentes al parque</strong>, en una propuesta que —según el propio Municipio— busca
+      “integrar el parque sin sacrificar el espacio público”. Ese es exactamente el ingrediente que hoy le falta al Bicentenario y que La Carolina
+      tiene de fábrica: un borde caminable, con vereda generosa y ciclovía, que convierte cada metro del perímetro en un punto de ingreso potencial
+      en lugar de obligar al vecino a peregrinar hasta uno de los tres portones del noreste.
+    </p>
+
+    <div class="callout">
+      <h3>De tres puertas a un anillo de entradas</h3>
+      <p>
+        Hoy el Bicentenario funciona como un recinto con accesos puntuales. El anillo vial —Amazonas al occidente, Real Audiencia y Rafael
+        Aulestria al oriente— rodea el parque con <strong>ciclovía y bulevar continuos</strong>. En la práctica, eso transforma un puñado de
+        portones en un <strong>borde de ingreso permeable</strong> a lo largo de varios kilómetros, enlazado con el Corredor Central Norte y la
+        estación El Labrador del Metro.
+      </p>
+      <p>
+        Dicho de otro modo: la obra acerca al Bicentenario al modelo que hace funcional a La Carolina —el perímetro como invitación y no como muro—
+        y lo hace no en un solo flanco, sino en casi todo el contorno. Por primera vez, el vecino del sur o del oriente podría tener una entrada
+        funcional cerca de su casa, en lugar de una reja lejana.
+      </p>
+    </div>
+
+    <p>
+      Vale la pena ser explícito sobre por qué esto importa tanto para el caso particular del Bicentenario. A diferencia de La Carolina, rodeada
+      de torres y oficinas que generan tránsito —y, con él, vigilancia informal— a casi cualquier hora, el Bicentenario nació mirando hacia un
+      entorno deprimido: las avenidas Amazonas y La Prensa quedaron con locales vacíos y baja densidad tras el cierre del aeropuerto en 2013.
+      Un parque cerrado que da la espalda a un entorno muerto multiplica el vacío; un parque con un borde activo —ciclovía, bulevar, gente
+      circulando— empieza a coser de nuevo esa relación. El anillo vial no es solo una entrada al parque: es la costura que vuelve a unir al
+      parque con la ciudad que lo rodea.
+    </p>
+
+    <p>
+      La advertencia honesta —porque esta voz no vende obras sin matiz— es que un bulevar, por sí solo, no fabrica seguridad: La Carolina no
+      es segura porque tenga aceras anchas, sino porque la densidad de su entorno y un patrullaje sostenido mantienen gente en el parque a casi
+      todas las horas. Pero esa no es una objeción a la obra; es su hoja de ruta. El anillo vial crea la <em>condición</em> que hoy no existe
+      —un borde permeable, caminable, transitado— y sobre ella se vuelven viables la iluminación constante, el patrullaje y la reactivación
+      comercial que el cierre del aeropuerto dejó pendientes. Sin ese borde, esas medidas no tienen dónde anclarse; con él, por fin las tienen.
+      Frente a la preocupación, legítima pero menor, de que ampliar vías comprometa el área verde, el propio diseño municipal ya responde: el
+      proyecto destina apenas una franja perimetral a la ciclovía y el bulevar, integrando el parque <em>sin</em> sacrificar el espacio público.
+      Se trata de coser un borde, no de invadir el césped.
+    </p>
+
+    <h2><span class="secnum">04</span>El criterio que debería ordenar la inversión</h2>
+
+    <p>
+      De este contraste se deriva una recomendación más general que la obra puntual. Quito tiende a evaluar sus parques por superficie y por
+      equipamiento —cuántas canchas, cuántas hectáreas, cuántos juegos—, y a celebrar inauguraciones antes que usos. El caso del Bicentenario sugiere
+      invertir el criterio: medir un parque por la <strong>accesibilidad real</strong> que ofrece a sus vecinos —cuántos hogares alcanza a pie,
+      durante cuántas horas, con qué percepción de seguridad— antes que por el área que encierra. Un parque que duplica en hectáreas a otro pero
+      lo iguala en reseñas y lo supera en miedo nocturno no tiene un problema de tamaño: tiene un problema de borde, de horario y de entorno.
+    </p>
+
+    <p>
+      Bajo ese criterio, La Carolina funciona mejor para sus vecinos no porque sea más grande o más bonita, sino porque resolvió primero la pregunta
+      elemental que el Bicentenario nunca pudo responder: dejó de tratar su perímetro como un muro y lo convirtió en una invitación. La prolongación
+      de la Amazonas y el anillo vial son, leídos así, mucho más que una obra de movilidad. Son la decisión de darle al Bicentenario, por fin, lo que
+      siempre le faltó: una entrada de verdad. Una obra que toma el parque más grande del norte —hoy infrautilizado, temido de noche, de espaldas a su
+      barrio— y le devuelve la condición básica para existir como espacio público: que se pueda entrar. Porque un parque, al final, no se mide por
+      lo que contiene, sino por lo que deja entrar.
+    </p>
+
+    <div class="endmark">◆</div>
+
+  </article>
+
+  <footer>
+    <p class="meta">Comentario urbano · Dos parques, dos ciudades · Junio 2026</p>
+
+    <p class="note">
+      Nota sobre las fuentes. Las calificaciones y reseñas de usuarios provienen de las fichas públicas de ambos parques en Google Maps
+      (consultadas en junio de 2026) y de opiniones publicadas en TripAdvisor. Los testimonios de vecinos y los datos sobre iluminación,
+      patrullaje y entorno provienen de cobertura de prensa local y de comunicados municipales, citados a continuación. Las reseñas en inglés
+      se reproducen traducidas y parafraseadas. Los esquemas geográficos se construyeron a partir de las coordenadas reales de cada parque; no
+      son cartografía a escala.
+    </p>
+
+    <h4>Fuentes</h4>
+    <ul>
+      <li>— Google Maps — fichas de Parque Bicentenario (★4,4; 23.507 reseñas) y Parque La Carolina (★4,5; 49.560 reseñas), junio 2026.</li>
+      <li>— TripAdvisor — opiniones de usuarios sobre Parque La Carolina y Parque Bicentenario, Quito.</li>
+      <li>— Primicias — "Abandono, inseguridad y proyectos inconclusos alrededor del parque Bicentenario" (julio 2025) y "Los contrastes del Parque Bicentenario" (agosto 2025).</li>
+      <li>— Expreso — "Parque Bicentenario sin luz: denuncian riesgo por luminarias apagadas" (febrero 2026).</li>
+      <li>— Quito Informa (EPMMOP) — comunicados sobre mantenimiento del Bicentenario (noviembre 2025) y la Pista Azul de La Carolina.</li>
+      <li>— Ministerio de Gobierno — "La Carolina forma parte de los 181 parques seguros de Quito" (UPC La Carolina, patrullaje 24 h).</li>
+      <li>— EPMMOP / Secretaría de Hábitat y Ordenamiento — anuncio del proyecto de prolongación de la Av. Amazonas, Real Audiencia y Rafael Aulestria (anillo vial del Bicentenario), recogido en El Comercio, "Se anuncia la prolongación de avenidas que circundan el Parque Bicentenario" (Leah Murdoch, 2 de junio de 2026).</li>
+      <li>— EPMMOP / "Quito Renace" — planos de diseño vial, prolongación de la Av. Amazonas (Gualaquiza–Luis Tufiño).</li>
+    </ul>
+
+    <p class="note" style="margin-top:1.2rem;">
+      Autor: Juan Pablo Jaramillo-Ramón.
+    </p>
+  </footer>
+
+</div>
+</body>
+</html>
