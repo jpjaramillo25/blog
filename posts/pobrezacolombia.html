@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La aritmética de los quintiles — Nota analítica</title>
+<meta name="description" content="La pobreza monetaria en Colombia cayó de 31,8% a 28,0% en 2025 mientras el ingreso agregado del país, ponderado por quintiles, creció apenas 4,22%. Por qué ambas cifras son compatibles, verificadas contra el boletín del DANE y la descomposición oficial del cambio.">
+<meta name="author" content="Juan Pablo Jaramillo-Ramón">
+<meta name="date" content="2026-06-14">
+<meta name="category" content="nota analítica">
+<meta property="og:type" content="article">
+<meta property="og:title" content="La aritmética de los quintiles">
+<meta property="og:description" content="Por qué la caída de la pobreza en Colombia de 31,8% a 28,0% en 2025 es compatible con el crecimiento real del ingreso por quintiles del DANE — y qué confirma la descomposición oficial del cambio.">
+<meta property="og:locale" content="es_CO">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="La aritmética de los quintiles">
+<meta name="twitter:description" content="Por qué la caída de la pobreza en Colombia de 31,8% a 28,0% en 2025 es compatible con el crecimiento real del ingreso por quintiles del DANE — y qué confirma la descomposición oficial del cambio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#211c17; --paper:#f4efe5; --paper2:#ebe3d3; --card:#faf6ec;
+    --rule:#ccc2ac; --red:#9c3018; --slate:#2f4858; --ochre:#946514;
+    --muted:#6b6356; --teal:#2f6b5e;
+    --sans:'IBM Plex Sans',-apple-system,Segoe UI,sans-serif;
+    --serif:'Spectral',Georgia,serif;
+    --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--sans); font-size:16.5px; line-height:1.68;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 32px 90px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+  /* ---- masthead ---- */
+  .top-rule{height:6px;background:var(--ink)}
+  .top-rule .seg{height:100%;width:18%;background:var(--red);float:right}
+  header.mast{padding:34px 0 26px;border-bottom:1px solid var(--rule)}
+  .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--red);font-weight:500}
+  .kicker .dot{color:var(--muted);margin:0 8px}
+  h1.title{font-family:var(--serif);font-weight:600;font-size:54px;
+    line-height:1.04;letter-spacing:-.015em;margin:14px 0 6px}
+  .dek{font-family:var(--serif);font-style:italic;font-size:21px;
+    color:var(--slate);line-height:1.4;max-width:38em;margin:10px 0 0}
+  .byline{font-family:var(--mono);font-size:11.5px;color:var(--muted);
+    margin-top:20px;letter-spacing:.04em}
+
+  /* ---- exec summary ---- */
+  .summary{background:var(--ink);color:#f4efe5;border-radius:3px;
+    padding:30px 34px;margin:34px 0 14px}
+  .summary h2{font-family:var(--mono);font-size:12px;letter-spacing:.2em;
+    text-transform:uppercase;color:#e0a58c;margin:0 0 18px;font-weight:500}
+  .summary ol{margin:0;padding:0;list-style:none;counter-reset:k}
+  .summary li{counter-increment:k;position:relative;padding:0 0 0 46px;
+    margin:0 0 16px;font-size:16px;line-height:1.6}
+  .summary li:last-child{margin-bottom:0}
+  .summary li::before{content:counter(k,decimal-leading-zero);
+    position:absolute;left:0;top:1px;font-family:var(--serif);font-weight:600;
+    font-size:20px;color:#e0a58c}
+  .summary b{color:#fff;font-weight:600}
+
+  /* ---- stat strip ---- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--rule);border:1px solid var(--rule);margin:28px 0 8px}
+  .stat{background:var(--paper);padding:18px 16px;min-width:0}
+  .stat .n{font-family:var(--serif);font-weight:600;font-size:32px;
+    line-height:1.05;color:var(--red);word-break:break-word}
+  .stat .l{font-size:12.5px;color:var(--muted);line-height:1.35;margin-top:8px}
+
+  /* ---- sections ---- */
+  section{padding-top:46px}
+  .sec-head{display:flex;align-items:baseline;gap:16px;
+    border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:18px}
+  .sec-num{font-family:var(--serif);font-weight:600;font-size:30px;color:var(--red)}
+  .sec-head h2{font-family:var(--serif);font-weight:600;font-size:27px;
+    margin:0;letter-spacing:-.01em;line-height:1.15}
+  p{margin:0 0 15px}
+  p.lead{font-size:18.5px;line-height:1.55;color:var(--slate);
+    font-family:var(--serif)}
+  .wide{max-width:none}
+
+  /* ---- figures ---- */
+  figure{margin:26px 0;background:var(--card);border:1px solid var(--rule);
+    border-radius:3px;padding:20px 22px}
+  .fig-tag{font-family:var(--mono);font-size:11px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--red);font-weight:500}
+  .fig-title{font-family:var(--serif);font-weight:600;font-size:18.5px;
+    margin:5px 0 4px;line-height:1.25}
+  figcaption{font-size:13px;color:var(--muted);line-height:1.5;
+    margin-top:12px;border-top:1px solid var(--rule);padding-top:10px}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin:10px 0 6px;
+    font-size:12.5px;color:var(--muted)}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .swatch{width:22px;height:0;border-top-width:3px;border-top-style:solid}
+  .chart-box{position:relative;width:100%}
+
+  /* ---- pull quote ---- */
+  .pull{border-left:4px solid var(--red);padding:4px 0 4px 22px;
+    margin:26px 0;font-family:var(--serif);font-size:23px;font-style:italic;
+    line-height:1.4;color:var(--ink)}
+
+  /* ---- tables ---- */
+  .table-wrap{overflow-x:auto;margin:22px 0}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;
+    background:var(--card);border:1px solid var(--rule)}
+  caption{font-family:var(--mono);font-size:11px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--red);font-weight:500;text-align:left;
+    padding-bottom:8px}
+  th,td{padding:9px 12px;border:1px solid var(--rule);text-align:right;
+    font-feature-settings:"tnum"}
+  th:first-child,td:first-child{text-align:left;font-weight:500}
+  thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--muted);font-weight:500;
+    background:var(--paper2)}
+  tbody tr:last-child td{font-weight:600;background:var(--paper2)}
+  .tbl-cap{font-size:13px;color:var(--muted);line-height:1.5;margin:8px 0 0}
+
+  /* ---- twin panels ---- */
+  .twin{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0 0}
+  .panel{border:1px solid var(--rule);border-radius:3px;padding:18px 18px 16px;
+    background:var(--card)}
+  .panel.seen{border-top:4px solid var(--slate)}
+  .panel.alt{border-top:4px solid var(--teal)}
+  .panel .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
+    text-transform:uppercase;font-weight:500}
+  .panel.seen .tag{color:var(--slate)}
+  .panel.alt .tag{color:var(--teal)}
+  .panel h3{font-family:var(--serif);font-weight:600;font-size:28px;
+    margin:6px 0 8px}
+  .panel p{font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 8px}
+  .panel .verdict{font-size:13px;font-weight:600;color:var(--ink);
+    border-top:1px solid var(--rule);padding-top:8px;margin-top:4px}
+  .twin-foot{background:var(--ink);color:#f4efe5;border-radius:3px;
+    padding:18px 22px;margin-top:14px;font-size:15px;line-height:1.55}
+  .twin-foot b{color:#e0a58c}
+
+  /* ---- footer / sources ---- */
+  .note{margin-top:46px;border-top:2px solid var(--ink);padding-top:18px}
+  .note h2{font-family:var(--mono);font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--red);margin:0 0 10px;font-weight:500}
+  .note p,.note li{font-size:12.5px;color:var(--muted);line-height:1.55}
+  .note ul{margin:6px 0 0;padding-left:18px}
+  .colophon{margin-top:24px;font-family:var(--mono);font-size:11px;
+    color:var(--muted);letter-spacing:.03em;line-height:1.7}
+
+  @media (max-width:680px){
+    .wrap{padding:0 18px 60px}
+    h1.title{font-size:36px}
+    .stats{grid-template-columns:1fr 1fr}
+    .stat .n{font-size:21px}
+    .twin{grid-template-columns:1fr}
+    th,td{padding:7px 8px}
+  }
+  @media print{
+    body{background:#fff}
+    .summary,.twin-foot{background:#fff;color:#000;border:1.5px solid #000}
+    .summary li::before,.summary h2,.twin-foot b{color:#9c3018}
+    figure,.panel{page-break-inside:avoid}
+    section{page-break-inside:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="top-rule"><div class="seg"></div></div>
+<div class="wrap">
+
+<header class="mast">
+  <div class="kicker">Nota analítica<span class="dot">/</span>Pobreza y desigualdad<span class="dot">/</span>Colombia</div>
+  <h1 class="title">La aritmética<br>de los quintiles</h1>
+  <p class="dek">La pobreza monetaria en Colombia cayó de 31,8% a 28,0% en 2025, mientras el ingreso agregado del país, ponderado por la distribución real entre quintiles, creció apenas 4,22%. Ambas cifras son compatibles — y el porqué está en cómo se distribuyó ese crecimiento.</p>
+  <div class="byline">Nota analítica · Junio 2026 · Verificación sobre el boletín de Pobreza Monetaria del DANE (12 de junio de 2026) y datos del Banco Mundial</div>
+</header>
+
+<div class="summary">
+  <h2>Mensajes clave</h2>
+  <ol>
+    <li>La caída de la pobreza monetaria de <b>31,8% a 28,0%</b> —confirmada en el boletín técnico del DANE del 12 de junio de 2026— es compatible con la variación real del ingreso por quintiles que reporta la misma entidad: el quintil 1 creció <b>11,8%</b> mientras el quintil 5 apenas <b>0,5%</b>.</li>
+    <li>El crecimiento agregado ponderado del ingreso, calculado con la distribución real por quintiles, es de solo <b>4,22%</b> — menos de la mitad del promedio simple de 8,3% que resulta de sumar los cinco quintiles sin ponderar. La pobreza, sin embargo, no reacciona al promedio agregado, sino al desplazamiento de los hogares cercanos a la línea.</li>
+    <li>La curva de Lorenz construida con estos quintiles se desplaza hacia la igualdad —el <b>Gini agrupado pasa de 0,493 a 0,475</b>— en la misma dirección que el Gini oficial del DANE, que cae de <b>0,551 a 0,531</b>.</li>
+    <li>La descomposición oficial del DANE para 2025 reproduce el mismo mecanismo con cifras propias: el <b>efecto crecimiento aportó 3,72 p.p.</b> de la caída de 3,8 p.p., la <b>redistribución 1,99 p.p.</b>, y el aumento real de la línea de pobreza <b>restó 1,93 p.p.</b></li>
+  </ol>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="n">31,8% → 28,0%</div><div class="l">pobreza monetaria nacional, DANE 2024–2025</div></div>
+  <div class="stat"><div class="n">4,22%</div><div class="l">crecimiento agregado ponderado del ingreso por quintiles</div></div>
+  <div class="stat"><div class="n">11,8% / 0,5%</div><div class="l">crecimiento real del ingreso, quintil 1 frente a quintil 5</div></div>
+  <div class="stat"><div class="n">0,551 → 0,531</div><div class="l">coeficiente de Gini oficial, 2024–2025</div></div>
+</div>
+
+<!-- ============ 01 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2>El punto de partida: no basta mirar el promedio simple</h2></div>
+  <p class="lead">Cuando una oficina nacional de estadística anuncia, a meses de un ciclo electoral, que la pobreza cayó 3,8 puntos porcentuales en un solo año, la sospecha es una reacción razonable. Pero la pregunta correcta no es si la cifra agregada "se ve demasiado buena": es si es compatible con los datos desagregados que la sustentan.</p>
+  <p>El 12 de junio de 2026 el DANE confirmó que la pobreza monetaria nacional pasó de 31,8% en 2024 a 28,0% en 2025 —la mayor caída interanual desde que la serie es comparable, en 2012, y el nivel más bajo de toda la serie—. El mismo boletín reporta la variación real del ingreso per cápita de la unidad de gasto por quintil: 11,8% en el primero, 10,4% en el segundo, 10,3% en el tercero, 8,4% en el cuarto y apenas 0,5% en el quinto.</p>
+
+  <figure>
+    <div class="fig-tag">Figura 1</div>
+    <div class="fig-title">Variación real del ingreso per cápita por quintil, 2024–2025</div>
+    <div class="chart-box" style="height:300px"><canvas id="c1" role="img" aria-label="Gráfico de barras que muestra la variación real del ingreso por quintil en 2025: 11,8% en el quintil 1, 10,4% en el quintil 2, 10,3% en el quintil 3, 8,4% en el quintil 4 y 0,5% en el quintil 5."></canvas></div>
+    <figcaption>Variación del ingreso per cápita real de la unidad de gasto, total nacional. Fuente: DANE, Boletín técnico Pobreza Monetaria 2025 (Gráfico 12), 12 de junio de 2026.</figcaption>
+  </figure>
+
+  <p>El promedio simple de esas cinco cifras es 8,3%. Es tentador leerlo como "el" crecimiento del ingreso del país en 2025, pero es un artefacto aritmético: trata a un hogar del quintil más rico —que concentra cerca de seis de cada diez pesos del ingreso nacional— como si pesara lo mismo que un hogar del quintil más pobre, que concentra apenas tres o cuatro. Para saber cuánto creció el ingreso agregado del país, y si ese crecimiento es compatible con la caída de la pobreza, hace falta ponderar cada quintil por su participación real en el ingreso total.</p>
+</section>
+
+<!-- ============ 02 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>La distribución real cambia la interpretación</h2></div>
+  <p>Esa participación la provee el Banco Mundial a través de la Plataforma de Pobreza y Equidad (PIP) / WDI: para Colombia, el quintil 1 concentra 3,4% del ingreso total, el segundo 7,1%, el tercero 11,3%, el cuarto 19,3% y el quinto 58,9%. La fotografía es la de un país con concentración extrema en la parte alta de la distribución: el 20% más rico recibe más que los cuatro quintiles restantes juntos.</p>
+
+  <figure>
+    <div class="fig-tag">Figura 2</div>
+    <div class="fig-title">Participación de cada quintil en el ingreso total, Colombia</div>
+    <div class="chart-box" style="height:300px"><canvas id="c2" role="img" aria-label="Gráfico de barras de la participación de cada quintil en el ingreso total: 3,4% el quintil 1, 7,1% el quintil 2, 11,3% el quintil 3, 19,3% el quintil 4 y 58,9% el quintil 5."></canvas></div>
+    <figcaption>Participación porcentual en el ingreso total por quintil. Fuente: Banco Mundial, World Development Indicators / Poverty and Inequality Platform, Colombia.</figcaption>
+  </figure>
+
+  <p>Al aplicar los crecimientos del DANE a estos pesos —multiplicando la participación de cada quintil por su crecimiento real y sumando— el crecimiento agregado ponderado del ingreso es <b>4,22%</b>: menos de la mitad del promedio simple, y del orden del crecimiento del PIB per cápita real del país en el mismo año. La Tabla 1 desagrega el cálculo y muestra, además, cómo cambiaría implícitamente la distribución del ingreso si cada quintil creciera exactamente a la tasa reportada por el DANE.</p>
+
+  <div class="table-wrap">
+    <table>
+      <caption>Tabla 1 · Cálculo ponderado del crecimiento real del ingreso por quintiles</caption>
+      <thead>
+        <tr><th>Quintil</th><th>Crecimiento real (%)</th><th>Peso 2024 (%)</th><th>Aporte (p.p.)</th><th>Peso implícito 2025 (%)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Q1</td><td>11,8</td><td>3,4</td><td>0,40</td><td>3,6</td></tr>
+        <tr><td>Q2</td><td>10,4</td><td>7,1</td><td>0,74</td><td>7,5</td></tr>
+        <tr><td>Q3</td><td>10,3</td><td>11,3</td><td>1,16</td><td>12,0</td></tr>
+        <tr><td>Q4</td><td>8,4</td><td>19,3</td><td>1,62</td><td>20,1</td></tr>
+        <tr><td>Q5</td><td>0,5</td><td>58,9</td><td>0,29</td><td>56,8</td></tr>
+        <tr><td>Total</td><td>—</td><td>100,0</td><td>4,22</td><td>100,0</td></tr>
+      </tbody>
+    </table>
+    <p class="tbl-cap">Fuente: elaboración propia con base en DANE (crecimiento por quintil) y Banco Mundial (pesos 2024). El peso implícito 2025 se obtiene multiplicando el peso 2024 por (1 + crecimiento real) y renormalizando para que las participaciones sumen 100%.</p>
+  </div>
+
+  <figure>
+    <div class="fig-tag">Figura 3</div>
+    <div class="fig-title">Aporte de cada quintil al crecimiento agregado ponderado (4,22%)</div>
+    <div class="chart-box" style="height:280px"><canvas id="c3" role="img" aria-label="Gráfico de barras del aporte en puntos porcentuales de cada quintil al crecimiento ponderado del 4,22%: 0,40 el quintil 1, 0,74 el quintil 2, 1,16 el quintil 3, 1,62 el quintil 4 y 0,29 el quintil 5."></canvas></div>
+    <figcaption>Aporte de cada quintil al crecimiento agregado ponderado, en puntos porcentuales (peso 2024 × crecimiento real ÷ 100). Fuente: elaboración propia con base en Tabla 1.</figcaption>
+  </figure>
+
+  <div class="twin">
+    <div class="panel seen">
+      <div class="tag">Promedio simple</div>
+      <h3>8,3%</h3>
+      <p>Suma los cinco crecimientos por quintil y divide entre cinco. Trata a un hogar del quintil 5 —58,9% del ingreso nacional— igual que a uno del quintil 1 —3,4%—.</p>
+      <div class="verdict">Sobreestima el crecimiento real del ingreso agregado en casi el doble.</div>
+    </div>
+    <div class="panel alt">
+      <div class="tag">Promedio ponderado por quintil</div>
+      <h3>4,22%</h3>
+      <p>Multiplica el crecimiento de cada quintil por su participación real en el ingreso total (Tabla 1) y suma los aportes.</p>
+      <div class="verdict">Es la cifra correcta para describir el ingreso agregado del país en 2025.</div>
+    </div>
+  </div>
+  <div class="twin-foot">Ninguna de las dos cifras, sin embargo, es la que explica la caída de la pobreza. Esa explicación viene de <b>cómo se distribuyó</b> ese crecimiento, no de su magnitud promedio. Eso es lo que muestran las secciones siguientes.</div>
+
+  <p style="margin-top:22px">Conviene una nota de cautela metodológica: la participación del quintil más pobre —el insumo más sensible del ejercicio, porque multiplica el peso más pequeño por el mayor crecimiento— se ha reportado entre 3,2% y 3,4% según la revisión de la serie del Banco Mundial que se consulte (vintages 2023–2024 de la Plataforma de Pobreza y Equidad). El ejercicio usa 3,4%. Usar 3,2% desplazaría el crecimiento ponderado de 4,22% a aproximadamente 4,20%: una diferencia de dos centésimas que no altera ninguna de las conclusiones que siguen.</p>
+</section>
+
+<!-- ============ 03 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>La curva de Lorenz: la desigualdad cae en el ejercicio por quintiles</h2></div>
+  <p>Con los pesos de 2024, el 80% más pobre de la población acumula 41,1% del ingreso total, mientras que el 20% superior concentra el 58,9% restante. Al aplicar los crecimientos diferenciales del DANE y renormalizar la distribución implícita de 2025, el 80% inferior pasaría a concentrar 43,2% del ingreso: una mejora distributiva de poco más de dos puntos en un solo año.</p>
+
+  <div class="table-wrap">
+    <table>
+      <caption>Tabla 2 · Coordenadas de la curva de Lorenz por quintiles</caption>
+      <thead>
+        <tr><th>Población acumulada (%)</th><th>Ingreso acumulado 2024 (%)</th><th>Ingreso acumulado implícito 2025 (%)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0,0</td><td>0,0</td><td>0,0</td></tr>
+        <tr><td>20,0</td><td>3,4</td><td>3,6</td></tr>
+        <tr><td>40,0</td><td>10,5</td><td>11,2</td></tr>
+        <tr><td>60,0</td><td>21,8</td><td>23,1</td></tr>
+        <tr><td>80,0</td><td>41,1</td><td>43,2</td></tr>
+        <tr><td>100,0</td><td>100,0</td><td>100,0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <figure>
+    <div class="fig-tag">Figura 4</div>
+    <div class="fig-title">Curva de Lorenz por quintiles, 2024 frente a la distribución implícita de 2025</div>
+    <div class="legend">
+      <span><span class="swatch" style="border-color:#b3a98f;border-top-style:dashed"></span>Equidistribución</span>
+      <span><span class="swatch" style="border-color:#9c3018"></span>2024</span>
+      <span><span class="swatch" style="border-color:#2f6b5e"></span>2025 (implícito)</span>
+    </div>
+    <div class="chart-box" style="height:340px"><canvas id="c4" role="img" aria-label="Curva de Lorenz construida por quintiles para 2024 y la distribución implícita de 2025, mostrando que la curva de 2025 se acerca más a la línea de equidistribución que la de 2024."></canvas></div>
+    <figcaption>Curva de Lorenz agrupada por quintiles. Fuente: elaboración propia con base en Tabla 2.</figcaption>
+  </figure>
+
+  <p>Calculando el coeficiente de Gini agrupado por quintiles a partir de estas dos curvas —uno menos dos veces el área bajo la curva de Lorenz, por el método trapezoidal— el indicador pasa de <b>0,493 en 2024 a 0,475</b> en la distribución implícita de 2025: una caída de 1,8 puntos. Este número no debe confundirse con el Gini oficial del DANE, calculado con microdatos y por tanto sensible a la desigualdad dentro de cada quintil —incluida la del quintil superior, donde se concentra la mayor dispersión de ingresos del país—. El Gini agrupado, por construcción, subestima la desigualdad real. Lo relevante no es replicar su nivel, sino que ambos indicadores se mueven en la misma dirección: hacia una menor concentración. El Gini oficial del DANE cae, en el mismo periodo, de 0,551 a 0,531.</p>
+</section>
+
+<!-- ============ 04 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>Por qué la caída de la pobreza es plausible</h2></div>
+  <p class="lead">Aquí está el punto que la lectura del promedio simple pasa por alto: la pobreza monetaria no depende del ingreso promedio del país. Depende de cuántas personas tienen un ingreso por debajo de una línea fija.</p>
+  <p>Por eso un crecimiento agregado moderado —4,22%— es perfectamente compatible con una caída fuerte de la pobreza, si ese crecimiento se concentra en los hogares que estaban cerca de la línea. Y eso es exactamente lo que muestran los datos por quintiles: un aumento real de 11,8% en el ingreso del quintil más pobre desplaza por encima de la línea de pobreza —$482.041 mensuales per cápita en 2025— a una parte relevante de los hogares que en 2024 estaban apenas por debajo de ella. El bajo crecimiento del quintil superior (0,5%), por su parte, reduce el promedio ponderado sin alterar la pobreza, porque esos hogares ya estaban —y siguen estando— muy por encima del umbral.</p>
+
+  <div class="pull">La pobreza no cae porque suba el ingreso promedio del país: cae porque suben los ingresos de los hogares que estaban más cerca de dejar de ser pobres.</div>
+
+  <p>La verificación más directa de este mecanismo no es la curva de Lorenz construida aquí por quintiles: es la propia descomposición que el DANE incluye en su análisis de 2025. Según la entidad, de los 3,8 puntos porcentuales de caída en la pobreza, el <b>efecto crecimiento</b> del ingreso explica <b>3,72 puntos</b>, el <b>efecto redistribución</b> otros <b>1,99 puntos</b>, y el aumento real de la línea de pobreza —que creció 4,7% nominal en 2025— <b>resta 1,93 puntos</b>. La suma de los tres componentes, 3,72 + 1,99 − 1,93, da 3,78: prácticamente idéntica a la caída observada de 3,8 puntos.</p>
+
+  <figure>
+    <div class="fig-tag">Figura 5</div>
+    <div class="fig-title">Descomposición oficial del DANE del cambio en la pobreza, 2024–2025</div>
+    <div class="chart-box" style="height:260px"><canvas id="c5" role="img" aria-label="Gráfico de barras horizontales de la descomposición del cambio en la pobreza: el efecto crecimiento aporta 3,72 puntos porcentuales, el efecto redistribución 1,99 puntos, el efecto de la línea de pobreza resta 1,93 puntos, y la suma de los tres reproduce el cambio total de 3,78 puntos."></canvas></div>
+    <figcaption>Contribución de cada componente a la caída de 3,8 p.p. en la incidencia de la pobreza monetaria nacional. Fuente: DANE, análisis de descomposición de la Pobreza Monetaria 2025, 12 de junio de 2026.</figcaption>
+  </figure>
+
+  <p>Esta descomposición oficial confirma, con datos propios del DANE y una metodología distinta —la de tipo Datt-Ravallion, no el ejercicio de quintiles de este documento—, el mismo diagnóstico: la caída de la pobreza en 2025 se explica sobre todo por el crecimiento del ingreso concentrado en los hogares de menores recursos, reforzado por una mejora distributiva, y a pesar de —no gracias a— el encarecimiento real de la canasta que define la línea de pobreza.</p>
+</section>
+
+<!-- ============ 05 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2>Coherencia macroeconómica: el consumo de los hogares respalda la plausibilidad</h2></div>
+  <p>Un ejercicio de plausibilidad también debe preguntar si el contexto macroeconómico admite estas cifras. En 2025 el PIB real de Colombia creció 2,6%, por debajo de las expectativas del mercado pero por encima del 1,7% de 2024. Desde el enfoque del gasto, el consumo final total creció 4,2% y, dentro de él, el gasto de consumo final de los hogares creció 3,6%.</p>
+
+  <figure>
+    <div class="fig-tag">Figura 6</div>
+    <div class="fig-title">Crecimiento real de indicadores macroeconómicos seleccionados, Colombia 2025</div>
+    <div class="chart-box" style="height:260px"><canvas id="c6" role="img" aria-label="Gráfico de barras del crecimiento real en 2025: 2,6% el PIB, 4,2% el consumo final total y 3,6% el consumo de los hogares."></canvas></div>
+    <figcaption>Variación real anual, 2025 respecto a 2024. Fuente: DANE, Boletín técnico PIB Trimestral, IV trimestre de 2025 (16 de febrero de 2026).</figcaption>
+  </figure>
+
+  <p>El consumo no es idéntico al ingreso —puede financiarse con crédito, ahorro previo, remesas o transferencias—, pero un crecimiento real del consumo de los hogares de 3,6%, en un año en que el PIB creció apenas 2,6%, es consistente con una mejora real del poder de compra de los hogares por encima del crecimiento promedio de la economía. Es, además, el tipo de composición del crecimiento —impulsado por el consumo de los hogares y el gasto público, con la inversión rezagada— que un mercado laboral más dinámico en los quintiles bajos predeciría.</p>
+</section>
+
+<!-- ============ 06 ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">06</span><h2>Conclusión</h2></div>
+  <p>Con la distribución real por quintiles, los crecimientos del ingreso reportados por el DANE producen un crecimiento agregado ponderado de apenas 4,22%. Pero ese no es el número que decide si la pobreza cae: lo decide el desplazamiento de los hogares cercanos a la línea, y ese desplazamiento depende de dónde se concentra el crecimiento, no de su magnitud promedio.</p>
+  <p>La evidencia disponible es internamente consistente en tres niveles independientes: la variación del ingreso por quintil favorece desproporcionadamente a los hogares pobres; la curva de Lorenz construida con esos quintiles se desplaza hacia la igualdad, en la misma dirección que el Gini oficial; y la propia descomposición del DANE atribuye la caída a crecimiento y redistribución —no a un cambio metodológico en la línea de pobreza, que de hecho jugó en contra—. El consumo real de los hogares ofrece, finalmente, la pieza macroeconómica que cierra el círculo.</p>
+  <p>La distribución real del ingreso no vuelve inverosímil la caída de la pobreza: la explica. Un país puede crecer poco en promedio y reducir la pobreza con fuerza, siempre que ese poco crecimiento ocurra donde más cuenta — y en Colombia, en 2025, ocurrió ahí.</p>
+</section>
+
+<div class="note">
+  <h2>Nota metodológica</h2>
+  <p>El crecimiento agregado ponderado (4,22%) se calcula como la suma, para cada quintil, del producto entre su participación en el ingreso total en 2024 (Banco Mundial, PIP/WDI) y su variación real del ingreso per cápita reportada por el DANE para 2025 (Gráfico 12 del boletín técnico), dividiendo los pesos entre 100. La distribución implícita 2025 (Tabla 1) se obtiene multiplicando cada peso 2024 por (1 + crecimiento real) y renormalizando para que las participaciones sumen 100%. El Gini agrupado por quintiles (Tabla 2) se calcula como 1 menos dos veces el área bajo la curva de Lorenz, integrada por el método trapezoidal sobre los puntos (0,0), (20, y₁), (40, y₂), (60, y₃), (80, y₄) y (100, 100); el resultado es 0,493 para 2024 y 0,475 para la distribución implícita de 2025. Este cálculo agrupado no reemplaza al Gini oficial del DANE, que requiere microdatos o, al menos, deciles/centiles, y que se reporta aquí solo como referencia de contraste direccional (0,551 → 0,531).</p>
+  <p style="margin-top:10px">Verificación de fuentes: las cifras de pobreza monetaria (31,8% → 28,0%), Gini oficial (0,551 → 0,531), variación real del ingreso por quintil (11,8% / 10,4% / 10,3% / 8,4% / 0,5%) y la descomposición crecimiento-redistribución-línea de pobreza (+3,72 / +1,99 / −1,93 p.p.) se verificaron contra el boletín técnico y la presentación de resultados de Pobreza Monetaria 2025 publicados por el DANE el 12 de junio de 2026, y coinciden exactamente. Las cifras macroeconómicas (PIB +2,6%, consumo final total +4,2%, consumo de los hogares +3,6%) se verificaron contra el comunicado del DANE sobre el PIB del cuarto trimestre de 2025 (16 de febrero de 2026). Las participaciones del ingreso por quintil (Banco Mundial) son consistentes con la serie PIP/WDI más reciente, salvo el quintil 1, cuyo valor oscila entre 3,2% y 3,4% según la vintage consultada; el efecto sobre el crecimiento ponderado es de dos centésimas (sección 02) y no afecta las conclusiones.</p>
+  <h2 style="margin-top:18px">Fuentes</h2>
+  <ul>
+    <li>DANE. Boletín técnico y Presentación de resultados: Pobreza Monetaria 2025. Departamento Administrativo Nacional de Estadística, Colombia, 12 de junio de 2026.</li>
+    <li>DANE. Comunicado: el PIB creció 2,6% durante 2025. Departamento Administrativo Nacional de Estadística, Colombia, 16 de febrero de 2026.</li>
+    <li>Banco Mundial. World Development Indicators / Poverty and Inequality Platform: Income share held by lowest, second, third, fourth y highest 20%, Colombia.</li>
+    <li>Cobertura de prensa sobre el boletín de Pobreza Monetaria 2025 (El País, El Colombiano, Pluralidad Z, Bloomberg Línea, Cambio Colombia; junio de 2026).</li>
+  </ul>
+  <div class="colophon">
+    Nota analítica · La aritmética de los quintiles · Junio 2026<br>
+    Verificación de datos sobre cifras oficiales del DANE y el Banco Mundial.<br>
+    Autor: Juan Pablo Jaramillo-Ramón
+  </div>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  if(!window.Chart){return;}
+  var INK='#211c17',RED='#9c3018',SLATE='#2f4858',OCHRE='#946514',
+      TEAL='#2f6b5e',MUT='#6b6356',GRID='rgba(33,28,23,0.09)';
+  Chart.defaults.font.family="'IBM Plex Sans',sans-serif";
+  Chart.defaults.font.size=11.5;
+  Chart.defaults.color=MUT;
+
+  function barDS(data,color){
+    return {data:data,backgroundColor:color,borderColor:color,
+      borderWidth:1,borderRadius:2,barPercentage:.55,categoryPercentage:.6};
+  }
+  var QUINT=['Q1','Q2','Q3','Q4','Q5'];
+
+  // Fig 1 — variación real del ingreso por quintil
+  new Chart(document.getElementById('c1'),{
+    type:'bar',
+    data:{labels:QUINT,datasets:[barDS([11.8,10.4,10.3,8.4,0.5],RED)]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:function(c){return 'Variación real: '+c.parsed.y+'%';}}}},
+      scales:{
+        x:{grid:{display:false}},
+        y:{min:0,max:14,grid:{color:GRID},border:{display:false},
+          title:{display:true,text:'Variación real del ingreso (%)'},
+          ticks:{callback:function(v){return v+'%';}}}
+      }}
+  });
+
+  // Fig 2 — participación del ingreso por quintil
+  new Chart(document.getElementById('c2'),{
+    type:'bar',
+    data:{labels:QUINT,datasets:[barDS([3.4,7.1,11.3,19.3,58.9],SLATE)]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:function(c){return 'Participación: '+c.parsed.y+'%';}}}},
+      scales:{
+        x:{grid:{display:false}},
+        y:{min:0,max:65,grid:{color:GRID},border:{display:false},
+          title:{display:true,text:'Participación en el ingreso total (%)'},
+          ticks:{callback:function(v){return v+'%';}}}
+      }}
+  });
+
+  // Fig 3 — aporte de cada quintil al crecimiento ponderado
+  new Chart(document.getElementById('c3'),{
+    type:'bar',
+    data:{labels:QUINT,datasets:[barDS([0.40,0.74,1.16,1.62,0.29],TEAL)]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:function(c){return 'Aporte: '+c.parsed.y.toFixed(2)+' p.p.';}}}},
+      scales:{
+        x:{grid:{display:false}},
+        y:{min:0,max:1.8,grid:{color:GRID},border:{display:false},
+          title:{display:true,text:'Aporte al crecimiento ponderado (p.p.)'}}
+      }}
+  });
+
+  // Fig 4 — curva de Lorenz por quintiles
+  function lineDS(data,color,dash){
+    return {data:data,borderColor:color,backgroundColor:color,
+      borderWidth:2.6,borderDash:dash||[],pointRadius:3,pointHoverRadius:5,
+      fill:false,tension:.08};
+  }
+  new Chart(document.getElementById('c4'),{
+    type:'line',
+    data:{labels:['0','20','40','60','80','100'],datasets:[
+      lineDS([0,20,40,60,80,100],'#b3a98f',[5,4]),
+      lineDS([0,3.4,10.5,21.8,41.1,100],RED),
+      lineDS([0,3.6,11.2,23.1,43.2,100],TEAL)
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:function(c){
+          var names=['Equidistribución','2024','2025 (implícito)'];
+          return names[c.datasetIndex]+': '+c.parsed.y+'%';}}}},
+      scales:{
+        x:{grid:{display:false},
+          title:{display:true,text:'Población acumulada (%)'}},
+        y:{min:0,max:100,grid:{color:GRID},border:{display:false},
+          title:{display:true,text:'Ingreso acumulado (%)'},
+          ticks:{callback:function(v){return v+'%';}}}
+      }}
+  });
+
+  // Fig 5 — descomposición oficial DANE del cambio en pobreza
+  new Chart(document.getElementById('c5'),{
+    type:'bar',
+    data:{labels:['Efecto crecimiento','Efecto redistribución','Efecto línea de pobreza','Cambio total (suma)'],
+      datasets:[{data:[3.72,1.99,-1.93,3.78],
+        backgroundColor:[TEAL,TEAL,RED,INK],borderWidth:0,
+        barPercentage:.55,categoryPercentage:.6}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:function(c){return c.parsed.x.toFixed(2)+' p.p.';}}}},
+      scales:{
+        x:{min:-3,max:5,grid:{color:GRID},border:{display:false},
+          title:{display:true,text:'Contribución a la caída de la pobreza (p.p.)'}},
+        y:{grid:{display:false},ticks:{font:{size:12,weight:'500'}}}
+      }}
+  });
+
+  // Fig 6 — coherencia macroeconómica
+  new Chart(document.getElementById('c6'),{
+    type:'bar',
+    data:{labels:['PIB real','Consumo final total','Consumo de los hogares'],
+      datasets:[barDS([2.6,4.2,3.6],OCHRE)]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:function(c){return 'Variación real: '+c.parsed.y+'%';}}}},
+      scales:{
+        x:{grid:{display:false}},
+        y:{min:0,max:5,grid:{color:GRID},border:{display:false},
+          title:{display:true,text:'Variación real anual, 2025 (%)'},
+          ticks:{callback:function(v){return v+'%';}}}
+      }}
+  });
+})();
+</script>
+
+</body>
+</html>
