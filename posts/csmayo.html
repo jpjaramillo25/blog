@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="meta-author" content="Juan Pablo Jaramillo-Ramón">
-<meta name="meta-description" content="La intención de voto para la alcaldía de Quito en mayo de 2026 no se ordena por la demografía sino por un clivaje afectivo: correísmo contra anticorreísmo. Un análisis de clusters, probit y predicción de indecisos sobre 509 encuestados.">
+<meta name="meta-description" content="La intención de voto para la alcaldía de Quito en mayo de 2026 no se ordena por la demografía sino por un clivaje afectivo: correísmo contra anticorreísmo (noboísmo). Un análisis de clusters, probit y predicción de indecisos sobre 509 encuestados.">
 <title>El clivaje que ordena el voto en Quito — jpjaramillo25</title>
 <style>
   :root{
@@ -92,22 +92,22 @@
   }
 </style>
 <style>
-  #gate{position:fixed; inset:0; z-index:9999; background:#fafaf8;
-    display:flex; align-items:center; justify-content:center; padding:24px;
+  #gate{position:fixed;inset:0;z-index:9999;background:#fafaf8;
+    display:flex;align-items:center;justify-content:center;padding:24px;
     font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
-  #gate .card{background:#fff; border:1px solid #e4e4e4; border-radius:12px;
-    max-width:420px; width:100%; padding:34px 30px; box-shadow:0 6px 30px rgba(0,0,0,.06);}
-  #gate .lock{font-size:30px; line-height:1; margin-bottom:14px;}
-  #gate h2{margin:0 0 6px; font-size:21px; color:#1a1a1a; font-weight:700;}
-  #gate p{margin:0 0 20px; font-size:14.5px; color:#6b6b6b; line-height:1.55;}
-  #gate input{width:100%; padding:12px 14px; font-size:16px; border:1px solid #ccc;
-    border-radius:8px; outline:none; margin-bottom:12px;}
-  #gate input:focus{border-color:#2E75B6; box-shadow:0 0 0 3px rgba(46,117,182,.12);}
-  #gate button{width:100%; padding:12px 14px; font-size:15px; font-weight:600;
-    color:#fff; background:#1F4E79; border:none; border-radius:8px; cursor:pointer;}
+  #gate .card{background:#fff;border:1px solid #e4e4e4;border-radius:12px;
+    max-width:420px;width:100%;padding:34px 30px;box-shadow:0 6px 30px rgba(0,0,0,.06);}
+  #gate .lock{font-size:30px;line-height:1;margin-bottom:14px;}
+  #gate h2{margin:0 0 6px;font-size:21px;color:#1a1a1a;font-weight:700;}
+  #gate p{margin:0 0 20px;font-size:14.5px;color:#6b6b6b;line-height:1.55;}
+  #gate input{width:100%;padding:12px 14px;font-size:16px;border:1px solid #ccc;
+    border-radius:8px;outline:none;margin-bottom:12px;box-sizing:border-box;}
+  #gate input:focus{border-color:#2E75B6;box-shadow:0 0 0 3px rgba(46,117,182,.12);}
+  #gate button{width:100%;padding:12px 14px;font-size:15px;font-weight:600;
+    color:#fff;background:#1F4E79;border:none;border-radius:8px;cursor:pointer;}
   #gate button:hover{background:#2E75B6;}
-  #gate .err{color:#b3261e; font-size:13.5px; min-height:18px; margin:4px 0 0;}
-  #gate .note{font-size:12px; color:#999; margin-top:16px; line-height:1.5;}
+  #gate .err{color:#b3261e;font-size:13.5px;min-height:18px;margin:4px 0 0;}
+  #gate .note{font-size:12px;color:#999;margin-top:16px;line-height:1.5;}
   body.locked{overflow:hidden;}
   #content.hidden{display:none;}
 </style>
@@ -122,7 +122,7 @@
     <div class="tags">Comportamiento electoral · Quito · Correísmo · Encuestas</div>
     <div class="kicker-top">Análisis de datos · Política subnacional</div>
     <h1>El clivaje que ordena el voto en Quito</h1>
-    <p class="lede">Una encuesta preelectoral de mayo de 2026 muestra a Pabel Muñoz al frente de la carrera por la alcaldía. Pero el dato relevante no es quién gana: es <em>qué</em> ordena el voto. No la edad, ni el ingreso, ni la educación. Un afecto: estar con Correa o estar contra él.</p>
+    <p class="lede">Una encuesta preelectoral de mayo de 2026 muestra a Pabel Muñoz al frente de la carrera por la alcaldía. Pero el dato relevante no es quién gana: es <em>qué</em> ordena el voto. No la edad, ni el ingreso, ni la educación. Un afecto: estar con Correa o estar contra él, refugiado en el noboísmo.</p>
     <div class="author-line"><strong>Juan Pablo Jaramillo-Ramón</strong> · Nota de análisis, junio de 2026 · n = 509 (Quito)</div>
   </div>
 </header>
@@ -132,26 +132,26 @@
   <div class="stats">
     <div class="stat"><div class="num">25,5%</div><div class="lab">intención de voto por Pabel Muñoz, el puntero</div></div>
     <div class="stat"><div class="num">43,8%</div><div class="lab">no tiene candidato: suma de indecisos y voto nulo/blanco</div></div>
-    <div class="stat"><div class="num">+36 p.p.</div><div class="lab">efecto de ser correísta sobre la probabilidad de votar por Muñoz</div></div>
-    <div class="stat"><div class="num">+17,8 p.p.</div><div class="lab">no reconocer a la prefecta de Pichincha predice la indecisión</div></div>
+    <div class="stat"><div class="num">+32 p.p.</div><div class="lab">efecto de ser correísta sobre la probabilidad de votar por Muñoz</div></div>
+    <div class="stat"><div class="num">53%</div><div class="lab">de la base correísta respalda a Muñoz; del campo noboísta, solo 14%</div></div>
   </div>
 
   <div class="finding">
     <div class="ftag">Hallazgo 1 · Estructura del voto</div>
     <h3>La demografía no ordena; el afecto político sí</h3>
-    <p>Sexo, edad, educación e ingresos producen variaciones modestas. La pertenencia al bloque correísta, en cambio, multiplica la probabilidad de votar por Muñoz: 56,3% de ese segmento lo respalda, frente a apenas 11,5% del segmento anticorreísta.</p>
+    <p>Sexo, edad, educación e ingresos producen variaciones modestas. La pertenencia al bloque correísta, en cambio, multiplica la probabilidad de votar por Muñoz: 53% de ese segmento lo respalda, frente a apenas 13,5% del segmento anticorreísta (noboísta).</p>
   </div>
 
   <div class="finding">
     <div class="ftag">Hallazgo 2 · Oposición fragmentada</div>
     <h3>El campo anticorreísta se reparte entre tres candidatos</h3>
-    <p>Merino, Morillo y Barrera compiten por un mismo electorado. Sus votantes comparten perfil —simpatía por Noboa, distancia de Pabón— y se canibalizan. Ninguno consolida la alternativa.</p>
+    <p>Merino, Morillo y Barrera compiten por un mismo electorado. Sus votantes comparten perfil —simpatía por Noboa, distancia de Correa— y se canibalizan. Ninguno consolida la alternativa.</p>
   </div>
 
   <div class="finding">
     <div class="ftag">Hallazgo 3 · La naturaleza de la indecisión</div>
     <h3>No saber por quién votar es apatía, no equilibrio</h3>
-    <p>La indecisión no se explica por un cálculo entre opciones cercanas, sino por desconexión con la política: quien no reconoce a una autoridad con ocho años en el cargo difícilmente sigue la coyuntura electoral.</p>
+    <p>La indecisión no se explica por un cálculo entre opciones cercanas, sino por desconexión con la política: se concentra entre quienes carecen de identidad partidaria y de simpatías definidas, no entre quienes deliberan.</p>
   </div>
 
   <hr class="rule">
@@ -187,29 +187,29 @@
       </tbody>
     </table>
     </div>
-    <p>Para encontrar el principio ordenador hay que dejar de mirar quiénes son los votantes y empezar a mirar qué sienten. Construí, sobre el conjunto de los encuestados, una segmentación que combina perfil sociodemográfico, estado de ánimo, visión sobre el rumbo del cantón, preferencia partidaria y simpatía declarada —en una escala de 0 a 10— hacia tres figuras nacionales: Daniel Noboa, Rafael Correa y Paola Pabón. El algoritmo no recibió instrucción alguna sobre política; agrupó a las personas por su parecido. Y lo que devolvió fue, esencialmente, un mapa afectivo.</p>
+    <p>Para encontrar el principio ordenador hay que dejar de mirar quiénes son los votantes y empezar a mirar qué sienten. Construí, sobre el conjunto de los encuestados, una segmentación que combina perfil sociodemográfico, estado de ánimo, visión sobre el rumbo del cantón, preferencia partidaria y simpatía declarada —en una escala de 0 a 10— hacia las dos figuras que polarizan la política ecuatoriana: Rafael Correa y Daniel Noboa. El algoritmo no recibió instrucción alguna sobre política; agrupó a las personas por su parecido. Y lo que devolvió fue, esencialmente, un mapa afectivo organizado por ese único eje.</p>
   </section>
 
   <section>
     <div class="num-kicker">03</div>
-    <h2>Cuatro tribus afectivas</h2>
-    <p>De la segmentación emergen cuatro grupos. El más numeroso —el 37% del peso muestral— es el de los <strong>independientes descontentos</strong>: escolaridad media, ingresos medios y bajos, sin filiación partidaria, simpatías tibias hacia todas las figuras y una convicción casi unánime (81%) de que Quito necesita un cambio. Es el grupo de la indecisión y del voto nulo; el más volátil y, por tamaño, el más decisivo de cara a la campaña.</p>
-    <p>El segundo es la <strong>base correísta</strong> (24%): casi nueve de cada diez se identifican con la Revolución Ciudadana, califican alto a Correa y a Pabón, y reservan a Noboa la peor evaluación. El tercero, su espejo, es el bloque <strong>anticorreísta</strong> (14%): mayoritariamente masculino, más educado, devoto de Noboa y distante de Correa, refugiado en partidos que no son ni el oficialismo nacional ni el correísmo. El cuarto es una <strong>clase media educada sin partido</strong> (24%): titulados universitarios, más mujeres, jóvenes-adultos, sin ancla ideológica y con simpatías moderadas hacia todos. Indecisos por sofisticación, no por desinformación.</p>
-    <p>Lo revelador aparece al cruzar esas tribus con la intención de voto. La adhesión a Muñoz no se distribuye: se concentra. Entre los correístas alcanza el 56,3%; entre los anticorreístas se desploma al 11,5%. El mismo candidato, dos electorados, una brecha de cuarenta y cinco puntos que ninguna variable demográfica produce por sí sola.</p>
+    <h2>Tres tribus, un solo eje</h2>
+    <p>La segmentación, resuelta en tres grupos —la solución que mejor separa a los encuestados según las medidas de cohesión interna—, devuelve un mapa que se ordena con limpieza a lo largo del eje Correa–Noboa. En un extremo está la <strong>base correísta</strong> (129 casos): califica a Correa con 8,0 sobre 10 y a Noboa con apenas 1,2; el 85% se identifica con la Revolución Ciudadana. En el extremo opuesto, su espejo, el bloque <strong>noboísta o anticorreísta</strong> (82 casos): invierte esas cifras —Noboa 6,4, Correa 2,4—, es algo más educado y refugia su voto, casi en bloque, en partidos que no son el correísmo.</p>
+    <p>Entre ambos polos se extiende el grupo más numeroso, y el más decisivo: los <strong>independientes sin partido</strong> (294 casos, más de la mitad de la muestra). Califican a las dos figuras de forma tibia e intermedia —Noboa 2,8, Correa 3,6—, el 98% no se reconoce en ningún partido y tres de cada cuatro creen que Quito necesita un cambio. Es el pantano de la indecisión: entre ellos, el «no sé» (37%) y el voto nulo (19%) suman más de la mitad. No están en el medio porque deliberen entre Correa y Noboa, sino porque ninguno de los dos afectos los moviliza.</p>
+    <p>Lo revelador aparece al cruzar esas tribus con la intención de voto. La adhesión a Muñoz no se distribuye: se concentra. Entre los correístas alcanza el 53%; entre los noboístas se desploma al 13,5%. El mismo candidato, dos electorados, una brecha de cuarenta puntos que ninguna variable demográfica produce por sí sola.</p>
     <div class="tbl-wrap">
     <table>
-      <caption>Intención de voto según segmento afectivo (porcentajes ponderados). C0: independientes descontentos; C1: base correísta; C2: anticorreístas; C3: clase media sin partido.</caption>
+      <caption>Intención de voto según segmento afectivo (porcentajes ponderados). Correísta: alta simpatía por Correa, militancia en RC; Noboísta: alta simpatía por Noboa, refugio en otros partidos; Independientes: sin filiación ni simpatías definidas.</caption>
       <thead>
-        <tr><th>Candidato</th><th>C0 Indep.</th><th>C1 Correísta</th><th>C2 Anti.</th><th>C3 Clase media</th></tr>
+        <tr><th>Candidato</th><th>Correísta (N=129)</th><th>Noboísta (N=82)</th><th>Independientes (N=294)</th></tr>
       </thead>
       <tbody>
-        <tr><td>Pabel Muñoz</td><td>14,2</td><td class="hi">56,3</td><td>11,5</td><td>18,6</td></tr>
-        <tr><td>Wilson Merino</td><td>8,5</td><td>1,4</td><td class="hi">23,4</td><td>18,3</td></tr>
-        <tr><td>Nathaly Morillo</td><td>4,6</td><td>1,2</td><td class="hi">21,6</td><td>5,2</td></tr>
-        <tr><td>Augusto Barrera</td><td>4,9</td><td>2,3</td><td>12,0</td><td>5,2</td></tr>
-        <tr><td>Jorge Yunda</td><td>6,8</td><td>11,4</td><td>7,9</td><td>5,0</td></tr>
-        <tr><td>No sabe</td><td class="hi">39,0</td><td>13,8</td><td>13,1</td><td>33,2</td></tr>
-        <tr><td>Nulo / blanco</td><td>21,9</td><td>13,6</td><td>10,5</td><td>14,4</td></tr>
+        <tr><td>Pabel Muñoz</td><td class="hi">53,0</td><td>13,5</td><td>16,4</td></tr>
+        <tr><td>Wilson Merino</td><td>2,1</td><td class="hi">25,7</td><td>11,3</td></tr>
+        <tr><td>Nathaly Morillo</td><td>2,8</td><td class="hi">18,9</td><td>4,4</td></tr>
+        <tr><td>Augusto Barrera</td><td>1,6</td><td>11,5</td><td>5,3</td></tr>
+        <tr><td>Jorge Yunda</td><td>10,7</td><td>7,9</td><td>6,3</td></tr>
+        <tr><td>No sabe</td><td>15,7</td><td>12,6</td><td class="hi">37,2</td></tr>
+        <tr><td>Nulo / blanco</td><td>14,1</td><td>10,1</td><td>19,2</td></tr>
       </tbody>
     </table>
     </div>
@@ -218,39 +218,39 @@
   <section>
     <div class="num-kicker">04</div>
     <h2>El clivaje, medido</h2>
-    <p>La segmentación sugiere un patrón; el modelo lo cuantifica. Estimé regresiones probit para cada candidato —la variable dependiente toma el valor 1 si el encuestado lo elige y 0 en cualquier otro caso— tomando como categoría de referencia al bloque anticorreísta. El ejercicio confirma con números lo que las tablas insinúan: pertenecer a la base correísta eleva en <strong>36,1 puntos porcentuales</strong> la probabilidad de votar por Muñoz (p&lt;0,001), y es el único coeficiente estadísticamente distinto de cero en su modelo. Ni los independientes ni la clase media se separan de forma significativa de los anticorreístas. Para Muñoz, el mundo se divide en correístas y todo lo demás.</p>
-    <p>Al sustituir los clusters por las variables que los componen, el mecanismo se vuelve aún más nítido. Cada punto adicional de simpatía hacia Noboa <em>reduce</em> en 2,7 p.p. la probabilidad de votar por Muñoz; cada punto de simpatía hacia Pabón la <em>aumenta</em> en 2,5 p.p. Identificarse con la Revolución Ciudadana añade 14,1 p.p.; preferir la continuidad de la gestión municipal, hasta 34. El voto por Muñoz es, en rigor, un voto afectivo organizado alrededor de un eje: Pabón y Correa de un lado, Noboa del otro.</p>
+    <p>La segmentación sugiere un patrón; el modelo lo cuantifica. Estimé regresiones probit para cada candidato —la variable dependiente toma el valor 1 si el encuestado lo elige y 0 en cualquier otro caso— tomando como categoría de referencia al bloque noboísta. El ejercicio confirma con números lo que las tablas insinúan: pertenecer a la base correísta eleva en <strong>31,9 puntos porcentuales</strong> la probabilidad de votar por Muñoz (p&lt;0,001), y es el único coeficiente estadísticamente distinto de cero en su modelo. El amplio segmento independiente no se separa de forma significativa de los noboístas (p=0,80). Para Muñoz, el mundo se divide en correístas y todo lo demás.</p>
+    <p>Al sustituir los clusters por las variables que los componen, el mecanismo se vuelve aún más nítido. Cada punto adicional de simpatía hacia Noboa <em>reduce</em> en 2,5 p.p. la probabilidad de votar por Muñoz; cada punto de simpatía hacia Correa la <em>aumenta</em> en 1,7 p.p. Identificarse con la Revolución Ciudadana añade 17,5 p.p.; preferir la continuidad de la gestión municipal, hasta 35. El voto por Muñoz es, en rigor, un voto afectivo organizado alrededor de un solo eje: Correa de un lado, Noboa del otro.</p>
     <div class="tbl-wrap">
     <table>
-      <caption>Efectos marginales de pertenecer a cada segmento sobre la probabilidad de votar por cada candidato, respecto del bloque anticorreísta (probit). *** p&lt;0,01; ** p&lt;0,05; n.s. = no significativo.</caption>
+      <caption>Efectos marginales de pertenecer a cada segmento sobre la probabilidad de votar por cada candidato, respecto del bloque noboísta (probit). *** p&lt;0,01; ** p&lt;0,05; * p&lt;0,1; n.s. = no significativo.</caption>
       <thead>
-        <tr><th>Candidato</th><th>Correísta</th><th>Indep.</th><th>Clase media</th></tr>
+        <tr><th>Candidato</th><th>Correísta</th><th>Independientes</th></tr>
       </thead>
       <tbody>
-        <tr><td>Pabel Muñoz</td><td class="hi">+36,1 ***</td><td>+2,3 n.s.</td><td>+5,7 n.s.</td></tr>
-        <tr><td>Nathaly Morillo</td><td>−20,1 ***</td><td>−10,0 ***</td><td>−7,7 **</td></tr>
-        <tr><td>Wilson Merino</td><td>−20,1 ***</td><td>−7,7 **</td><td>−1,0 n.s.</td></tr>
-        <tr><td>Augusto Barrera</td><td>−7,5 **</td><td>−6,3 **</td><td>−4,6 n.s.</td></tr>
-        <tr><td>Jorge Yunda</td><td>+2,8 n.s.</td><td>+0,1 n.s.</td><td>−5,3 n.s.</td></tr>
+        <tr><td>Pabel Muñoz</td><td class="hi">+31,9 ***</td><td>+1,3 n.s.</td></tr>
+        <tr><td>Wilson Merino</td><td>−17,7 ***</td><td>−6,5 *</td></tr>
+        <tr><td>Nathaly Morillo</td><td>−15,2 ***</td><td>−8,1 ***</td></tr>
+        <tr><td>Augusto Barrera</td><td>−8,9 ***</td><td>−5,1 **</td></tr>
+        <tr><td>Jorge Yunda</td><td>+2,0 n.s.</td><td>−1,8 n.s.</td></tr>
       </tbody>
     </table>
     </div>
-    <p>La columna de los opositores cuenta la otra mitad de la historia. Morillo, Merino y Barrera tienen en común un signo: su apoyo cae, de forma significativa, entre los correístas. Son candidatos del campo contrario, y precisamente por eso se estorban. Comparten el mismo nicho —electores que simpatizan con Noboa y desconfían de Pabón— y se reparten entre tres lo que ninguno logra concentrar. La fragmentación de la oposición no es un accidente de personalidades: es la consecuencia aritmética de competir por el mismo afecto.</p>
-    <blockquote class="thesis">El voto en Quito no se ordena por lo que la gente es —su edad, su barrio, su ingreso— sino por lo que la gente siente hacia un solo hombre que ni siquiera está en la papeleta. Correa estructura la elección por ausencia.</blockquote>
-    <p>Hay una excepción, y conviene señalarla con honestidad porque el modelo la señala. Jorge Yunda no encaja en el eje. Ningún segmento explica su voto: su modelo global no alcanza significancia estadística. Lo que sí lo predice, al desagregar las variables, es un perfil generacional —rinde entre los votantes de 20 a 29 años y se hunde entre los mayores de 60— y una preferencia definida por candidatos con trayectoria. Yunda es el residuo del clivaje: el voto que sobrevive fuera de la lógica correísmo/anticorreísmo, anclado en biografía propia más que en pertenencia afectiva.</p>
+    <p>La columna de los opositores cuenta la otra mitad de la historia. Morillo, Merino y Barrera tienen en común un signo: su apoyo cae, de forma significativa, entre los correístas. Son candidatos del campo contrario, y precisamente por eso se estorban. Comparten el mismo nicho —electores que simpatizan con Noboa y desconfían de Correa— y se reparten entre tres lo que ninguno logra concentrar. La fragmentación de la oposición no es un accidente de personalidades: es la consecuencia aritmética de competir por el mismo afecto.</p>
+    <blockquote class="thesis">El voto en Quito no se ordena por lo que la gente es —su edad, su barrio, su ingreso— sino por lo que la gente siente hacia dos hombres que ni siquiera están en la papeleta. Correa y Noboa estructuran la elección por ausencia.</blockquote>
+    <p>Hay una excepción, y conviene señalarla con honestidad porque el modelo la señala. Jorge Yunda no encaja en el eje. Ningún segmento explica su voto: su modelo global no alcanza significancia estadística (p=0,49). Lo que sí lo predice, al desagregar las variables, es un perfil generacional —rinde entre los votantes de 20 a 29 años y se hunde entre los mayores de 60— y una preferencia definida por candidatos con trayectoria. Yunda es el residuo del clivaje: el voto que sobrevive fuera de la lógica correísmo/anticorreísmo, anclado en biografía propia más que en pertenencia afectiva.</p>
   </section>
 
   <section>
     <div class="num-kicker">05</div>
     <h2>La indecisión no es un empate interno</h2>
-    <p>Queda el 43,8% sin candidato, y es tentador leerlo como un electorado deliberante, sopesando opciones parejas. Los datos desmienten esa lectura amable. Un probit sobre la probabilidad de responder «no sé» arroja un predictor dominante: <strong>no reconocer a Paola Pabón aumenta en 17,8 puntos porcentuales</strong> la probabilidad de estar indeciso. Pabón no es una recién llegada —lleva ocho años como prefecta de Pichincha—, de modo que su desconocimiento no mide novedad: mide desconexión. Quien no ubica a una autoridad con esa trayectoria difícilmente sigue la campaña municipal, y por eso mismo no tiene candidato.</p>
-    <p>El reverso confirma el punto. Tener una identidad política definida <em>reduce</em> la indecisión: militar en la Revolución Ciudadana la baja en 16,4 p.p., y cada grado de simpatía por Noboa la disminuye también. Quien tiene un ancla —a favor o en contra del correísmo— ya tiene, casi siempre, un nombre. La indecisión es alta entre los más jóvenes, entre quienes tienen formación técnica y entre las mujeres; es baja, en cambio, entre los de ingresos bajos, que no dudan: votan nulo o en blanco. El padrón sin asignar no es un jurado que delibera. Es un público que todavía no entró a la sala.</p>
+    <p>Queda el 43,8% sin candidato, y es tentador leerlo como un electorado deliberante, sopesando opciones parejas. Los datos desmienten esa lectura amable. Un probit sobre la probabilidad de responder «no sé» muestra que lo que más reduce la indecisión es tener un ancla afectiva: <strong>militar en la Revolución Ciudadana la baja en 19,4 puntos porcentuales</strong> (p&lt;0,01), y cada grado de simpatía por Noboa la disminuye también. Quien tiene una posición tomada en el eje Correa–Noboa —a favor o en contra— ya tiene, casi siempre, un nombre. La indecisión es, ante todo, la marca de quienes no se ubican en ese eje.</p>
+    <p>El perfil sociodemográfico confirma que se trata de desconexión, no de cálculo. La indecisión es más alta entre los más jóvenes (16 a 19 años, +19,2 p.p.), entre quienes tienen formación técnica o artesanal (+21,5 p.p.) y entre las mujeres (+8,9 p.p.). Es más baja, en cambio, entre quienes tienen ingresos bajos: ellos no dudan, votan nulo o en blanco. Sentir alegría reduce la probabilidad de no saber; no poder siquiera nombrar el propio estado de ánimo la aumenta. El padrón sin asignar no es un jurado que delibera entre Correa y Noboa. Es un público que todavía no entró a la sala donde esa discusión ocurre.</p>
   </section>
 
   <section>
     <div class="num-kicker">06</div>
     <h2>Hacia dónde se inclina lo que aún no se decide</h2>
-    <p>Si la indecisión es desconexión y no equilibrio, cabe una pregunta operativa: cuando esos votantes finalmente entren a la sala, ¿hacia quién se moverán? Para estimarlo entrené un modelo —una regresión logística multinomial— sobre los 304 encuestados que <em>sí</em> declararon candidato, enseñándole a asociar cada perfil de actitudes con cada opción. Luego apliqué ese modelo a los 128 indecisos, para los que conozco las mismas actitudes aunque no su voto, y le pedí que estimara a qué candidato se parece más cada uno. El procedimiento acierta el 59,9% de los casos conocidos, frente al 43,8% de una regla ingenua que asignara a todos el candidato más votado: las actitudes, en efecto, contienen información sobre la preferencia.</p>
+    <p>Si la indecisión es desconexión y no equilibrio, cabe una pregunta operativa: cuando esos votantes finalmente entren a la sala, ¿hacia quién se moverán? Para estimarlo entrené un modelo —una regresión logística multinomial— sobre los 304 encuestados que <em>sí</em> declararon candidato, enseñándole a asociar cada perfil de actitudes (perfil sociodemográfico, ánimo, rumbo, partido y simpatía hacia Correa y Noboa) con cada opción. Luego apliqué ese modelo a los 128 indecisos, para los que conozco las mismas actitudes aunque no su voto, y le pedí que estimara a qué candidato se parece más cada uno. El procedimiento acierta el 61,8% de los casos conocidos, frente al 43,8% de una regla ingenua que asignara a todos el candidato más votado: las actitudes, en efecto, contienen información sobre la preferencia.</p>
     <p>Conviene ser explícito sobre lo que este ejercicio puede y no puede afirmar. No predice el voto futuro de nadie; reasigna a cada indeciso el candidato más compatible con las actitudes que <em>ya reveló</em> en otras preguntas. Es una proyección condicional, no un pronóstico: supone que la indecisión se resolverá según las afinidades existentes, y deja fuera, por construcción, los efectos de la campaña, los debates y la abstención de último momento.</p>
     <div class="tbl-wrap">
     <table>
@@ -259,29 +259,29 @@
         <tr><th>Candidato</th><th>Indecisos: candidato más cercano</th><th>Escenario proyectado</th></tr>
       </thead>
       <tbody>
-        <tr><td>Pabel Muñoz</td><td class="hi">43,4</td><td class="hi">44,7</td></tr>
-        <tr><td>Wilson Merino</td><td>21,3</td><td>20,5</td></tr>
-        <tr><td>Jorge Yunda</td><td>15,5</td><td>14,3</td></tr>
-        <tr><td>Nathaly Morillo</td><td>10,2</td><td>11,0</td></tr>
-        <tr><td>Augusto Barrera</td><td>9,7</td><td>9,6</td></tr>
+        <tr><td>Pabel Muñoz</td><td class="hi">53,4</td><td class="hi">47,9</td></tr>
+        <tr><td>Wilson Merino</td><td>24,7</td><td>21,6</td></tr>
+        <tr><td>Jorge Yunda</td><td>9,9</td><td>12,5</td></tr>
+        <tr><td>Nathaly Morillo</td><td>6,8</td><td>9,9</td></tr>
+        <tr><td>Augusto Barrera</td><td>5,1</td><td>8,1</td></tr>
       </tbody>
     </table>
     </div>
-    <p>El resultado es a la vez tranquilizador y revelador para la candidatura puntera. Tranquilizador porque, reasignados los indecisos según su afinidad, el orden no se altera y Muñoz conserva una ventaja amplia, cercana al 45% del voto efectivo. Revelador porque el bloque indeciso dista de ser neutro: un 43,4% de quienes hoy no deciden tiene un perfil afectivo más próximo al votante de Muñoz que al de cualquier otro. La continuidad correísta no solo lidera entre los decididos; también es el destino más probable de buena parte de la indecisión, si esa indecisión llega a resolverse. La segunda reserva, más modesta, pertenece a Merino, lo que ratifica su lugar como principal —y solitaria— alternativa anticorreísta.</p>
+    <p>El resultado es a la vez tranquilizador y revelador para la candidatura puntera. Tranquilizador porque, reasignados los indecisos según su afinidad, el orden no se altera y Muñoz conserva una ventaja amplia, cercana al 48% del voto efectivo. Revelador porque el bloque indeciso dista de ser neutro: un 53,4% de quienes hoy no deciden tiene un perfil afectivo más próximo al votante de Muñoz que al de cualquier otro. La continuidad correísta no solo lidera entre los decididos; también es el destino más probable de la mayoría de la indecisión, si esa indecisión llega a resolverse. La segunda reserva, más modesta, pertenece a Merino, lo que ratifica su lugar como principal —y solitaria— alternativa noboísta.</p>
   </section>
 
   <section>
     <div class="num-kicker">07</div>
     <h2>Conclusión: una elección sobre un ausente</h2>
-    <p>La contribución de este análisis es doble. Empíricamente, muestra que la intención de voto para la alcaldía de Quito en mayo de 2026 no se estructura por las divisiones sociodemográficas clásicas, sino por un clivaje afectivo entre correísmo y anticorreísmo, robusto a la segmentación, a los modelos probit por candidato y a la sustitución de los clusters por sus variables constituyentes. Sustantivamente, sugiere que la fragmentación de la oposición es endógena al clivaje —tres candidatos disputándose un mismo afecto— y que la indecisión masiva es desconexión política antes que deliberación, con una inclinación latente que, de activarse, favorecería al puntero.</p>
+    <p>La contribución de este análisis es doble. Empíricamente, muestra que la intención de voto para la alcaldía de Quito en mayo de 2026 no se estructura por las divisiones sociodemográficas clásicas, sino por un clivaje afectivo entre correísmo y anticorreísmo —es decir, noboísmo—, robusto a la segmentación, a los modelos probit por candidato y a la sustitución de los clusters por sus variables constituyentes. Sustantivamente, sugiere que la fragmentación de la oposición es endógena al clivaje —tres candidatos disputándose un mismo afecto anti-Correa— y que la indecisión masiva es desconexión política antes que deliberación, con una inclinación latente que, de activarse, favorecería al puntero.</p>
     <p>De allí surgen preguntas que esta encuesta no puede responder. ¿Logrará alguno de los aspirantes opositores consolidar el campo anticorreísta antes de los comicios, o la aritmética del clivaje los condena a dividirse? ¿Qué moviliza al 37% de independientes descontentos que hoy ni eligen ni rechazan, sino que simplemente se ausentan? ¿Puede una campaña convertir la apatía en voto, o solo redistribuye a los que ya estaban dentro de la sala?</p>
-    <blockquote class="thesis">En Quito, la papeleta tendrá cinco nombres, pero la elección se juega sobre un sexto que no aparece en ella. El voto por Muñoz es un voto por Correa; el de sus rivales, un voto contra él. La política local hace tiempo que dejó de ser local: el afecto nacional la define.</blockquote>
+    <blockquote class="thesis">En Quito, la papeleta tendrá cinco nombres, pero la elección se juega sobre dos que no aparecen en ella. El voto por Muñoz es un voto por Correa; el de sus rivales, un voto por Noboa. La política local hace tiempo que dejó de ser local: el afecto nacional la define.</blockquote>
   </section>
 
   <div class="colophon">
     <div class="h">Sobre el análisis</div>
     <p><strong>Datos:</strong> encuesta preelectoral CS_Quito, levantada el 8 y 9 de mayo de 2026 en el cantón Quito (n = 509; muestra provincial total de 2.848 casos en ocho cantones de Pichincha). Distribuciones ponderadas por el factor de expansión muestral.</p>
-    <p><strong>Métodos:</strong> segmentación por K-means (k = 4) sobre variables sociodemográficas, anímicas, de rumbo, partidarias y de simpatía 0–10 hacia Noboa, Correa y Pabón; modelos probit por candidato con efectos marginales; regresión logística multinomial para la reasignación condicional de indecisos (precisión en muestra de 59,9% frente a una línea base de 43,8%).</p>
+    <p><strong>Métodos:</strong> segmentación por K-means (k = 3, seleccionada por índice de silueta) sobre variables sociodemográficas, anímicas, de rumbo, partidarias y de simpatía 0–10 hacia Correa y Noboa; modelos probit por candidato con efectos marginales; regresión logística multinomial para la reasignación condicional de indecisos (precisión en muestra de 61,8% frente a una línea base de 43,8%).</p>
     <p><strong>Advertencia epistémica:</strong> los modelos identifican asociación, no causalidad. Las proyecciones de indecisos son condicionales a las actitudes ya reveladas y no incorporan efectos de campaña ni abstención. Las especificaciones de tres candidatos con pocos casos positivos deben leerse como indicativas.</p>
   </div>
 
@@ -293,7 +293,7 @@
   <div class="card">
     <div class="lock">&#128274;</div>
     <h2>Borrador privado</h2>
-    <p>Este documento est&aacute; en revisi&oacute;n. Ingresa la clave para verlo.</p>
+    <p>Este documento est&#225; en revisi&#243;n. Ingresa la clave para verlo.</p>
     <input id="pw" type="password" placeholder="Clave de acceso" autocomplete="off" autofocus>
     <button id="enter">Entrar</button>
     <p class="err" id="err"></p>
@@ -317,13 +317,12 @@
       content.classList.remove('hidden');
       try{ sessionStorage.setItem('qc_ok','1'); }catch(e){}
     } else {
-      err.textContent = 'Clave incorrecta. Int&eacute;ntalo de nuevo.'.replace('&eacute;','é');
+      err.textContent = 'Clave incorrecta. Inténtalo de nuevo.';
       pw.value=''; pw.focus();
     }
   }
   document.getElementById('enter').addEventListener('click', tryEnter);
   pw.addEventListener('keydown', function(e){ if(e.key==='Enter') tryEnter(); });
-  // Remember within the same tab session so reload doesn't re-prompt
   try{
     if(sessionStorage.getItem('qc_ok')==='1'){
       gate.style.display='none';
