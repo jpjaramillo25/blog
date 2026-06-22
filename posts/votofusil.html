@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Juan Pablo Jaramillo-Ramón">
+    <meta name="description" content="Refutación cuantitativa del argumento del voto fusil: la violencia municipal no predice el voto de izquierda en Colombia 2026 cuando se controla por tamaño poblacional.">
+    <title>El voto fusil una narrativa más — Juan Pablo Jaramillo-Ramón</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 60px 48px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        /* Tags line */
+        .tags {
+            font-size: 0.82em;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #7f8c8d;
+            margin-bottom: 18px;
+        }
+        .tags span { margin-right: 14px; }
+
+        /* Title */
+        h1 {
+            font-size: 2.3em;
+            line-height: 1.25;
+            color: #1a252f;
+            margin-bottom: 16px;
+        }
+        h1 em {
+            font-style: italic;
+            color: inherit;
+        }
+
+        /* Deck / lead */
+        .deck {
+            font-size: 1.12em;
+            color: #34495e;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        /* Byline */
+        .byline {
+            font-size: 0.88em;
+            color: #95a5a6;
+            margin-bottom: 36px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ecf0f1;
+            margin: 32px 0;
+        }
+
+        /* Stats strip */
+        .stats-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .stat {
+            text-align: center;
+            padding: 20px 12px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .stat-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #1a252f;
+            line-height: 1.1;
+            display: block;
+        }
+        .stat-label {
+            font-size: 0.78em;
+            color: #7f8c8d;
+            line-height: 1.4;
+            margin-top: 6px;
+            display: block;
+        }
+
+        /* Section headers */
+        h2 {
+            font-size: 1.55em;
+            color: #1a252f;
+            margin: 44px 0 18px 0;
+            line-height: 1.3;
+        }
+        .section-num {
+            font-size: 0.75em;
+            font-weight: 700;
+            color: #e74c3c;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            color: #34495e;
+            margin: 28px 0 12px 0;
+        }
+
+        /* Body text */
+        p {
+            margin-bottom: 20px;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        /* Pull quote */
+        blockquote {
+            margin: 28px 0;
+            padding: 18px 24px;
+            background: #fef9f3;
+            border-left: 4px solid #e74c3c;
+            font-style: italic;
+            color: #555;
+            line-height: 1.65;
+        }
+
+        /* Result cards — vertical */
+        .result-stack {
+            margin: 24px 0;
+            border: 1px solid #e8edf2;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .result-row {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e8edf2;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .result-row:last-child { border-bottom: none; }
+        .result-row.highlight { background: #fef9f3; }
+        .result-label {
+            font-size: 0.85em;
+            font-weight: 600;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .result-rho {
+            font-size: 1.55em;
+            font-weight: 700;
+            color: #1a252f;
+            line-height: 1.1;
+        }
+        .result-rho.null { color: #95a5a6; }
+        .result-rho.weak { color: #f39c12; }
+        .result-note {
+            font-size: 0.88em;
+            color: #7f8c8d;
+            margin-top: 2px;
+        }
+
+        /* Key finding box */
+        .finding {
+            background: #e8f4f8;
+            border-left: 4px solid #2980b9;
+            padding: 20px 24px;
+            margin: 28px 0;
+            border-radius: 2px;
+        }
+        .finding strong { color: #2980b9; }
+
+        /* Footer */
+        .footnote {
+            font-size: 0.88em;
+            color: #95a5a6;
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid #ecf0f1;
+            line-height: 1.6;
+        }
+        .footnote p { margin-bottom: 10px; text-align: left; }
+
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            border-bottom: 1px dotted #3498db;
+        }
+        a:hover { color: #e74c3c; }
+
+        strong { color: #1a252f; }
+
+        @media (max-width: 640px) {
+            .container { padding: 36px 20px; }
+            .stats-strip { grid-template-columns: repeat(2, 1fr); }
+            h1 { font-size: 1.7em; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="tags">
+        <span>Análisis de datos</span>
+        <span>Colombia</span>
+        <span>Seguridad &amp; violencia</span>
+        <span>Junio 2026</span>
+    </div>
+
+    <h1>El voto fusil<br><em>una narrativa más</em></h1>
+
+    <p class="deck">La narrativa de que "municipios más violentos votan más por la izquierda" circula en redes como si fuera un hecho establecido. Con datos de 1.031 municipios colombianos y un control estadístico básico, se desmorona.</p>
+
+    <p class="byline">Análisis de datos · Primera vuelta presidencial Colombia 2026 · Fuentes: SPOA-FGN, Registraduría, DANE · Autor: Juan Pablo Jaramillo-Ramón</p>
+
+    <hr>
+
+    <div class="stats-strip">
+        <div class="stat">
+            <span class="stat-value">1.031</span>
+            <span class="stat-label">municipios con datos completos analizados</span>
+        </div>
+        <div class="stat">
+            <span class="stat-value">90,1%</span>
+            <span class="stat-label">del universo electoral nacional cubierto</span>
+        </div>
+        <div class="stat">
+            <span class="stat-value">+0.198</span>
+            <span class="stat-label">correlación bruta homicidios-voto izquierda</span>
+        </div>
+        <div class="stat">
+            <span class="stat-value">+0.021</span>
+            <span class="stat-label">la misma correlación controlando por población</span>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- 01 -->
+    <h2><span class="section-num">01</span>La narrativa y su problema</h2>
+
+    <p>En redes sociales prolifera una tesis sobre el <strong>"voto fusil"</strong> que se repite con la confianza de quien cree que los datos la respaldan. La idea es esta: en municipios más violentos, la gente vota más por la izquierda. El mecanismo específico que se invoca es la coerción: grupos armados —las FARC, sus disidencias, el ELN— ejercen control territorial y presionan electoralmente a favor de candidatos del bloque izquierdista con los que tienen afinidad histórica o conveniencia política.</p>
+
+    <p>La tesis tiene sustento geográfico superficial. Existe una coincidencia real: territorios violentos del Caribe, el Pacífico, la Amazonía y las fronteras votan de forma más izquierdista que el interior andino. Entonces la conclusión parece obvia: la violencia produce el voto de izquierda.</p>
+
+    <p>Pero hay un error de razonamiento en esa inferencia. Y se llama <strong>variable de confusión</strong>.</p>
+
+    <!-- 02 -->
+    <h2><span class="section-num">02</span>El confusor que la narrativa ignora</h2>
+
+    <p>Dos variables pueden correlacionar fuertemente sin que una cause la otra. Basta con que ambas estén causadas por una tercera variable que actúa como confusor. Establecer si la correlación es causal requiere controlar por ese confusor.</p>
+
+    <p>En este caso el confusor es obvio: <strong>tamaño municipal</strong>.</p>
+
+    <p>Los municipios grandes tienen más homicidios en números absolutos —simplemente porque hay más personas. Al mismo tiempo, los municipios grandes tienden a ser más urbanos, más integrados institucionalmente, con sectores populares organizados y una tradición de voto de izquierda más consolidada. Entonces: municipios grandes tienen más homicidios y votan más izquierda. Pero el tamaño es lo que las une, no una la causa de la otra.</p>
+
+    <p>La pregunta correcta no es "¿municipios violentos votan más izquierda?". Eso es cierto en bruto pero es la pregunta incorrecta. La pregunta correcta es: "¿dos municipios de igual tamaño, uno violento y otro pacífico, votan diferente?" Si la respuesta es no, la narrativa del voto fusil no tiene respaldo empírico.</p>
+
+    <blockquote>
+        "Un análisis correlacional que no controla por tamaño poblacional en Colombia no está midiendo la relación entre violencia y voto. Está midiendo la relación entre tamaño municipal y voto, con violencia como variable interpuesta."
+    </blockquote>
+
+    <!-- 03 -->
+    <h2><span class="section-num">03</span>Los datos: 1.031 municipios, cuatro ventanas temporales</h2>
+
+    <p>Para testear la hipótesis, utilicé tres fuentes de datos públicos: homicidios de la base SPOA-FGN de la Fiscalía General (2003-2026), resultados electorales de la Registraduría (primera vuelta presidencial del 31 de mayo de 2026), y proyecciones de población del DANE. El análisis cubre 1.031 municipios con datos completos, equivalentes a 21,6 millones de votos válidos —el 90,1% del universo electoral nacional.</p>
+
+    <p>Si la violencia realmente fuera el mecanismo que mueve el voto, debería manifestarse consistentemente a través del tiempo. Por eso testeé cuatro períodos distintos:</p>
+
+    <div class="result-stack">
+        <div class="result-row">
+            <span class="result-label">Homicidios 2025</span>
+            <span style="color:#34495e; font-weight:600;">Violencia en el año electoral mismo</span>
+            <span class="result-note">Mide si la coyuntura de seguridad inmediata predice el voto. N = 1.031 municipios.</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Homicidios 2016</span>
+            <span style="color:#34495e; font-weight:600;">Línea base estructural, previa al Acuerdo FARC</span>
+            <span class="result-note">Completamente exógena al ciclo electoral de 2026. N = 1.030 municipios.</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Cambio 2016 → 2025</span>
+            <span style="color:#34495e; font-weight:600;">Trayectoria de largo plazo (una década)</span>
+            <span class="result-note">Mide si municipios que se deterioraron más votan diferente. N = 1.030 municipios.</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Cambio 2021 → 2025</span>
+            <span style="color:#34495e; font-weight:600;">Período de la administración Petro</span>
+            <span class="result-note">Testea si el electorado premió o castigó el desempeño de seguridad reciente. N = 1.031 municipios.</span>
+        </div>
+    </div>
+
+    <!-- 04 -->
+    <h2><span class="section-num">04</span>Primer hallazgo: la correlación de 2025 es espuria</h2>
+
+    <p>En 2025, año electoral, los municipios más violentos votaron más por Cepeda (candidato de izquierda). La correlación de Spearman es ρ = +0.198, estadísticamente significativa. Es una asociación real y detectable.</p>
+
+    <p>Pero cuando controlo por tamaño poblacional mediante correlación parcial con residuos OLS, esa correlación se desmorona por completo.</p>
+
+    <div class="result-stack">
+        <div class="result-row">
+            <span class="result-label">Sin control — Homicidios 2025 vs. voto Cepeda</span>
+            <span class="result-rho">ρ = +0.198</span>
+            <span class="result-note">p &lt; 0.0001. Municipios violentos votan más izquierda. Correlación real.</span>
+        </div>
+        <div class="result-row highlight">
+            <span class="result-label">Controlando por ln(población)</span>
+            <span class="result-rho null">ρ = +0.021</span>
+            <span class="result-note">p = 0.427. Desaparece. No significativa. La relación era artefacto de tamaño.</span>
+        </div>
+    </div>
+
+    <p>Traduzco: dos municipios de igual población, uno con homicidios altos y otro con homicidios bajos, votan de forma prácticamente idéntica. El tamaño es lo que importa. La violencia es irrelevante una vez se limpia por ese confusor.</p>
+
+    <!-- 05 -->
+    <h2><span class="section-num">05</span>Segundo hallazgo: la línea base de 2016 reproduce el mismo patrón</h2>
+
+    <p>Quizás 2025 tiene efectos coyunturales que nublan el análisis. Verifico entonces con la violencia de 2016, completamente exógena al ciclo electoral de 2026 —anterior a Petro, anterior al rebote post-acuerdo, anterior a la presente campaña. Si el argumento del voto fusil fuera estructural, la violencia histórica también debería predecir el voto.</p>
+
+    <div class="result-stack">
+        <div class="result-row">
+            <span class="result-label">Sin control — Homicidios 2016 vs. voto Cepeda</span>
+            <span class="result-rho">ρ = +0.293</span>
+            <span class="result-note">p &lt; 0.0001. Correlación bruta más fuerte que en 2025.</span>
+        </div>
+        <div class="result-row highlight">
+            <span class="result-label">Controlando por ln(población)</span>
+            <span class="result-rho null">ρ = −0.049</span>
+            <span class="result-note">p = 0.116. Desaparece. Incluso invierte levemente de signo.</span>
+        </div>
+    </div>
+
+    <p>La violencia de hace diez años tampoco predice el voto de 2026 cuando controlo por tamaño. El patrón es consistente: hay una geografía que persiste, pero es geográfica y estructural, no causal. Y el confusor que la genera es el mismo en todos los períodos.</p>
+
+    <!-- 06 -->
+    <h2><span class="section-num">06</span>Tercer hallazgo: los shocks recientes de violencia son electoralmente inertes</h2>
+
+    <p>Tal vez la pregunta no es sobre niveles sino sobre cambios. Municipios donde la violencia subió inesperadamente en 2025, ¿votaron diferente?</p>
+
+    <p>Para testear esto construí una variable de "shock": el residuo de un modelo que predice ln(hom_2025) desde ln(hom_2024) y ln(población). Ese residuo captura el aumento de violencia no explicado por la trayectoria previa del municipio.</p>
+
+    <div class="result-stack">
+        <div class="result-row highlight">
+            <span class="result-label">Shock de violencia 2024 → 2025</span>
+            <span class="result-rho null">ρ = −0.022</span>
+            <span class="result-note">p = 0.477. Completamente nulo. Sin relación detectable.</span>
+        </div>
+    </div>
+
+    <p>Los municipios donde la violencia se disparó inesperadamente en 2025 no mostraron ningún desplazamiento de preferencia electoral. Los votantes colombianos, a nivel municipal agregado, no castigaron al gobierno por deterioros recientes de seguridad.</p>
+
+    <!-- 07 -->
+    <h2><span class="section-num">07</span>Cuarto hallazgo: el cambio de largo plazo sobrevive el control, pero es débil</h2>
+
+    <p>Hay un resultado que sí persiste: el cambio acumulado de violencia entre 2016 y 2025. Municipios donde los homicidios crecieron más a lo largo de la década tienden a votar ligeramente más por la izquierda, incluso después de limpiar por tamaño.</p>
+
+    <div class="result-stack">
+        <div class="result-row">
+            <span class="result-label">Sin control — Cambio % 2016-2025 vs. voto Cepeda</span>
+            <span class="result-rho">ρ = +0.159</span>
+            <span class="result-note">p &lt; 0.0001.</span>
+        </div>
+        <div class="result-row highlight">
+            <span class="result-label">Controlando por ln(población)</span>
+            <span class="result-rho weak">ρ = +0.091</span>
+            <span class="result-note">p = 0.001. Único resultado robusto al control.</span>
+        </div>
+    </div>
+
+    <p>Pero observe el tamaño del efecto: ρ = +0.091 explica menos del 1% de la varianza total en comportamiento electoral. Es estadísticamente distinguible de cero solo gracias al N grande. Sustantivamente, es negligible. No es la base para una narrativa de causalidad.</p>
+
+    <!-- 08 -->
+    <h2><span class="section-num">08</span>Quinto hallazgo: la era Petro no deja huella electoral en seguridad</h2>
+
+    <p>La pregunta política más directa: ¿castigó o premió el electorado a Petro por los resultados de violencia bajo su administración?</p>
+
+    <p>Bajo el gobierno Petro (agosto 2022 – junio 2026), los homicidios subieron modestamente: +1,7%, de aproximadamente 12.400 a 12.600 anuales. Un aumento pequeño, con heterogeneidad territorial notable. ¿Se reflejó en el voto municipal?</p>
+
+    <div class="result-stack">
+        <div class="result-row">
+            <span class="result-label">Sin control — Cambio % 2021-2025 vs. voto Cepeda</span>
+            <span class="result-rho">ρ = +0.101</span>
+            <span class="result-note">p = 0.006. Correlación bruta pequeña.</span>
+        </div>
+        <div class="result-row highlight">
+            <span class="result-label">Controlando por ln(población)</span>
+            <span class="result-rho null">ρ = +0.036</span>
+            <span class="result-note">p = 0.324. Desaparece. No significativa.</span>
+        </div>
+    </div>
+
+    <p>Desaparece. Los electores no castigaron ni premiaron basándose en el cambio de violencia bajo Petro. La política de seguridad de la administración saliente, a nivel de comportamiento electoral municipal, no dejó huella detectable.</p>
+
+    <!-- 09 -->
+    <h2><span class="section-num">09</span>Síntesis: cinco especificaciones, una conclusión</h2>
+
+    <p>Los cinco hallazgos producen la misma lectura. La presento de forma consolidada:</p>
+
+    <div class="result-stack">
+        <div class="result-row">
+            <span class="result-label">Nivel de violencia 2025</span>
+            <span style="color:#7f8c8d; font-size:0.95em;">Bruto: ρ = +0.198 · Controlado: ρ = +0.021 (ns)</span>
+            <span class="result-note">Espuria. Desaparece bajo control básico.</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Nivel de violencia 2016</span>
+            <span style="color:#7f8c8d; font-size:0.95em;">Bruto: ρ = +0.293 · Controlado: ρ = −0.049 (ns)</span>
+            <span class="result-note">Espuria. Incluso invierte signo.</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Shock 2024 → 2025</span>
+            <span style="color:#7f8c8d; font-size:0.95em;">ρ = −0.022 (ns)</span>
+            <span class="result-note">Nula. Sin relación en ninguna especificación.</span>
+        </div>
+        <div class="result-row highlight">
+            <span class="result-label">Cambio 2016 → 2025</span>
+            <span style="color:#f39c12; font-size:0.95em; font-weight:600;">Bruto: ρ = +0.159 · Controlado: ρ = +0.091 (p=0.001)</span>
+            <span class="result-note">Único resultado robusto. Explica &lt;1% de varianza. Débil.</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Era Petro 2021 → 2025</span>
+            <span style="color:#7f8c8d; font-size:0.95em;">Bruto: ρ = +0.101 · Controlado: ρ = +0.036 (ns)</span>
+            <span class="result-note">Espuria. Desaparece bajo control.</span>
+        </div>
+    </div>
+
+    <!-- 10 -->
+    <h2><span class="section-num">10</span>Por qué la geografía coincide y no implica causalidad</h2>
+
+    <p>La coincidencia geográfica entre violencia e izquierda es real. Pero no es la violencia lo que produce el voto. Es que los mismos territorios que históricamente han sido más izquierdistas —por razones ideológicas, de estructura social, de marginalización histórica del Estado— son también los territorios donde grupos armados han tenido mayor presencia y donde la violencia ha sido más persistente.</p>
+
+    <p>El Pacífico colombiano, la Amazonía, el Caribe marginal: son territorios con ausencia institucional crónica, economías vinculadas al narcotráfico, comunidades que llevan décadas fuera del Estado. Esas condiciones producen simultáneamente dos cosas: violencia persistente y preferencias electorales que tienden hacia candidatos que ofrecen algún tipo de redistribución o reconocimiento.</p>
+
+    <p>La dirección de la causalidad es la inversa a la que propone la narrativa popular. No es que la violencia genere el voto de izquierda. Es que las estructuras sociales que producen violencia también producen ese alineamiento electoral. Son síntomas del mismo fenómeno de fondo, no una causa de la otra.</p>
+
+    <blockquote>
+        "Si quiere medir si los grupos armados coercionan electorados, necesita datos de presencia territorial de grupos armados, no datos de homicidios agregados. La tasa de homicidios no mide control territorial: un grupo que controla completamente un territorio puede mantenerlo muy tranquilo, precisamente porque ya no tiene quién le dispute."
+    </blockquote>
+
+    <!-- 11 -->
+    <h2><span class="section-num">11</span>Conclusión</h2>
+
+    <div class="finding">
+        <strong>La tesis de que municipios más violentos votan más por la izquierda es falsa como argumento causal.</strong> La correlación bruta existe pero es espuria: ambas variables —violencia y voto izquierdista— están correlacionadas con tamaño y urbanización, no una con la otra. Bajo el más básico de los controles estadísticos, la relación desaparece en cuatro de cinco especificaciones. La quinta sobrevive con un efecto tan pequeño que no sostiene ninguna narrativa causal.
+    </div>
+
+    <p>Los datos no respaldan la idea de que la seguridad fue el factor electoral determinante en Colombia 2026. La geografía electoral está estructurada por factores históricos y estructurales que son resistentes a cambios coyunturales de violencia. Municipios que deterioraron su seguridad durante 2025 no mostraron ningún movimiento de voto.</p>
+
+    <p>Eso no cierra el debate sobre coerción electoral. Es un debate diferente, que requiere datos diferentes —presencia de grupos armados a nivel sub-municipal, reportes de control territorial, análisis de vereda. Lo que sí cierra es la versión simplista: <em>más homicidios = más voto izquierda</em>. Eso no existe en los datos.</p>
+
+    <hr>
+
+    <div class="footnote">
+        <p><strong>Nota metodológica</strong></p>
+        <p>Análisis de 1.031 municipios colombianos con datos de homicidios SPOA-FGN (2003-2026), resultados electorales primera vuelta Registraduría (31 de mayo de 2026) y proyecciones de población DANE (2025). Todas las correlaciones usan coeficiente de Spearman (no paramétrico). El control por tamaño se implementa mediante correlación parcial: se regresa cada variable sobre ln(población), se toman los residuos y se correlacionan entre sí. Todas las estimaciones de homicidios usan transformación ln(1+x).</p>
+        <p><strong>Limitación:</strong> Análisis correlacional a nivel municipal agregado. No establece causalidad. La coerción electoral sub-municipal, de existir, no sería necesariamente detectable con esta metodología.</p>
+        <p>Autor: Juan Pablo Jaramillo-Ramón · <a href="https://orcid.org/0000-0001-6161-4477">ORCID: 0000-0001-6161-4477</a> · <a href="https://jpjaramillo25.github.io/blog/">jpjaramillo25.github.io</a></p>
+    </div>
+
+</div>
+</body>
+</html>
