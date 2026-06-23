@@ -79,7 +79,6 @@
     line-height: 1.55;
   }
 
-
   /* layout */
   .body-wrap {
     max-width: var(--max);
@@ -136,19 +135,6 @@
     padding-top: 40px;
     border-left: 1px solid var(--rule);
     padding-left: 56px;
-  }
-  .feed-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--rule);
-  }
-  .feed-count {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: .06em;
   }
 
   /* post card */
@@ -242,8 +228,7 @@
 
   /* responsive */
   @media (max-width: 800px) {
-    .masthead { padding: 36px 24px 32px; grid-template-columns: 1fr; }
-    .mast-counter { text-align: left; }
+    .masthead { padding: 36px 24px 32px; }
     .body-wrap { padding: 0 24px 80px; grid-template-columns: 1fr; }
     .sidebar { position: static; padding-top: 28px; border-bottom: 1px solid var(--rule); padding-bottom: 28px; }
     .filter-list { flex-direction: row; flex-wrap: wrap; }
@@ -259,12 +244,9 @@
 <div class="id-stripe"></div>
 
 <header class="masthead">
-  <div>
-    <div class="mast-eyebrow">Política · Economía · Datos</div>
-    <h1 class="mast-title">Juan Pablo<br>Jaramillo-Ramón</h1>
-    <p class="mast-sub">Análisis de política pública, economía política y estadísticas sociales en Ecuador y América Latina.</p>
-  </div>
-
+  <div class="mast-eyebrow">Política · Economía · Datos</div>
+  <h1 class="mast-title">Juan Pablo<br>Jaramillo-Ramón</h1>
+  <p class="mast-sub">Análisis de política pública, economía política y estadísticas sociales en Ecuador y América Latina.</p>
 </header>
 
 <div class="body-wrap">
@@ -272,9 +254,9 @@
   <aside class="sidebar">
     <div class="sidebar-label">Categorías</div>
     <ul class="filter-list" role="list">
-      <li><button class="filter-btn active" data-cat="all" onclick="filterPosts('all',this)">Todos <span class="ct" id="ct-all">9</span></button></li>
+      <li><button class="filter-btn active" data-cat="all" onclick="filterPosts('all',this)">Todos <span class="ct">11</span></button></li>
       <li><button class="filter-btn" data-cat="policy" onclick="filterPosts('policy',this)">Política pública <span class="ct">4</span></button></li>
-      <li><button class="filter-btn" data-cat="seguridad" onclick="filterPosts('seguridad',this)">Seguridad & violencia <span class="ct">2</span></button></li>
+      <li><button class="filter-btn" data-cat="seguridad" onclick="filterPosts('seguridad',this)">Seguridad & violencia <span class="ct">4</span></button></li>
       <li><button class="filter-btn" data-cat="economia" onclick="filterPosts('economia',this)">Economía política <span class="ct">1</span></button></li>
       <li><button class="filter-btn" data-cat="metodo" onclick="filterPosts('metodo',this)">Métodos <span class="ct">2</span></button></li>
     </ul>
@@ -288,8 +270,37 @@
 
   <main class="posts-col">
 
-
     <!-- 1 -->
+    <article class="post-item" data-cat="seguridad">
+      <div>
+        <div class="post-meta-row">
+          <span class="post-cat cat-seguridad">Seguridad & violencia</span>
+          <span class="post-type">Análisis de datos</span>
+          <span class="post-date">Junio 2026</span>
+        </div>
+        <h2 class="post-title"><a href="posts/votofusil.html">El voto fusil: una narrativa más</a></h2>
+        <p class="post-excerpt">Con datos de 1.031 municipios colombianos y un control estadístico básico, la narrativa de que los municipios más violentos votan más por la izquierda se desmorona. La correlación bruta existe pero es espuria: la variable de confusión es el tamaño poblacional, no la violencia.</p>
+        <a href="posts/votofusil.html" class="post-link-arrow">Leer artículo <span>→</span></a>
+      </div>
+      <div class="post-number" aria-hidden="true">01</div>
+    </article>
+
+    <!-- 2 -->
+    <article class="post-item" data-cat="seguridad">
+      <div>
+        <div class="post-meta-row">
+          <span class="post-cat cat-seguridad">Seguridad & violencia</span>
+          <span class="post-type">Análisis de datos</span>
+          <span class="post-date">Junio 2026</span>
+        </div>
+        <h2 class="post-title"><a href="posts/votofusilcherrypicking.html">¿Qué pasa si seleccionamos los municipios más violentos donde gana cada candidato? El voto fusil es puro cherry picking.</a></h2>
+        <p class="post-excerpt">Una demostración didáctica: los 20 municipios más violentos donde ganó Espriella tienen una tasa media de 157 homicidios por 100k. Los 20 más violentos donde ganó Cepeda tienen 146. La prueba t da p=0,49. Son estadísticamente indistinguibles. El argumento no son los datos: es cuáles decides mirar.</p>
+        <a href="posts/votofusilcherrypicking.html" class="post-link-arrow">Leer artículo <span>→</span></a>
+      </div>
+      <div class="post-number" aria-hidden="true">02</div>
+    </article>
+
+    <!-- 3 -->
     <article class="post-item" data-cat="metodo">
       <div>
         <div class="post-meta-row">
@@ -301,10 +312,10 @@
         <p class="post-excerpt">En nueve meses, una hipótesis sin revisión por pares recorrió 28 medios en cuatro países, llegó al escritorio presidencial y terminó en una auditoría del INEC. La hipótesis de la Pax Narca como caso paradigmático: cómo un modelo econométrico frágil —cuyo coeficiente clave colapsa a p=0,952 con grupos de control corregidos— se convirtió en narrativa de Estado.</p>
         <a href="posts/paxnarca.html" class="post-link-arrow">Leer artículo <span>→</span></a>
       </div>
-      <div class="post-number" aria-hidden="true">01</div>
+      <div class="post-number" aria-hidden="true">03</div>
     </article>
 
-    <!-- 2 -->
+    <!-- 4 -->
     <article class="post-item" data-cat="policy">
       <div>
         <div class="post-meta-row">
@@ -316,10 +327,10 @@
         <p class="post-excerpt">Las cifras oficiales de pobreza del Ecuador dejaron de ser confiables para medir el progreso. La causa de fondo: un marco muestral anclado al censo de 2010, cuya actualización es urgente.</p>
         <a href="posts/2026-05-26-medir-la-pobreza-a-ciegas.html" class="post-link-arrow">Leer artículo <span>→</span></a>
       </div>
-      <div class="post-number" aria-hidden="true">02</div>
+      <div class="post-number" aria-hidden="true">04</div>
     </article>
 
-    <!-- 3 -->
+    <!-- 5 -->
     <article class="post-item" data-cat="economia">
       <div>
         <div class="post-meta-row">
@@ -331,10 +342,10 @@
         <p class="post-excerpt">En 28 meses de gobierno, Noboa apenas sumó 85.730 afiliados al IESS. Los datos del REESS-INEC no muestran recuperación: muestran estancamiento con anestesia estadística.</p>
         <a href="posts/empleoformalestancado.html" class="post-link-arrow">Leer artículo <span>→</span></a>
       </div>
-      <div class="post-number" aria-hidden="true">02</div>
+      <div class="post-number" aria-hidden="true">05</div>
     </article>
 
-    <!-- 3 -->
+    <!-- 6 -->
     <article class="post-item" data-cat="policy">
       <div>
         <div class="post-meta-row">
@@ -346,10 +357,10 @@
         <p class="post-excerpt">El 12,6% de los encuestados no votó por Noboa en primera vuelta pero confió en que el gobierno entregaría los bonos. De ese grupo, el 42,4% lo votó en el balotaje. Sin esos votos, Noboa cae por debajo de González.</p>
         <a href="posts/noboabonos.html" class="post-link-arrow">Leer artículo <span>→</span></a>
       </div>
-      <div class="post-number" aria-hidden="true">03</div>
+      <div class="post-number" aria-hidden="true">06</div>
     </article>
 
-    <!-- 4 -->
+    <!-- 7 -->
     <article class="post-item" data-cat="seguridad">
       <div>
         <div class="post-meta-row">
@@ -361,10 +372,10 @@
         <p class="post-excerpt">Ecuador no pasó de isla de paz a país violento por casualidad. Un event study mensual con 3.456 observaciones fecha la fractura: abril de 2021, un mes antes de que Lasso asumiera. Los homicidios en la Costa subieron 400% entre 2020 y 2023.</p>
         <a href="posts/violencia-ecuador.html" class="post-link-arrow">Leer artículo <span>→</span></a>
       </div>
-      <div class="post-number" aria-hidden="true">04</div>
+      <div class="post-number" aria-hidden="true">07</div>
     </article>
 
-    <!-- 5 -->
+    <!-- 8 -->
     <article class="post-item" data-cat="seguridad">
       <div>
         <div class="post-meta-row">
@@ -376,10 +387,10 @@
         <p class="post-excerpt">Colombia bajó de 78 homicidios diarios en 2002 a 33 en 2017. Luego el mapa volvió a encenderse. Un recorrido por la distribución territorial de la violencia letal desde los noventa hasta el deterioro del gobierno Petro.</p>
         <a href="posts/colombiahomicidios.html" class="post-link-arrow">Leer artículo <span>→</span></a>
       </div>
-      <div class="post-number" aria-hidden="true">05</div>
+      <div class="post-number" aria-hidden="true">08</div>
     </article>
 
-    <!-- 6 -->
+    <!-- 9 -->
     <article class="post-item" data-cat="policy">
       <div>
         <div class="post-meta-row">
@@ -391,25 +402,10 @@
         <p class="post-excerpt">La pregunta más incómoda de la política colombiana tiene ahora una respuesta cuantitativa. Donde las FARC estaban presentes, la firma del acuerdo redujo los homicidios hasta en un 81%. Un análisis de 1.079 municipios.</p>
         <a href="posts/pazfarc.html" class="post-link-arrow">Leer artículo <span>→</span></a>
       </div>
-      <div class="post-number" aria-hidden="true">06</div>
+      <div class="post-number" aria-hidden="true">09</div>
     </article>
 
-    <!-- 7 -->
-    <article class="post-item" data-cat="metodo">
-      <div>
-        <div class="post-meta-row">
-          <span class="post-cat cat-metodo">Métodos</span>
-          <span class="post-type">Working Paper</span>
-          <span class="post-date">2026</span>
-        </div>
-        <h2 class="post-title"><a href="posts/sesgodeanclaje.html">¿Por qué fallaron las encuestas en el balotaje?</a></h2>
-        <p class="post-excerpt">Once de doce encuestas proyectaron victoria de González o empate técnico. Noboa ganó por once puntos. El error no fue aleatorio ni fue de firma: fue estructural, sembrado por calibrar encuestas de segunda vuelta con el recuerdo del voto de primera ronda.</p>
-        <a href="posts/sesgodeanclaje.html" class="post-link-arrow">Leer artículo <span>→</span></a>
-      </div>
-      <div class="post-number" aria-hidden="true">07</div>
-    </article>
-
-    <!-- 8 -->
+    <!-- 10 -->
     <article class="post-item" data-cat="policy">
       <div>
         <div class="post-meta-row">
@@ -421,7 +417,22 @@
         <p class="post-excerpt">En menos de treinta meses, Ecuador transitó hacia un régimen autoritario competitivo consolidado. El artículo reconstruye el mecanismo: una secuencia de dos fases coordinada a través de cuatro nodos institucionales capturados, con 14 pasos causales documentados y tres partidos suspendidos o cancelados.</p>
         <a href="posts/autoritarismo-competitivo.html" class="post-link-arrow">Leer artículo <span>→</span></a>
       </div>
-      <div class="post-number" aria-hidden="true">08</div>
+      <div class="post-number" aria-hidden="true">10</div>
+    </article>
+
+    <!-- 11 -->
+    <article class="post-item" data-cat="metodo">
+      <div>
+        <div class="post-meta-row">
+          <span class="post-cat cat-metodo">Métodos</span>
+          <span class="post-type">Working Paper</span>
+          <span class="post-date">2026</span>
+        </div>
+        <h2 class="post-title"><a href="posts/sesgodeanclaje.html">¿Por qué fallaron las encuestas en el balotaje?</a></h2>
+        <p class="post-excerpt">Once de doce encuestas proyectaron victoria de González o empate técnico. Noboa ganó por once puntos. El error no fue aleatorio ni fue de firma: fue estructural, sembrado por calibrar encuestas de segunda vuelta con el recuerdo del voto de primera ronda.</p>
+        <a href="posts/sesgodeanclaje.html" class="post-link-arrow">Leer artículo <span>→</span></a>
+      </div>
+      <div class="post-number" aria-hidden="true">11</div>
     </article>
 
     <div class="empty-state" id="empty-state">No hay artículos en esta categoría todavía.</div>
@@ -438,7 +449,6 @@
 
 <script>
   const posts = document.querySelectorAll('.post-item');
-  const feedCount = document.getElementById('feed-count');
   const emptyState = document.getElementById('empty-state');
 
   function filterPosts(cat, btn) {
@@ -450,9 +460,6 @@
       p.classList.toggle('hidden', !match);
       if (match) visible++;
     });
-    feedCount.textContent = visible === posts.length
-      ? `${visible} artículos`
-      : `${visible} de ${posts.length} artículos`;
     emptyState.style.display = visible === 0 ? 'block' : 'none';
   }
 </script>
