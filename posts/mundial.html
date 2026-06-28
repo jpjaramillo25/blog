@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>World Cup 2026 · Bracket Circular</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #f0ebe0;
+    --ink:   #1a1a1a;
+    --gold:  #c9a84c;
+    --dim:   #7a7060;
+    --card:  #e8e2d4;
+    --blue:  #3b82f6;
+  }
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 14px;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+  header { text-align: center; padding: 24px 16px 8px; }
+  header h1 { font-size: clamp(18px, 5vw, 26px); font-weight: 900; letter-spacing: 0.5px; }
+  header p { font-size: 10px; color: var(--dim); letter-spacing: 3px; text-transform: uppercase; margin-top: 3px; }
+
+  /* ── CONTROLS ── */
+  .controls {
+    display: flex; flex-wrap: wrap; gap: 10px 18px;
+    justify-content: center; align-items: flex-end;
+    padding: 12px 16px;
+    background: var(--card);
+    border-top: 1px solid rgba(0,0,0,0.08);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    margin-bottom: 4px;
+  }
+  .cg { display: flex; flex-direction: column; gap: 3px; }
+  .cl { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--dim); font-weight: 600; }
+  .wbar { display: flex; height: 4px; border-radius: 2px; overflow: hidden; width: 170px; margin-top: 2px; }
+  .wbar .mb { background: var(--blue); transition: flex 0.25s; }
+  .wbar .fb { background: var(--gold); transition: flex 0.25s; }
+  input[type=range] { width: 170px; cursor: pointer; accent-color: var(--gold); }
+  select { background: var(--cream); border: 1px solid rgba(0,0,0,0.2); border-radius: 6px; color: var(--ink); font-size: 12px; padding: 5px 8px; cursor: pointer; }
+  .aread { font-size: 10px; color: var(--ink); font-weight: 700; text-align: center; margin-top: 1px; }
+  .btn {
+    background: var(--ink); color: var(--cream);
+    border: none; border-radius: 8px;
+    padding: 8px 22px; font-size: 13px; font-weight: 800;
+    cursor: pointer; letter-spacing: 0.5px; transition: opacity 0.15s;
+  }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* ── SVG BRACKET ── */
+  .bwrap { display: flex; justify-content: center; padding: 8px 8px 2px; }
+  #bsvg { width: 100%; max-width: 680px; height: auto; display: block; }
+
+  /* ── MATCHUP LIST (below SVG) ── */
+  .matchups { max-width: 680px; margin: 0 auto; padding: 10px 14px 6px; }
+  .mu-title { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--dim); text-align: center; margin-bottom: 8px; }
+  .mu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 5px; }
+  .mu-card { background: var(--card); border-radius: 6px; padding: 5px 8px; font-size: 11px; display: flex; align-items: center; gap: 5px; }
+  .mu-num { font-size: 9px; color: var(--dim); min-width: 14px; }
+  .mu-vs { font-weight: 700; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ── STATS ── */
+  .stats { max-width: 680px; margin: 0 auto; padding: 10px 14px 40px; }
+  .st-title { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--dim); text-align: center; margin-bottom: 8px; }
+  .st-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); gap: 5px; }
+  .st-card { background: var(--card); border-radius: 7px; padding: 7px 9px; display: flex; align-items: center; gap: 7px; }
+  .st-flag { font-size: 18px; flex-shrink: 0; }
+  .st-body { flex: 1; min-width: 0; }
+  .st-name { font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .st-pct { font-size: 14px; font-weight: 900; color: var(--gold); }
+  .st-bar { height: 3px; background: #ccc; border-radius: 2px; margin: 2px 0; }
+  .st-fill { height: 100%; background: var(--gold); border-radius: 2px; }
+  .st-sub { font-size: 9px; color: var(--dim); }
+
+  /* ── TOOLTIP ── */
+  #tip {
+    position: fixed; pointer-events: none; z-index: 999;
+    background: var(--ink); color: var(--cream);
+    border-radius: 8px; padding: 7px 11px; font-size: 11px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    display: none; max-width: 170px; line-height: 1.5;
+  }
+
+  footer { text-align: center; padding: 10px; font-size: 9px; color: var(--dim); letter-spacing: 1px; border-top: 1px solid rgba(0,0,0,0.08); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>World Cup 2026</h1>
+  <p>Monte Carlo · FIFA × Transfermarkt</p>
+</header>
+
+<div class="controls">
+  <div class="cg">
+    <span class="cl">Peso FIFA ↔ Mercado</span>
+    <div style="display:flex;align-items:center;gap:6px">
+      <span style="font-size:10px;color:var(--blue)">💶</span>
+      <input type="range" id="alpha" min="0" max="1" step="0.05" value="0.5" oninput="onAlpha(+this.value)"/>
+      <span style="font-size:10px;color:var(--gold)">🏆</span>
+    </div>
+    <div class="wbar"><div class="mb" id="mb" style="flex:0.5"></div><div class="fb" id="fb" style="flex:0.5"></div></div>
+    <div class="aread" id="ar">50% FIFA · 50% Mercado</div>
+  </div>
+  <div class="cg">
+    <span class="cl">Sorpresa: <span id="ul">Moderado</span></span>
+    <input type="range" id="upset" min="0" max="0.8" step="0.05" value="0.3"
+           oninput="document.getElementById('ul').textContent=upLbl(+this.value)"
+           style="accent-color:#e44;width:130px"/>
+  </div>
+  <div class="cg">
+    <span class="cl">Simulaciones</span>
+    <select id="nsel">
+      <option value="5000">5 000</option>
+      <option value="20000" selected>20 000</option>
+      <option value="100000">100 000</option>
+    </select>
+  </div>
+  <button class="btn" id="btn" onclick="simulate()">▶ Simular</button>
+</div>
+
+<div class="bwrap">
+  <svg id="bsvg" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg">
+    <g id="gl"></g><!-- lines -->
+    <g id="gn"></g><!-- nodes -->
+    <g id="gt" transform="translate(350,350)"><!-- trophy -->
+      <circle r="38" fill="#e8e2d4" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text y="7" text-anchor="middle" font-size="30">🏆</text>
+    </g>
+  </svg>
+</div>
+
+<!-- Matchup list -->
+<div class="matchups">
+  <div class="mu-title">Emparejamientos Ronda de 32 (bracket oficial)</div>
+  <div class="mu-grid" id="mulist"></div>
+</div>
+
+<!-- Stats -->
+<div class="stats" id="stats" style="display:none">
+  <div class="st-title">Probabilidad de campeonato (Monte Carlo)</div>
+  <div class="st-grid" id="stgrid"></div>
+</div>
+
+<div id="tip"></div>
+
+<footer>Ranking FIFA jun 11 2026 · Transfermarkt top-16 jun 2026 · Bracket oficial FIFA World Cup 2026</footer>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const T = {
+  "Francia":      {f:"🇫🇷",r:3,  m:1380,p:"Mbappé",     v:180},
+  "España":       {f:"🇪🇸",r:2,  m:1090,p:"Yamal",       v:200},
+  "Argentina":    {f:"🇦🇷",r:1,  m:720, p:"J.Álvarez",   v:100},
+  "Inglaterra":   {f:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",r:4,  m:1220,p:"Bellingham",  v:130},
+  "Portugal":     {f:"🇵🇹",r:5,  m:900, p:"João Neves",  v:140},
+  "Brasil":       {f:"🇧🇷",r:6,  m:820, p:"Vinicius Jr.",v:150},
+  "Marruecos":    {f:"🇲🇦",r:7,  m:390, p:"Hakimi",      v:80 },
+  "P.Bajos":      {f:"🇳🇱",r:8,  m:660, p:"Simons",      v:80 },
+  "Bélgica":      {f:"🇧🇪",r:9,  m:480, p:"Doku",        v:70 },
+  "Alemania":     {f:"🇩🇪",r:10, m:850, p:"Musiala",     v:100},
+  "Croacia":      {f:"🇭🇷",r:11, m:335, p:"Gvardiol",    v:80 },
+  "Colombia":     {f:"🇨🇴",r:13, m:265, p:"L.Díaz",      v:88 },
+  "México":       {f:"🇲🇽",r:14, m:192, p:"S.Giménez",   v:55 },
+  "Senegal":      {f:"🇸🇳",r:15, m:420, p:"Diatta",      v:65 },
+  "Noruega":      {f:"🇳🇴",r:31, m:530, p:"Haaland",     v:200},
+  "EEUU":         {f:"🇺🇸",r:17, m:335, p:"Pulisic",     v:65 },
+  "Japón":        {f:"🇯🇵",r:18, m:235, p:"Mitoma",      v:50 },
+  "Suiza":        {f:"🇨🇭",r:19, m:288, p:"Akanji",      v:35 },
+  "Argelia":      {f:"🇩🇿",r:28, m:220, p:"Bennacer",    v:30 },
+  "Ecuador":      {f:"🇪🇨",r:23, m:320, p:"M.Caicedo",   v:100},
+  "Austria":      {f:"🇦🇹",r:24, m:152, p:"Sabitzer",    v:22 },
+  "Australia":    {f:"🇦🇺",r:27, m:148, p:"Bos",         v:20 },
+  "Ghana":        {f:"🇬🇭",r:62, m:195, p:"Kudus",       v:55 },
+  "Suecia":       {f:"🇸🇪",r:35, m:350, p:"Gyökeres",    v:90 },
+  "C.Marfil":     {f:"🇨🇮",r:50, m:460, p:"Semenyo",     v:90 },
+  "Paraguay":     {f:"🇵🇾",r:45, m:132, p:"Enciso",      v:22 },
+  "Canadá":       {f:"🇨🇦",r:30, m:195, p:"Davies",      v:55 },
+  "Sudáfrica":    {f:"🇿🇦",r:60, m:65,  p:"Tau",         v:12 },
+  "Bosnia-Hz.":   {f:"🇧🇦",r:65, m:75,  p:"Džeko",       v:8  },
+  "Congo DR":     {f:"🇨🇩",r:55, m:70,  p:"Bakambu",     v:12 },
+  "Egipto":       {f:"🇪🇬",r:29, m:102, p:"Salah",       v:20 },
+  "Cabo Verde":   {f:"🇨🇻",r:75, m:42,  p:"Tavares",     v:18 },
+};
+
+// ── BRACKET OFICIAL R32 ───────────────────────────────────────────────────────
+// 16 pares confirmados (Yahoo Sports / Fox Sports / ESPN, 28 jun 2026)
+// Orden en el círculo: empieza en la parte superior y va en sentido horario
+// Se agrupan en 8 pares de pares para los 8avos, luego cuartos, semis, final
+//
+// Llave fija del torneo:
+// MITAD A (izquierda → semifinal A):
+//   Llave 1: Sudáfrica-Canadá vs Brasil-Japón
+//   Llave 2: Alemania-Paraguay vs P.Bajos-Marruecos
+//   Llave 3: C.Marfil-Noruega  vs Francia-Suecia
+//   Llave 4: México-Ecuador     vs Inglaterra-Congo DR
+// MITAD B (derecha → semifinal B):
+//   Llave 5: Bélgica-Senegal   vs EEUU-Bosnia-Hz.
+//   Llave 6: España-Austria    vs Portugal-Croacia
+//   Llave 7: Suiza-Argelia     vs Colombia-Ghana
+//   Llave 8: Australia-Egipto  vs Argentina-Cabo Verde
+
+const BRACKET = [
+  // Pair index 0-15 (placed clockwise from top)
+  // Mitad A: pairs 0-7
+  ["Sudáfrica",  "Canadá"],      // 0  → vencedor juega vs ganador par 1
+  ["Brasil",     "Japón"],       // 1
+  ["Alemania",   "Paraguay"],    // 2  → vs ganador par 3
+  ["P.Bajos",    "Marruecos"],   // 3
+  ["C.Marfil",   "Noruega"],     // 4  → vs ganador par 5
+  ["Francia",    "Suecia"],      // 5
+  ["México",     "Ecuador"],     // 6  → vs ganador par 7
+  ["Inglaterra", "Congo DR"],    // 7
+  // Mitad B: pairs 8-15
+  ["Bélgica",    "Senegal"],     // 8  → vs ganador par 9
+  ["EEUU",       "Bosnia-Hz."],  // 9
+  ["España",     "Austria"],     // 10 → vs ganador par 11
+  ["Portugal",   "Croacia"],     // 11
+  ["Suiza",      "Argelia"],     // 12 → vs ganador par 13
+  ["Colombia",   "Ghana"],       // 13
+  ["Australia",  "Egipto"],      // 14 → vs ganador par 15
+  ["Argentina",  "Cabo Verde"],  // 15
+];
+
+// ── MODELO ────────────────────────────────────────────────────────────────────
+const mxF = Math.max(...Object.values(T).map(t=>1/Math.pow(t.r,0.55)));
+const mxM = Math.max(...Object.values(T).map(t=>Math.sqrt(t.m)));
+
+function bs(team){ const t=T[team]; if(!t) return {f:0,m:0};
+  return {f:(1/Math.pow(t.r,0.55))/mxF, m:Math.sqrt(t.m)/mxM}; }
+
+function gs(team,a,u){ const {f,m}=bs(team);
+  return (a*f+(1-a)*m)*Math.max(1+(Math.random()-0.5)*u*1.4,0.02); }
+
+function win(a,b,al,up){ const sa=gs(a,al,up),sb=gs(b,al,up);
+  return Math.random()<sa/(sa+sb)?a:b; }
+
+function simOnce(al,up){
+  const r32 = BRACKET.map(([a,b])=>win(a,b,al,up));
+  // R16: pairs (0,1),(2,3),(4,5),(6,7),(8,9),(10,11),(12,13),(14,15)
+  const r16 = [];
+  for(let i=0;i<8;i++) r16.push(win(r32[i*2],r32[i*2+1],al,up));
+  // QF: pairs (0,1),(2,3) left; (4,5),(6,7) right
+  const qf = [];
+  for(let i=0;i<4;i++) qf.push(win(r16[i*2],r16[i*2+1],al,up));
+  // SF
+  const sfA=win(qf[0],qf[1],al,up), sfB=win(qf[2],qf[3],al,up);
+  const slA=sfA===qf[0]?qf[1]:qf[0], slB=sfB===qf[2]?qf[3]:qf[2];
+  const champ=win(sfA,sfB,al,up);
+  return {r32,r16,qf,sfA,sfB,slA,slB,champ,runner:champ===sfA?sfB:sfA,
+          third:win(slA,slB,al,up)};
+}
+
+function runMC(n,al,up){
+  const w={},fi={},s4={};
+  Object.keys(T).forEach(t=>{w[t]=0;fi[t]=0;s4[t]=0;});
+  for(let i=0;i<n;i++){
+    const r=simOnce(al,up);
+    w[r.champ]++; fi[r.champ]++; fi[r.runner]++;
+    [r.champ,r.runner,r.third,r.sfA===r.champ?r.sfB:r.sfA].forEach(t=>s4[t]++);
+  }
+  return Object.keys(T).map(t=>({team:t,
+    wp:+(w[t]/n*100).toFixed(2), fp:+(fi[t]/n*100).toFixed(1),
+  })).sort((a,b)=>b.wp-a.wp);
+}
+
+// ── GEOMETRY ──────────────────────────────────────────────────────────────────
+const CX=350,CY=350;
+const RA=280, RB=210, RC=148, RD=92, RE=48; // radii: team, r16, qf, sf, final
+
+function pairAng(i){ return (270+i*(360/16)+360)%360; }
+function slotAng(pair,slot){
+  const base=pairAng(pair), half=360/32;
+  return (base+(slot===0?-half/2:half/2)+360)%360;
+}
+function polar(ang,r){ const rad=ang*Math.PI/180;
+  return {x:CX+r*Math.cos(rad), y:CY+r*Math.sin(rad)}; }
+function midAngle(a1,a2){
+  // handle wrap-around
+  let d=((a2-a1)+360)%360;
+  if(d>180) d=d-360;
+  return (a1+d/2+360)%360;
+}
+
+// ── SVG HELPERS ───────────────────────────────────────────────────────────────
+const NS='http://www.w3.org/2000/svg';
+const gl=document.getElementById('gl');
+const gn=document.getElementById('gn');
+
+function mk(tag,attrs,parent){
+  const e=document.createElementNS(NS,tag);
+  for(const[k,v] of Object.entries(attrs)) e.setAttribute(k,v);
+  if(parent) parent.appendChild(e); return e;
+}
+function line(x1,y1,x2,y2,w=1.4,clr='#1a1a1a'){
+  mk('line',{x1,y1,x2,y2,stroke:clr,'stroke-width':w,'stroke-linecap':'round'},gl);
+}
+function dot(x,y,r,fill,stroke='#1a1a1a',sw=1.2){
+  mk('circle',{cx:x,cy:y,r,fill,stroke,'stroke-width':sw},gn);
+}
+
+// ── TOOLTIP ───────────────────────────────────────────────────────────────────
+const tip=document.getElementById('tip');
+function showTip(e,team,pct){
+  const t=T[team]; if(!t)return;
+  tip.innerHTML=`<strong>${t.f} ${team}</strong><br>FIFA #${t.r} · €${t.m}M<br>⭐ ${t.p} (€${t.v}M)${pct!=null?`<br>🏆 ${pct}% de ganar`:''}`;
+  tip.style.display='block'; moveTip(e);
+}
+function moveTip(e){tip.style.left=(e.clientX+14)+'px';tip.style.top=(e.clientY-8)+'px';}
+function hideTip(){tip.style.display='none';}
+
+// ── BUILD BRACKET ─────────────────────────────────────────────────────────────
+let wpMap={};
+
+function buildBracket(sc){
+  gl.innerHTML=''; gn.innerHTML='';
+
+  const r32=sc?.r32||[], r16=sc?.r16||[], qf=sc?.qf||[];
+  const sfA=sc?.sfA, sfB=sc?.sfB, champ=sc?.champ;
+
+  // ── 1. TEAM NODES + lines to R16 junction ──
+  const posR16=[]; // one pos per pair
+
+  BRACKET.forEach(([tA,tB],pi)=>{
+    const posA=polar(slotAng(pi,0),RA);
+    const posB=polar(slotAng(pi,1),RA);
+    const posM=polar(pairAng(pi),RB); // R16 junction
+    posR16.push(posM);
+
+    // lines team→junction
+    line(posA.x,posA.y,posM.x,posM.y,1.2);
+    line(posB.x,posB.y,posM.x,posM.y,1.2);
+
+    // draw each team flag circle
+    [[tA,posA],[tB,posB]].forEach(([team,pos])=>{
+      const won=r32.includes(team)&&r32[pi]===team;
+      const pct=wpMap[team]??null;
+      const fill=champ===team?'#c9a84c':won?'#e8dfc0':sc?'#c4bdb0':'#e8e2d4';
+      const sw=champ===team?2.5:won?1.8:1.2;
+      const sr=champ===team?24:22;
+      const scl=champ===team?1.08:1;
+
+      // glow ring for champion
+      if(champ===team) mk('circle',{cx:pos.x,cy:pos.y,r:sr+5,fill:'rgba(201,168,76,0.3)'},gn);
+
+      const g=mk('g',{transform:`translate(${pos.x},${pos.y}) scale(${scl})`,cursor:'pointer'},gn);
+      mk('circle',{r:sr,fill,stroke:'#1a1a1a','stroke-width':sw},g);
+      const fl=mk('text',{y:'0.38em','text-anchor':'middle','font-size':sr*0.92,'dominant-baseline':'middle'},g);
+      fl.textContent=T[team]?.f||'?';
+
+      // % label
+      if(pct!==null&&pct>0){
+        const lb=mk('text',{y:sr+10,'text-anchor':'middle','font-size':7.5,fill:'#5a4a10','font-weight':'700'},g);
+        lb.textContent=pct>=10?pct.toFixed(0)+'%':pct.toFixed(1)+'%';
+      }
+
+      g.addEventListener('mouseenter',e=>showTip(e,team,pct));
+      g.addEventListener('mouseleave',hideTip);
+      g.addEventListener('mousemove',moveTip);
+    });
+
+    // R16 junction dot
+    const w16=r32[pi]||null;
+    const f16=w16?'#d4c080':'#c8c0aa';
+    const jg=mk('g',{transform:`translate(${posM.x},${posM.y})`,cursor:w16?'pointer':'default'},gn);
+    mk('circle',{r:10,fill:f16,stroke:'#1a1a1a','stroke-width':1},jg);
+    if(w16&&T[w16]){const ft=mk('text',{y:'0.38em','text-anchor':'middle','font-size':9.5},jg);ft.textContent=T[w16].f;}
+    if(w16){
+      jg.addEventListener('mouseenter',e=>showTip(e,w16,wpMap[w16]??null));
+      jg.addEventListener('mouseleave',hideTip);
+      jg.addEventListener('mousemove',moveTip);
+    }
+  });
+
+  // ── 2. R16 → QF junctions ──
+  // 8 QF nodes: pairs (0,1),(2,3),(4,5),(6,7),(8,9),(10,11),(12,13),(14,15)
+  const posQF=[];
+  for(let i=0;i<8;i++){
+    const pA=posR16[i*2], pB=posR16[i*2+1];
+    const aA=pairAng(i*2), aB=pairAng(i*2+1);
+    const posQ=polar(midAngle(aA,aB),RC);
+    posQF.push(posQ);
+    line(pA.x,pA.y,posQ.x,posQ.y,1.5);
+    line(pB.x,pB.y,posQ.x,posQ.y,1.5);
+
+    const wq=r16[i]||null;
+    const fq=wq?'#d4c080':'#c8c0aa';
+    const qg=mk('g',{transform:`translate(${posQ.x},${posQ.y})`,cursor:wq?'pointer':'default'},gn);
+    mk('circle',{r:12,fill:fq,stroke:'#1a1a1a','stroke-width':1},qg);
+    if(wq&&T[wq]){const ft=mk('text',{y:'0.38em','text-anchor':'middle','font-size':11},qg);ft.textContent=T[wq].f;}
+    if(wq){
+      qg.addEventListener('mouseenter',e=>showTip(e,wq,wpMap[wq]??null));
+      qg.addEventListener('mouseleave',hideTip);
+      qg.addEventListener('mousemove',moveTip);
+    }
+  }
+
+  // ── 3. QF → SF junctions ──
+  // 4 SF nodes: (0,1),(2,3),(4,5),(6,7) of posQF
+  const posSF=[];
+  for(let i=0;i<4;i++){
+    const pA=posQF[i*2], pB=posQF[i*2+1];
+    const aA=Math.atan2(pA.y-CY,pA.x-CX)*180/Math.PI;
+    const aB=Math.atan2(pB.y-CY,pB.x-CX)*180/Math.PI;
+    const posS=polar(midAngle(aA,aB),RD);
+    posSF.push(posS);
+    line(pA.x,pA.y,posS.x,posS.y,1.8);
+    line(pB.x,pB.y,posS.x,posS.y,1.8);
+
+    const ws=qf[i]||null;
+    const fs=ws?'#d4c080':'#c8c0aa';
+    const sg=mk('g',{transform:`translate(${posS.x},${posS.y})`,cursor:ws?'pointer':'default'},gn);
+    mk('circle',{r:14,fill:fs,stroke:'#1a1a1a','stroke-width':1.3},sg);
+    if(ws&&T[ws]){const ft=mk('text',{y:'0.38em','text-anchor':'middle','font-size':12.5},sg);ft.textContent=T[ws].f;}
+    if(ws){
+      sg.addEventListener('mouseenter',e=>showTip(e,ws,wpMap[ws]??null));
+      sg.addEventListener('mouseleave',hideTip);
+      sg.addEventListener('mousemove',moveTip);
+    }
+  }
+
+  // ── 4. SF → Final nodes ──
+  // Left finalist: merge posSF[0] and posSF[1]
+  // Right finalist: merge posSF[2] and posSF[3]
+  if(posSF.length===4){
+    const angL0=Math.atan2(posSF[0].y-CY,posSF[0].x-CX)*180/Math.PI;
+    const angL1=Math.atan2(posSF[1].y-CY,posSF[1].x-CX)*180/Math.PI;
+    const posFL=polar(midAngle(angL0,angL1),RE);
+
+    const angR0=Math.atan2(posSF[2].y-CY,posSF[2].x-CX)*180/Math.PI;
+    const angR1=Math.atan2(posSF[3].y-CY,posSF[3].x-CX)*180/Math.PI;
+    const posFR=polar(midAngle(angR0,angR1),RE);
+
+    line(posSF[0].x,posSF[0].y,posFL.x,posFL.y,2.2);
+    line(posSF[1].x,posSF[1].y,posFL.x,posFL.y,2.2);
+    line(posSF[2].x,posSF[2].y,posFR.x,posFR.y,2.2);
+    line(posSF[3].x,posSF[3].y,posFR.x,posFR.y,2.2);
+    line(posFL.x,posFL.y,CX,CY,2.5);
+    line(posFR.x,posFR.y,CX,CY,2.5);
+
+    // Final nodes
+    [[posFL,sfA],[posFR,sfB]].forEach(([pos,team])=>{
+      const ff=team?'#c9a84c':'#c8c0aa';
+      const fg=mk('g',{transform:`translate(${pos.x},${pos.y})`,cursor:team?'pointer':'default'},gn);
+      mk('circle',{r:16,fill:ff,stroke:'#1a1a1a','stroke-width':1.5},fg);
+      if(team&&T[team]){const ft=mk('text',{y:'0.38em','text-anchor':'middle','font-size':14},fg);ft.textContent=T[team].f;}
+      if(team){
+        fg.addEventListener('mouseenter',e=>showTip(e,team,wpMap[team]??null));
+        fg.addEventListener('mouseleave',hideTip);
+        fg.addEventListener('mousemove',moveTip);
+      }
+    });
+  }
+
+  // Re-bring trophy to front
+  const gt=document.getElementById('gt');
+  document.getElementById('bsvg').appendChild(gt);
+
+  // Round labels (static)
+  const lblSvg=document.getElementById('bsvg');
+  [
+    {r:RA-40,text:'16avos'},
+    {r:RB-28,text:'Octavos'},
+    {r:RC-22,text:'Cuartos'},
+    {r:RD-18,text:'Semis'},
+  ].forEach(({r,text})=>{
+    const p=polar(90,r);
+    const el=mk('text',{x:p.x,y:p.y+3,'text-anchor':'middle','font-size':8,
+      fill:'#7a7060','font-weight':'600','letter-spacing':0.5},gn);
+    el.textContent=text;
+  });
+}
+
+// ── MATCHUP LIST ──────────────────────────────────────────────────────────────
+function renderMatchups(){
+  const div=document.getElementById('mulist');
+  div.innerHTML=BRACKET.map(([a,b],i)=>`
+    <div class="mu-card">
+      <span class="mu-num">${i+1}</span>
+      <span class="mu-vs">${T[a]?.f||''} ${a} <span style="color:var(--dim)">vs</span> ${T[b]?.f||''} ${b}</span>
+    </div>`).join('');
+}
+
+// ── STATS ──────────────────────────────────────────────────────────────────────
+function renderStats(res){
+  const area=document.getElementById('stats');
+  area.style.display='block';
+  const maxW=res[0].wp;
+  document.getElementById('stgrid').innerHTML=
+    res.filter(t=>t.wp>0.1).map(t=>{
+      const td=T[t.team];
+      const w=Math.min(t.wp/maxW*100,100);
+      return `<div class="st-card">
+        <div class="st-flag">${td.f}</div>
+        <div class="st-body">
+          <div class="st-name">${t.team}</div>
+          <div class="st-pct">${t.wp}%</div>
+          <div class="st-bar"><div class="st-fill" style="width:${w}%"></div></div>
+          <div class="st-sub">#${td.r} · €${td.m}M</div>
+        </div>
+      </div>`;
+    }).join('');
+}
+
+// ── EVENT HANDLERS ────────────────────────────────────────────────────────────
+let curAlpha=0.5;
+function onAlpha(v){
+  curAlpha=v;
+  const p=Math.round(v*100);
+  document.getElementById('mb').style.flex=1-v;
+  document.getElementById('fb').style.flex=v;
+  document.getElementById('ar').textContent=`${p}% FIFA · ${100-p}% Mercado`;
+}
+function upLbl(v){return v<0.15?'Mínimo':v<0.35?'Bajo':v<0.55?'Moderado':'Alto';}
+
+function simulate(){
+  const btn=document.getElementById('btn');
+  btn.disabled=true; btn.textContent='Simulando…';
+  setTimeout(()=>{
+    const n=+document.getElementById('nsel').value;
+    const up=+document.getElementById('upset').value;
+    const res=runMC(n,curAlpha,up);
+    wpMap={};
+    res.forEach(r=>{wpMap[r.team]=r.wp;});
+    const sc=simOnce(curAlpha,0.05); // low upset for display clarity
+    buildBracket(sc);
+    renderStats(res);
+    btn.disabled=false; btn.textContent='▶ Simular';
+  },60);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderMatchups();
+buildBracket(null);
+</script>
+</body>
+</html>
