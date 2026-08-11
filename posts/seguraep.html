@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Hizo la intervención de Segura EP más segura a Guayaquil? — Ecuador 2026</title>
+<meta name="author" content="Juan Pablo Jaramillo-Ramón">
+<meta name="description" content="Evidencia cuantitativa de 294 circuitos policiales en Guayas, Los Ríos, El Oro y Santa Elena sobre el efecto de la intervención gubernamental de Segura EP (15-feb-2026) en los homicidios de Guayaquil.">
+<style>
+  :root{
+    --bg:#0b1414;
+    --panel:#101b1c;
+    --paper:#f3efe6;
+    --ink:#0b1414;
+    --ink-soft:#3a4444;
+    --line:rgba(243,239,230,0.14);
+    --line-soft:rgba(11,20,20,0.12);
+    --amber:#e8a33d;
+    --amber-dim:#8a651f;
+    --red:#c1502e;
+    --teal:#3fa79a;
+    --mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+    --serif: 'Source Serif 4', 'Iowan Old Style', 'Georgia', serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--sans); line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(circle at 18% 18%, rgba(232,163,61,0.10), transparent 45%),
+      repeating-linear-gradient(115deg, rgba(243,239,230,0.035) 0px, rgba(243,239,230,0.035) 1px, transparent 1px, transparent 64px),
+      var(--bg);
+    color:var(--paper);
+    padding: 3.2rem 1.5rem 3.6rem;
+    position:relative;
+    overflow:hidden;
+  }
+  .scanline{
+    position:absolute; left:0; right:0; height:1px;
+    background:linear-gradient(90deg, transparent, rgba(232,163,61,0.55), transparent);
+    animation: sweep 7s linear infinite;
+    opacity:0.6;
+  }
+  @keyframes sweep{
+    0%{ top:-2%; }
+    100%{ top:102%; }
+  }
+  .wrap{max-width:760px; margin:0 auto;}
+  .eyebrow{
+    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--amber); display:flex; gap:0.6em; align-items:center; margin-bottom:1.4rem; flex-wrap:wrap;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%; background:var(--red); box-shadow:0 0 8px var(--red); animation:blink 1.8s ease-in-out infinite;}
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:0.25;} }
+  .rec{color:#e6b8ab;}
+
+  h1.title{
+    font-family:var(--serif); font-weight:600; font-size:clamp(1.9rem, 4.6vw, 3.05rem);
+    line-height:1.12; margin:0 0 1.1rem; letter-spacing:-0.01em;
+  }
+  h1.title em{ font-style:italic; color:var(--amber); }
+  .dek{ font-size:1.08rem; color:#c9d3d1; max-width:56ch; margin:0 0 1.6rem; }
+  .byline{
+    font-family:var(--mono); font-size:0.78rem; color:#8fa19d; border-top:1px solid var(--line);
+    padding-top:1rem; display:flex; gap:1.6em; flex-wrap:wrap;
+  }
+
+  /* ---------- VERDICT BLOCK ---------- */
+  .verdict{
+    background:var(--panel); color:var(--paper);
+    padding:2.6rem 1.5rem 3rem; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .verdict .wrap{display:grid; gap:1.6rem;}
+  .verdict-answer{
+    font-family:var(--serif); font-style:italic; font-size:clamp(2.4rem,7vw,3.6rem);
+    color:var(--amber); line-height:1;
+  }
+  .verdict-sub{ font-size:1rem; color:#c9d3d1; max-width:52ch; }
+  .lede{ font-family:var(--mono); font-size:0.74rem; letter-spacing:0.08em; text-transform:uppercase; color:#8fa19d; }
+
+  /* ---------- STAT STRIP ---------- */
+  .stats{ background:var(--bg); padding:0 1.5rem 3rem; }
+  .stat-grid{
+    max-width:760px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  .stat{ background:var(--panel); padding:1.3rem 1rem; }
+  .stat .num{ font-family:var(--mono); font-size:1.55rem; color:var(--amber); }
+  .stat .num.neutral{color:#d8d2c2;}
+  .stat .lab{ font-family:var(--sans); font-size:0.74rem; color:#8fa19d; margin-top:0.35rem; line-height:1.35; }
+  @media(max-width:640px){ .stat-grid{grid-template-columns:repeat(2,1fr);} }
+
+  /* ---------- BODY ---------- */
+  main{ background:var(--paper); }
+  .section{ max-width:700px; margin:0 auto; padding:3.4rem 1.5rem; border-bottom:1px solid var(--line-soft); }
+  .section:last-of-type{border-bottom:none;}
+  .sec-num{
+    font-family:var(--mono); font-size:0.75rem; color:var(--amber-dim); letter-spacing:0.1em;
+    display:block; margin-bottom:0.6rem;
+  }
+  h2{ font-family:var(--serif); font-weight:600; font-size:1.5rem; margin:0 0 1.3rem; line-height:1.25; }
+  p{ margin:0 0 1.1rem; font-size:1.02rem; color:var(--ink-soft); }
+  p strong{color:var(--ink);}
+  .lead-p{font-size:1.1rem; color:var(--ink);}
+
+  blockquote{
+    font-family:var(--serif); font-style:italic; font-size:1.2rem; line-height:1.5;
+    border-left:3px solid var(--amber); margin:1.8rem 0; padding:0.2rem 0 0.2rem 1.3rem; color:var(--ink);
+  }
+
+  .callout{
+    background:#fff; border:1px solid var(--line-soft); border-left:3px solid var(--teal);
+    padding:1.1rem 1.3rem; margin:1.6rem 0; font-size:0.95rem;
+  }
+  .callout .k{ font-family:var(--mono); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--teal); display:block; margin-bottom:0.4rem;}
+
+  /* ---------- TABLE ---------- */
+  table{width:100%; border-collapse:collapse; margin:1.6rem 0; font-size:0.92rem;}
+  caption{text-align:left; font-family:var(--mono); font-size:0.72rem; color:var(--ink-soft); margin-bottom:0.6rem; text-transform:uppercase; letter-spacing:0.06em;}
+  th,td{ text-align:left; padding:0.55rem 0.7rem; border-bottom:1px solid var(--line-soft); }
+  th{font-family:var(--mono); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft); font-weight:600;}
+  td.num, th.num{font-family:var(--mono); text-align:right;}
+  tr.highlight td{background:rgba(232,163,61,0.09); font-weight:600;}
+  .fig-note{font-family:var(--mono); font-size:0.76rem; color:var(--ink-soft); margin-top:0.6rem;}
+
+  /* ---------- CHART ---------- */
+  .chart-card{ background:#fff; border:1px solid var(--line-soft); padding:1.4rem 1.2rem 0.8rem; margin:1.8rem 0; }
+  .chart-title{ font-family:var(--mono); font-size:0.74rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); margin-bottom:0.9rem; }
+  svg{width:100%; height:auto; display:block;}
+  .legend{display:flex; gap:1.4em; font-family:var(--mono); font-size:0.72rem; color:var(--ink-soft); margin-top:0.6rem; flex-wrap:wrap;}
+  .legend span{display:inline-flex; align-items:center; gap:0.4em;}
+  .sw{width:10px;height:10px;display:inline-block;}
+
+  ol.numlist, ul.plainlist{padding-left:1.2rem;}
+  ol.numlist li, ul.plainlist li{margin-bottom:0.7rem; color:var(--ink-soft);}
+  ol.numlist li strong, ul.plainlist li strong{color:var(--ink);}
+
+  .aphorism{
+    font-family:var(--serif); font-style:italic; font-size:1.35rem; text-align:center;
+    color:var(--ink); max-width:600px; margin:2rem auto; line-height:1.4;
+  }
+
+  footer{ background:var(--panel); color:#c9d3d1; padding:3rem 1.5rem 3.5rem; }
+  footer .wrap{display:grid; gap:1.6rem;}
+  footer h3{font-family:var(--mono); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--amber); margin:0 0 0.6rem;}
+  footer p, footer li{font-size:0.9rem; color:#a9b6b3;}
+  footer ul{padding-left:1.1rem; margin:0.3rem 0;}
+  .foot-meta{font-family:var(--mono); font-size:0.72rem; color:#6f8480; border-top:1px solid var(--line); padding-top:1.4rem; margin-top:0.6rem;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="scanline"></div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span><span class="rec">REC · CCTV-8</span> · Policy Brief Seguridad Ciudadana · Agosto 2026 · 294 circuitos policiales</div>
+    <h1 class="title">¿Hizo la intervención de <em>Segura EP</em> más segura a Guayaquil?</h1>
+    <p class="dek">El 15 de febrero de 2026 el Gobierno tomó el control operativo de las cámaras municipales de Guayaquil. Diecinueve semanas después, comparamos la trayectoria semanal de homicidios en los 57 circuitos de Guayaquil contra 237 circuitos de control en Guayas, Los Ríos, El Oro y Santa Elena.</p>
+    <div class="byline">
+      <span>Juan Pablo Jaramillo-Ramón</span>
+      <span>Mgs. en Economía · Mgs. en Política Comparada</span>
+      <span>ORCID: 0000-0001-6161-4477</span>
+    </div>
+  </div>
+</div>
+
+<div class="verdict">
+  <div class="wrap">
+    <div class="lede">La respuesta corta</div>
+    <div class="verdict-answer">No — al menos no todavía.</div>
+    <p class="verdict-sub">Diecinueve semanas después de la intervención, Guayaquil no muestra una caída de homicidios distinta a la del resto de la Costa. El efecto estimado es prácticamente cero y estadísticamente indistinguible de cero, en tres especificaciones distintas y también después de depurar el grupo de control para satisfacer el supuesto de tendencias paralelas.</p>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat-grid">
+    <div class="stat"><div class="num neutral">−0.003</div><div class="lab">β̂ TWFE (Guayaquil × Post), especificación depurada</div></div>
+    <div class="stat"><div class="num neutral">p = 0.90</div><div class="lab">Nivel de significancia del efecto principal</div></div>
+    <div class="stat"><div class="num">19</div><div class="lab">Semanas antes / después de la intervención (5-oct-2025 → 27-jun-2026)</div></div>
+    <div class="stat"><div class="num">253</div><div class="lab">Circuitos policiales: 57 en Guayaquil, 196 de control tras depuración</div></div>
+  </div>
+</div>
+
+<main>
+
+  <section class="section">
+    <span class="sec-num">01</span>
+    <h2>Una toma de cámaras que dividió a dos niveles de gobierno</h2>
+    <p class="lead-p">La noche del domingo 15 de febrero de 2026, en medio de la crisis de incendios estructurales en Guayaquil, el Ministerio del Interior y la Policía Nacional allanaron las instalaciones de Segura EP —la empresa pública municipal para la gestión de riesgos y control de la seguridad de Guayaquil— y tomaron el control operativo de su sistema de videovigilancia. El Gobierno justificó la medida citando una investigación fiscal sobre el manejo del centro de datos de las cámaras municipales; el Municipio de Guayaquil calificó la intervención de secuestro institucional y una vulneración de su autonomía administrativa.</p>
+    <p>Más allá del litigio político-constitucional, la intervención hizo una promesa empírica concreta: integrar la infraestructura tecnológica de Segura EP —cámaras, centros de monitoreo, sistemas de alerta— a la operación policial nacional debía traducirse en mejor capacidad de detección y respuesta, y por lo tanto en menos violencia letal.</p>
+    <blockquote>"El Ministerio del Interior afirma que uno de los ejes de la intervención es articular la infraestructura tecnológica de Segura EP con la operación policial." — Ministerio del Interior, 20 de febrero de 2026.</blockquote>
+    <p>Esa promesa es contrastable. Este policy brief la contrasta.</p>
+  </section>
+
+  <section class="section">
+    <span class="sec-num">02</span>
+    <h2>La pregunta que el debate público no puede responder por sí solo</h2>
+    <p>El debate sobre Segura EP se libró casi enteramente en el terreno constitucional —autonomía municipal versus facultad fiscalizadora del Ejecutivo— y muy poco en el terreno empírico. Es una omisión costosa: si la intervención efectivamente mejora la capacidad de vigilancia y respuesta, ese es un argumento a favor que la discusión jurídica no captura. Si no lo hace, entonces el costo institucional de la intervención —el precedente sobre autonomía de los GAD, la ruptura de la coordinación municipio-Gobierno central— se pagó sin la compensación de seguridad que la justificaba.</p>
+    <p>La comparación ingenua —homicidios de Guayaquil antes versus después del 15 de febrero— no sirve para responder esto. Ecuador entero venía reduciendo homicidios desde enero de 2026 (−7,9% nacional en el primer bimestre), en paralelo a estados de excepción prolongados, toques de queda y operativos contra la extorsión que nada tienen que ver con las cámaras de Segura EP. Cualquier caída observada en Guayaquil después de febrero podría deberse a la intervención, a estos otros factores, o a ninguno de los dos.</p>
+    <p>La pregunta que organiza este análisis es, entonces, más estricta: <strong>¿cayeron los homicidios en Guayaquil más de lo que cayeron en cantones costeros comparables que no tuvieron intervención de sus cámaras?</strong> Esa es la única pregunta que aísla, aunque sea parcialmente, el efecto específico de Segura EP de la tendencia regional de seguridad.</p>
+  </section>
+
+  <section class="section">
+    <span class="sec-num">03</span>
+    <h2>Diseño: un panel semanal de circuitos policiales, no de cantones</h2>
+    <p>Se construyó un panel de microdatos del Ministerio del Interior con todos los homicidios intencionales (asesinato, homicidio, femicidio, sicariato) registrados entre 2014 y junio de 2026 en Guayas, Los Ríos, El Oro y Santa Elena. La unidad de análisis es el <strong>circuito policial</strong> —la subdivisión geográfica más fina disponible en los microdatos y la única que anida consistentemente dentro de cada cantón, tanto para Guayaquil como para el resto de la muestra—, identificado de forma única como cantón × circuito.</p>
+    <div class="callout">
+      <span class="k">Nota de datos</span>
+      El MDI no reporta un campo de parroquia. El campo "distrito" solo equivale a parroquia urbana dentro de Guayaquil (10 unidades); fuera de Guayaquil agrupa varios cantones a la vez, por lo que no sirve como unidad de comparación. "Circuito" sí ofrece varias subdivisiones dentro de cada cantón —de 2 en Samborondón a 21 en Machala— y es la unidad usada aquí tanto para los circuitos tratados (Guayaquil) como para los de control.
+    </div>
+    <p>Se definió una ventana simétrica de 19 semanas antes y después del 15 de febrero de 2026 —el máximo disponible dado que los microdatos de 2026 cubren hasta el 30 de junio—, y se contó el número de homicidios por circuito-semana, incluyendo ceros. La variable dependiente es ln(1+conteo semanal), y el modelo es de doble efecto fijo:</p>
+    <blockquote>y<sub>it</sub> = α<sub>i</sub> + λ<sub>t</sub> + β·(Tratado<sub>i</sub> × Post<sub>t</sub>) + ε<sub>it</sub></blockquote>
+    <p>con efectos fijos de circuito (α<sub>i</sub>) y de semana (λ<sub>t</sub>), y errores estándar clusterizados por circuito. El coeficiente de interés, β, mide si Guayaquil se desvió de la tendencia del resto de la Costa después de la intervención.</p>
+  </section>
+
+  <section class="section">
+    <span class="sec-num">04</span>
+    <h2>El resultado: un efecto que no se distingue de cero</h2>
+    <p class="lead-p">La estimación TWFE no encuentra un efecto diferencial de la intervención sobre los homicidios de Guayaquil, y el resultado es estable frente a tres definiciones distintas del grupo de control.</p>
+    <table>
+      <caption>Tabla 1 — Coeficiente Guayaquil × Post, tres especificaciones</caption>
+      <thead>
+        <tr><th>Grupo de control</th><th class="num">β̂</th><th class="num">EE (cluster)</th><th class="num">p</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Las 4 provincias completas (237 circuitos)</td><td class="num">0.015</td><td class="num">0.024</td><td class="num">0.530</td></tr>
+        <tr><td>Solo resto de Guayas</td><td class="num">0.006</td><td class="num">0.026</td><td class="num">0.816</td></tr>
+        <tr><td>Solo cantones aledaños (Durán, Samborondón, Milagro, Daule, Naranjal, Yaguachi, Salitre, Playas, Naranjito)</td><td class="num">0.030</td><td class="num">0.029</td><td class="num">0.295</td></tr>
+      </tbody>
+    </table>
+    <p>En términos crudos, Guayaquil pasó de 0,77 a 0,74 homicidios por circuito-semana (−4,5%) entre el período pre y post-intervención; el conjunto de las cuatro provincias, de 0,34 a 0,28 (−17,8%). Si algo, Guayaquil cayó <em>menos</em> que su comparación regional —aunque, como muestra la tabla, la diferencia no es estadísticamente distinguible de cero en ninguna especificación.</p>
+  </section>
+
+  <section class="section">
+    <span class="sec-num">05</span>
+    <h2>El chequeo que la mayoría de los análisis de coyuntura se salta</h2>
+    <p>Un diseño de diferencias en diferencias solo es creíble si, antes del tratamiento, los circuitos tratados y de control se movían en tendencias paralelas. Con el conjunto completo de 237 circuitos de control, ese supuesto se rechaza con fuerza: el test conjunto sobre los coeficientes pre-tendencia del estudio de eventos da F = 2,44, p = 0,001. La Figura 1 muestra por qué: varios circuitos de control —sobre todo en Machala, Babahoyo, Balzar y Ventanas— tenían trayectorias de homicidios muy distintas a las de Guayaquil incluso antes de que existiera la intervención.</p>
+
+    <div class="chart-card">
+      <div class="chart-title">Figura 1 — Estudio de eventos: coeficiente Guayaquil×semana (ref. = semana −19), muestra completa</div>
+      <svg id="eventChart" viewBox="0 0 680 300" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="legend">
+        <span><span class="sw" style="background:#c1502e"></span>Coeficiente puntual</span>
+        <span><span class="sw" style="background:rgba(193,80,46,0.18)"></span>IC 95%</span>
+        <span><span class="sw" style="background:#3fa79a"></span>Semana 0 = intervención</span>
+      </div>
+      <div class="fig-note">FE circuito + FE semana. Errores clusterizados por circuito. N = 11.172 circuito-semana.</div>
+    </div>
+
+    <p>Por eso se repitió el ejercicio eliminando iterativamente —mediante selección backward, guiada por la divergencia de la pendiente pre-tratamiento de cada circuito respecto al promedio de Guayaquil— los circuitos de control más ruidosos, hasta que el test de tendencias paralelas dejara de rechazarse. Se necesitó excluir 41 de los 237 circuitos (17%) para llegar a F = 1,46, p = 0,105.</p>
+    <table>
+      <caption>Tabla 2 — Especificación con control depurado (196 circuitos)</caption>
+      <thead><tr><th></th><th class="num">Pre</th><th class="num">Post</th><th class="num">Δ%</th></tr></thead>
+      <tbody>
+        <tr><td>Guayaquil (tratado)</td><td class="num">0.775</td><td class="num">0.740</td><td class="num">−4.5%</td></tr>
+        <tr><td>Control depurado</td><td class="num">0.266</td><td class="num">0.252</td><td class="num">−5.5%</td></tr>
+        <tr class="highlight"><td>β̂ Guayaquil × Post</td><td colspan="2"></td><td class="num">−0.003 (p = 0.897)</td></tr>
+      </tbody>
+    </table>
+    <p>El resultado no cambia. Con tendencias paralelas satisfechas, el efecto estimado es aún más cercano a cero. Es la peor combinación posible para quien busque atribuirle un efecto a la intervención: no hay señal ni con el diseño ingenuo, ni con el diseño depurado.</p>
+    <div class="callout">
+      <span class="k">Advertencia metodológica</span>
+      Depurar el grupo de control hasta forzar tendencias paralelas es un ejercicio de robustez, no la especificación principal: eliminar observaciones hasta que un test deje de rechazar introduce el riesgo de <em>specification searching</em>. Se reporta aquí precisamente porque, incluso concediendo ese riesgo a favor de encontrar un efecto, el resultado no aparece.
+    </div>
+  </section>
+
+  <section class="section">
+    <span class="sec-num">06</span>
+    <h2>La respuesta final: la intervención no tiene un efecto medible sobre los homicidios</h2>
+    <p class="lead-p">¿Hizo la intervención de Segura EP más segura a Guayaquil? Con la evidencia disponible a junio de 2026, la respuesta es <strong>no. La intervención no tiene un efecto medible sobre los homicidios de Guayaquil</strong>. El coeficiente de interés es indistinguible de cero en las tres especificaciones del grupo de control, y sigue siendo indistinguible de cero incluso después de depurar la muestra para satisfacer el supuesto de tendencias paralelas —el ejercicio que, si algo, debería favorecer encontrar un efecto si este existiera. No hay ninguna de las cuatro especificaciones estimadas en este brief que produzca un coeficiente distinguible de cero.</p>
+    <p>La discusión pública sobre Segura EP se ha librado casi enteramente en el plano constitucional —autonomía municipal versus facultad fiscalizadora del Ejecutivo—. Ese debate puede resolverse por otras vías. Lo que ya no puede sostenerse, con los datos en la mano, es el argumento de seguridad que acompañó la intervención: diecinueve semanas después de tomar el control de las cámaras, Guayaquil no es más segura en el indicador que la intervención prometía mejorar. La carga de la prueba —y de aquí en adelante, la responsabilidad política del resultado— es de quienes prometieron ese resultado.</p>
+    <p class="aphorism">Una cámara que cambia de dueño no cambia, por sí sola, lo que ocurre frente a ella.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <h3>Nota metodológica</h3>
+      <p>Diseño de diferencias en diferencias con doble efecto fijo (circuito + semana), variable dependiente ln(1+conteo semanal de homicidios intencionales), errores estándar clusterizados por circuito. Ventana simétrica de 19 semanas alrededor del 15-feb-2026 (5-oct-2025 a 27-jun-2026). Robusto a tres definiciones del grupo de control y a la depuración de circuitos para satisfacer tendencias paralelas. Código de replicación en Python (pandas + pyfixest) disponible a solicitud del autor.</p>
+    </div>
+    <div>
+      <h3>Fuentes de datos</h3>
+      <ul>
+        <li>Ministerio del Interior del Ecuador — microdatos de homicidios intencionales, 2014–2025 y enero–junio 2026</li>
+        <li>Cobertura geográfica: Guayas, Los Ríos, El Oro, Santa Elena (294 circuitos policiales)</li>
+        <li>Cobertura de prensa de la intervención: El Universo, Primicias, Expreso, Extra, Infobae, teleSUR (feb–may 2026)</li>
+      </ul>
+    </div>
+    <div class="foot-meta">Policy Brief · ¿Hizo la intervención de Segura EP más segura a Guayaquil? · Agosto 2026 · Autor: Juan Pablo Jaramillo-Ramón · Mgs. en Economía · Mgs. en Política Comparada</div>
+  </div>
+</footer>
+
+<script>
+const data = [{"week": -19, "coef": 0.10728369815484247, "se": 0.08420478633802833}, {"week": -18, "coef": -0.04197483167566315, "se": 0.09591349072555613}, {"week": -17, "coef": -0.0642881445127486, "se": 0.09214271807667411}, {"week": -16, "coef": -0.03387977816186499, "se": 0.0902429388728893}, {"week": -15, "coef": -0.03890969977328095, "se": 0.09686390206008132}, {"week": -14, "coef": 0.004950522674559935, "se": 0.0978612118352091}, {"week": -13, "coef": 0.10666798530524574, "se": 0.09688483401837664}, {"week": -12, "coef": 0.14032195536385392, "se": 0.08582759612072656}, {"week": -11, "coef": 0.1730603341467272, "se": 0.10174719818691383}, {"week": -10, "coef": -0.008517512029923999, "se": 0.08044357357112002}, {"week": -9, "coef": 0.20184573359704566, "se": 0.10153033546839474}, {"week": -8, "coef": 0.021581693493224415, "se": 0.08015704259118277}, {"week": -7, "coef": 0.13375415406181138, "se": 0.10730709990112398}, {"week": -6, "coef": 0.23290271749186986, "se": 0.10318593852215661}, {"week": -5, "coef": 0.13310937987826096, "se": 0.09805263799289256}, {"week": -4, "coef": -0.000558181826420329, "se": 0.08557964987184724}, {"week": -3, "coef": 0.031261441217319774, "se": 0.08339802334845096}, {"week": -2, "coef": 0.10531848983161876, "se": 0.09652371049689155}, {"week": 0, "coef": 0.10566081614020109, "se": 0.09542649642293272}, {"week": 1, "coef": 0.10832279533808112, "se": 0.09982827694733451}, {"week": 2, "coef": 0.06346594841543868, "se": 0.09557518171558352}, {"week": 3, "coef": 0.041561806837344596, "se": 0.09644271030247108}, {"week": 4, "coef": 0.08457568990648585, "se": 0.08748847797418732}, {"week": 5, "coef": 0.14025323143389465, "se": 0.10219312812864366}, {"week": 6, "coef": 0.04190496365130649, "se": 0.09126884789975347}, {"week": 7, "coef": 0.08727410826666758, "se": 0.08620044346445921}, {"week": 8, "coef": 0.07183857294975049, "se": 0.0869878573137421}, {"week": 9, "coef": 0.09702263320781176, "se": 0.09482080887522076}, {"week": 10, "coef": 0.1325797338259164, "se": 0.09707330710026993}, {"week": 11, "coef": 0.1930934942746944, "se": 0.09338634231079959}, {"week": 12, "coef": 0.08257365928917808, "se": 0.09307645021083641}, {"week": 13, "coef": -0.09512115675839859, "se": 0.08534245007751176}, {"week": 14, "coef": 0.07425840156618256, "se": 0.08301159545851798}, {"week": 15, "coef": 0.05397563168500965, "se": 0.08720341792200607}, {"week": 16, "coef": 0.10637968470765236, "se": 0.09644196723414951}, {"week": 17, "coef": -0.04017389775631413, "se": 0.07610788267723374}, {"week": 18, "coef": 0.14732748938925663, "se": 0.08705752907064068}];
+
+const svg = document.getElementById('eventChart');
+const W=680,H=300, padL=40,padR=14,padT=14,padB=32;
+const xs = data.map(d=>d.week);
+const minW=Math.min(...xs), maxW=Math.max(...xs);
+const ys = data.map(d=>d.coef);
+const lo = Math.min(...data.map(d=>d.coef-1.96*d.se))-0.03;
+const hi = Math.max(...data.map(d=>d.coef+1.96*d.se))+0.03;
+
+function X(w){ return padL + (w-minW)/(maxW-minW) * (W-padL-padR); }
+function Y(v){ return H-padB - (v-lo)/(hi-lo) * (H-padT-padB); }
+
+let svgns = "http://www.w3.org/2000/svg";
+function el(tag,attrs){
+  const e = document.createElementNS(svgns,tag);
+  for(const k in attrs) e.setAttribute(k, attrs[k]);
+  return e;
+}
+
+// zero line
+svg.appendChild(el('line',{x1:padL,x2:W-padR,y1:Y(0),y2:Y(0),stroke:'#0b1414',"stroke-opacity":0.25,"stroke-dasharray":"3,3"}));
+// intervention band (week 0)
+svg.appendChild(el('line',{x1:X(0),x2:X(0),y1:padT,y2:H-padB,stroke:'#3fa79a',"stroke-width":1.5}));
+
+// CI band as path
+let bandTop = data.map(d=>`${X(d.week)},${Y(d.coef+1.96*d.se)}`).join(' L ');
+let bandBot = data.slice().reverse().map(d=>`${X(d.week)},${Y(d.coef-1.96*d.se)}`).join(' L ');
+svg.appendChild(el('path',{d:`M ${bandTop} L ${bandBot} Z`, fill:'#c1502e', "fill-opacity":0.14, stroke:'none'}));
+
+// line
+let linePts = data.map(d=>`${X(d.week)},${Y(d.coef)}`).join(' L ');
+svg.appendChild(el('path',{d:`M ${linePts}`, fill:'none', stroke:'#c1502e', "stroke-width":1.8}));
+
+// points
+data.forEach(d=>{
+  svg.appendChild(el('circle',{cx:X(d.week),cy:Y(d.coef),r:2.6,fill:'#c1502e'}));
+});
+
+// axis labels
+[minW,-10,0,10,maxW].forEach(w=>{
+  svg.appendChild(el('text',{x:X(w),y:H-padB+16,"font-size":9,"font-family":"JetBrains Mono, monospace",fill:'#3a4444',"text-anchor":"middle"})).textContent=w;
+});
+[lo,0,hi].forEach(v=>{
+  const t = el('text',{x:padL-8,y:Y(v)+3,"font-size":9,"font-family":"JetBrains Mono, monospace",fill:'#3a4444',"text-anchor":"end"});
+  t.textContent = v.toFixed(2);
+  svg.appendChild(t);
+});
+</script>
+
+</body>
+</html>
