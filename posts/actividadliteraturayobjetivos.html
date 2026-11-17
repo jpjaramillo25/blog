@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Actividad: aporte, pregunta o hipótesis y objetivos · Taller de tesina I</title>
+<style>
+:root{
+  --navy:#1b2a41; --navy2:#2c405e; --accent:#e07a1f; --accent-soft:#fdf0e3;
+  --blue:#2a6f97; --green:#2f7d5a; --red:#b3402f;
+  --bg:#f3f5f9; --card:#ffffff; --line:#d9dfe8; --muted:#5b6678; --text:#1d2433;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 "Segoe UI",system-ui,-apple-system,Calibri,Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:22px 20px 18px}
+.wrap{max-width:980px;margin:0 auto}
+header .kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#f3b57c;margin:0 0 4px}
+header h1{font:700 26px/1.25 Georgia,"Times New Roman",serif;margin:0 0 10px}
+.who{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px}
+.who input{background:#fff;color:var(--text);border:0;border-radius:8px;padding:8px 12px;min-width:260px;font-size:15px}
+.who .hint{color:#c9d3e2}
+nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:4px;overflow-x:auto;padding:8px 12px}
+nav button{flex:1 0 auto;border:0;background:transparent;padding:10px 14px;border-radius:10px;cursor:pointer;font:600 14px inherit;font-family:inherit;color:var(--muted);display:flex;gap:8px;align-items:center;white-space:nowrap}
+nav button .n{width:24px;height:24px;border-radius:50%;background:var(--line);color:var(--navy);display:inline-grid;place-items:center;font-size:13px}
+nav button.on{background:var(--navy);color:#fff}
+nav button.on .n{background:var(--accent);color:#fff}
+nav button.done .n{background:var(--green);color:#fff}
+main{padding:22px 16px 60px}
+section.step{display:none;max-width:980px;margin:0 auto}
+section.step.on{display:block}
+h2{font:700 24px/1.3 Georgia,serif;color:var(--navy);margin:0 0 6px}
+.lead{color:var(--muted);margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:0 0 16px;box-shadow:0 1px 2px rgba(27,42,65,.05)}
+.card h3{margin:0 0 4px;font-size:17px;color:var(--navy)}
+.tip{background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:14.5px;margin:0 0 16px}
+label{display:block;font-weight:600;font-size:14.5px;margin:12px 0 4px}
+label small{font-weight:400;color:var(--muted)}
+input[type=text],textarea,select{width:100%;border:1px solid #b9c3d3;border-radius:9px;padding:9px 11px;font:inherit;background:#fff;color:var(--text)}
+textarea{min-height:76px;resize:vertical}
+input:focus,textarea:focus,select:focus,button:focus-visible{outline:3px solid #f3b57c;outline-offset:1px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}.who input{min-width:0;width:100%}}
+.btn{border:0;border-radius:10px;padding:10px 16px;font:600 15px inherit;font-family:inherit;cursor:pointer;background:var(--navy);color:#fff}
+.btn.accent{background:var(--accent)}
+.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+.btn.small{padding:6px 11px;font-size:13.5px}
+.btn:disabled{opacity:.5;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.check{display:flex;gap:10px;align-items:flex-start;margin:7px 0;font-weight:400;font-size:15px}
+.check input{margin-top:5px;width:18px;height:18px;flex:0 0 auto}
+.preview{background:#f8fafc;border-left:5px solid var(--blue);padding:12px 14px;border-radius:8px;font-size:16px}
+.preview .ph{color:#98a2b3}
+.item-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.badge{font-size:12.5px;padding:2px 9px;border-radius:99px;background:#e8eef7;color:var(--navy)}
+.star{background:var(--accent-soft);border-color:var(--accent)}
+.diag{display:grid;grid-template-columns:34px 1fr 230px;gap:10px;align-items:start;padding:10px 0;border-top:1px solid var(--line)}
+.diag:first-of-type{border-top:0}
+.diag .num{width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:14px;font-weight:700}
+.diag .txt{font-size:15.5px}
+.fb{grid-column:2 / 4;font-size:14.5px;border-radius:8px;padding:8px 12px;display:none}
+.fb.show{display:block}
+.fb.ok{background:#e6f4ec;color:#1f5a3e}
+.fb.no{background:#fbe9e5;color:#8c2f21}
+@media(max-width:720px){.diag{grid-template-columns:34px 1fr}.diag select{grid-column:2}.fb{grid-column:1 / 3}}
+.warn{font-size:14px;color:var(--red);margin:4px 0 0;display:none}
+.warn.show{display:block}
+.ficha{background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px 30px;font-family:Calibri,"Segoe UI",Arial,sans-serif;font-size:15px}
+.ficha h1{font-size:22px;margin:0 0 4px;color:var(--navy)}
+.ficha h2{font-size:17px;margin:20px 0 6px;color:var(--navy);font-family:inherit}
+.ficha p,.ficha li{margin:4px 0}
+.ficha .pend{color:#98a2b3;font-style:italic}
+.toast{font-size:14.5px;font-weight:600;color:var(--green)}
+.nav-foot{display:flex;justify-content:space-between;margin-top:8px}
+.reset{margin-top:30px;font-size:13.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="kicker">Taller de tesina I · Clase 7–8 · FLACSO Ecuador</p>
+    <h1>De la literatura al aporte: pregunta, hipótesis y objetivos</h1>
+    <div class="who">
+      <label for="nombre" style="margin:0;font-weight:600">Nombre</label>
+      <input type="text" id="nombre" data-k="nombre" placeholder="Nombre y apellido" autocomplete="name">
+      <span class="hint">Tu avance se guarda en este navegador. Al final copias la ficha a Word.</span>
+    </div>
+  </div>
+</header>
+<nav aria-label="Pasos de la actividad"><div class="wrap" id="stepper"></div></nav>
+
+<main>
+<!-- PASO 1 -->
+<section class="step" id="s1">
+  <h2>1. Mapa de la literatura</h2>
+  <p class="lead">Divide tu campo en 3 o 4 conversaciones, enfoques o grupos de trabajos. Para cada una, escribe qué ya se sabe y qué falta. Marca con la estrella el vacío que tu tesina podría atender.</p>
+  <div class="tip"><strong>Prueba con tu pareja:</strong> explica tu mapa en 3 minutos. Ella solo pregunta “¿quién sostiene eso?” y “¿por qué ese vacío importa?”.</div>
+  <div id="mapa"></div>
+  <div class="row"><button class="btn ghost" id="addConv">+ Agregar conversación</button><span class="badge" id="convCount"></span></div>
+  <div class="nav-foot"><span></span><button class="btn" data-go="2">Siguiente: aporte →</button></div>
+</section>
+
+<!-- PASO 2 -->
+<section class="step" id="s2">
+  <h2>2. Problema de la literatura y aporte específico</h2>
+  <p class="lead">Un aporte no es “un tema poco estudiado”. Es un vacío, una contradicción o un límite concreto que tu tesina puede reducir.</p>
+  <div class="card">
+    <h3>Problema de la literatura (un párrafo)</h3>
+    <label for="problema">¿Qué se sabe, qué falta y por qué importa? Cita al menos tres trabajos concretos de tu revisión.</label>
+    <textarea id="problema" data-k="problema" style="min-height:120px" placeholder="Ej.: Los estudios sobre … (Autor 2020; Autor 2022) muestran que … Sin embargo, …"></textarea>
+  </div>
+  <div class="card">
+    <h3>Aporte en una frase</h3>
+    <div class="grid2">
+      <div><label for="a_tema">Tema <small>(la literatura sobre…)</small></label><input type="text" id="a_tema" data-k="aporte.tema"></div>
+      <div><label for="a_sabe">Lo que se sabe <small>(ha establecido que…)</small></label><input type="text" id="a_sabe" data-k="aporte.sabe"></div>
+      <div><label for="a_vacio">Vacío, contradicción o límite <small>(Sin embargo, …)</small></label><input type="text" id="a_vacio" data-k="aporte.vacio"></div>
+      <div><label for="a_razon">Razón <small>(debido a… datos, método, caso, teoría)</small></label><input type="text" id="a_razon" data-k="aporte.razon"></div>
+      <div><label for="a_tipo">Tipo de aporte</label>
+        <select id="a_tipo" data-k="aporte.tipo">
+          <option value="">Elige uno…</option>
+          <option>un aporte empírico</option>
+          <option>un aporte teórico</option>
+          <option>un aporte de datos o de método</option>
+          <option>una aplicación a un contexto no estudiado</option>
+        </select></div>
+      <div><label for="a_hara">Qué harás <small>(al + verbo en infinitivo: estimar, comparar, describir…)</small></label><input type="text" id="a_hara" data-k="aporte.hara" placeholder="Ej.: estimar el efecto de … sobre …"></div>
+    </div>
+    <label for="a_datos">Con qué datos o casos</label>
+    <input type="text" id="a_datos" data-k="aporte.datos">
+    <label style="margin-top:16px">Así se lee tu aporte</label>
+    <div class="preview" id="aportePrev"></div>
+  </div>
+  <div class="card">
+    <h3>Pruébalo con tu pareja</h3>
+    <label class="check"><input type="checkbox" data-k="criterios.0"> <span><strong>Específico:</strong> se ve qué literatura exacta cambia, no “la literatura en general”.</span></label>
+    <label class="check"><input type="checkbox" data-k="criterios.1"> <span><strong>No es mera aplicación:</strong> explica qué aprende el campo, no solo que se usó una técnica en un caso nuevo.</span></label>
+    <label class="check"><input type="checkbox" data-k="criterios.2"> <span><strong>Alcanzable:</strong> con tus datos y el tiempo de una tesina, puedes llegar a lo que prometes.</span></label>
+  </div>
+  <div class="nav-foot"><button class="btn ghost" data-go="1">← Mapa</button><button class="btn" data-go="3">Siguiente: diagnóstico →</button></div>
+</section>
+
+<!-- PASO 3 -->
+<section class="step" id="s3">
+  <h2>3. Diagnóstico de enunciados</h2>
+  <p class="lead">Clasifica cada enunciado y pulsa “Comprobar”. Puedes corregir y volver a comprobar. Después reescribe los enunciados 7 y 8.</p>
+  <div class="tip">Referencia (Tello 2011): una <strong>pregunta</strong> tiene incertidumbre y se responde; una <strong>hipótesis</strong> afirma una relación entre variables y se contrasta; un <strong>supuesto</strong> es una idea previa del investigador; un <strong>objetivo</strong> dice qué se hará.</div>
+  <div class="card" id="diagList"></div>
+  <div class="row"><button class="btn accent" id="checkDiag">Comprobar</button><span id="diagScore" class="badge" style="display:none"></span></div>
+  <div class="card" style="margin-top:16px">
+    <h3>Reescribe los enunciados mal formulados</h3>
+    <p class="lead" style="margin:0 0 6px"><em>7. ¿Es importante la movilidad en la pandemia?</em></p>
+    <div class="grid2">
+      <div><label for="r7p">Versión como pregunta</label><textarea id="r7p" data-k="diag.r7p"></textarea></div>
+      <div><label for="r7h">Versión como hipótesis</label><textarea id="r7h" data-k="diag.r7h"></textarea></div>
+    </div>
+    <p class="lead" style="margin:14px 0 6px"><em>8. La movilidad cambió por la pandemia.</em></p>
+    <div class="grid2">
+      <div><label for="r8p">Versión como pregunta</label><textarea id="r8p" data-k="diag.r8p"></textarea></div>
+      <div><label for="r8h">Versión como hipótesis</label><textarea id="r8h" data-k="diag.r8h"></textarea></div>
+    </div>
+  </div>
+  <div class="nav-foot"><button class="btn ghost" data-go="2">← Aporte</button><button class="btn" data-go="4">Siguiente: eje y objetivos →</button></div>
+</section>
+
+<!-- PASO 4 -->
+<section class="step" id="s4">
+  <h2>4. Mi eje y mis objetivos</h2>
+  <p class="lead">Decide el eje de tu tesina y redáctalo. Tello (2011) pide coherencia: el eje define la lógica del diseño, no es una casilla que llenar.</p>
+  <div class="tip"><strong>Guía:</strong> elige <em>hipótesis</em> si ya hay teoría y datos para afirmar y contrastar una relación; <em>pregunta</em> si el fenómeno está poco teorizado y buscas describir o comprender; <em>solo objetivos</em> si el aporte es sobre todo descriptivo o de datos.</div>
+  <div class="card">
+    <label for="eje">Eje de mi investigación</label>
+    <select id="eje" data-k="eje.tipo">
+      <option value="">Elige uno…</option>
+      <option>Pregunta</option>
+      <option>Hipótesis</option>
+      <option>Solo objetivos</option>
+      <option>Pregunta e hipótesis (con papeles distintos)</option>
+    </select>
+    <label for="just">Justifica la elección en 2 o 3 líneas <small>(¿qué lógica sigue mi tesina: verificación o descubrimiento?)</small></label>
+    <textarea id="just" data-k="eje.just"></textarea>
+    <div id="boxPreg">
+      <label for="preg">Mi pregunta de investigación</label>
+      <textarea id="preg" data-k="eje.pregunta" placeholder="¿…?"></textarea>
+      <p class="warn" id="wPreg">Cuidado: esta pregunta parece responderse con sí o no, o trae la respuesta incorporada. Reformúlala (por ejemplo, “¿qué relación existe entre… y…?”).</p>
+    </div>
+    <div id="boxHip">
+      <label for="hip">Mi hipótesis</label>
+      <textarea id="hip" data-k="eje.hipotesis"></textarea>
+      <div style="margin-top:6px">
+        <label class="check"><input type="checkbox" data-k="eje.hipCrit.0"> <span>Relaciona al menos dos variables y dice la dirección esperada.</span></label>
+        <label class="check"><input type="checkbox" data-k="eje.hipCrit.1"> <span>Tiene sustento en la literatura que reseñé (puedo nombrar a quién).</span></label>
+        <label class="check"><input type="checkbox" data-k="eje.hipCrit.2"> <span>Se puede operacionalizar con datos que existen y podría salir falsa.</span></label>
+        <label class="check"><input type="checkbox" data-k="eje.hipCrit.3"> <span>Su alcance es el de la tesina: ni un caso aislado ni una ley universal.</span></label>
+      </div>
+    </div>
+    <label for="sup">Supuestos de partida <small>(ideas previas que declaro aparte; no son hipótesis)</small></label>
+    <textarea id="sup" data-k="eje.supuestos"></textarea>
+  </div>
+  <div class="card">
+    <h3>Objetivos</h3>
+    <label for="og">Objetivo general <small>(un solo verbo medible: explicar, comparar, estimar, describir, caracterizar, comprender)</small></label>
+    <textarea id="og" data-k="obj.general"></textarea>
+    <p class="warn" id="wOg">Cuidado: “conocer”, “ver” o “analizar” a secas no se pueden verificar. Usa un verbo más preciso.</p>
+    <label>Objetivos específicos <small>(de 2 a 4, cada uno con un verbo medible)</small></label>
+    <div id="espList"></div>
+    <div class="row" style="margin-top:8px"><button class="btn ghost small" id="addEsp">+ Agregar objetivo específico</button></div>
+  </div>
+  <div class="card">
+    <h3>Lista de cotejo (con tu pareja)</h3>
+    <label class="check"><input type="checkbox" data-k="cotejo.0"> <span>Se entiende el aporte sin explicaciones adicionales.</span></label>
+    <label class="check"><input type="checkbox" data-k="cotejo.1"> <span>El eje elegido es coherente con la lógica de mi tesina.</span></label>
+    <label class="check"><input type="checkbox" data-k="cotejo.2"> <span>Mi pregunta no trae la respuesta incorporada.</span></label>
+    <label class="check"><input type="checkbox" data-k="cotejo.3"> <span>Mi hipótesis se puede contrastar con los datos disponibles.</span></label>
+    <label class="check"><input type="checkbox" data-k="cotejo.4"> <span>Cada objetivo específico tiene un verbo medible.</span></label>
+    <label class="check"><input type="checkbox" data-k="cotejo.5"> <span>Mis supuestos están declarados aparte y no disfrazados de hipótesis.</span></label>
+  </div>
+  <div class="nav-foot"><button class="btn ghost" data-go="3">← Diagnóstico</button><button class="btn accent" data-go="5">Ver mi ficha final →</button></div>
+</section>
+
+<!-- PASO 5 -->
+<section class="step" id="s5">
+  <h2>5. Mi ficha para copiar a Word</h2>
+  <p class="lead">Revisa la ficha, copia y pega en un documento de Word. Lo que aparece en gris como “Pendiente” es lo que aún falta completar. Esta es la base de tu entrega del jueves 19 de noviembre.</p>
+  <div class="row" style="margin-bottom:12px">
+    <button class="btn accent" id="copyRich">Copiar para Word</button>
+    <button class="btn ghost" id="copyPlain">Copiar como texto plano</button>
+    <span class="toast" id="toast" role="status"></span>
+  </div>
+  <div class="ficha" id="ficha"></div>
+  <p class="lead" style="margin-top:10px;font-size:14px">Si el botón no copia en tu navegador, selecciona toda la ficha con el mouse y copia con Ctrl + C (Cmd + C en Mac).</p>
+  <div class="nav-foot"><button class="btn ghost" data-go="4">← Eje y objetivos</button><span></span></div>
+  <div class="reset">
+    <span id="resetBox"><button class="btn ghost small" id="resetAsk">Borrar todo y empezar de nuevo</button></span>
+  </div>
+</section>
+</main>
+
+<script>
+(function(){
+"use strict";
+var STORE="tesina-clase78-v1";
+var DIAG=[
+  {t:"El apoyo tutorial contribuye de manera importante a los alumnos con problemas de disciplina.", ok:["Supuesto"], why:"Es una idea previa del investigador: afirma un efecto, pero no está construida como pregunta ni como hipótesis contrastable."},
+  {t:"¿Por qué los alumnos con alta autorregulación tienen mejor desempeño?", ok:["Mal formulado"], why:"Parece pregunta, pero ya trae la respuesta incorporada: es una hipótesis disfrazada de pregunta."},
+  {t:"¿Qué relación existe entre la autorregulación y el desempeño académico?", ok:["Pregunta bien formulada"], why:"Tiene incertidumbre real, no se contesta con sí o no y no incluye la respuesta."},
+  {t:"Los alumnos con alta autorregulación tendrán mejor desempeño que los de baja autorregulación.", ok:["Hipótesis"], why:"Afirma una relación entre variables con dirección esperada y se puede contrastar."},
+  {t:"No existe relación entre las horas en el centro de estudiantes y la permanencia tras el primer año.", ok:["Hipótesis"], why:"Es una hipótesis nula operacional: dice que no hay relación en términos de medidas concretas."},
+  {t:"Describir cómo cambia la intensidad del movimiento entre municipios durante el confinamiento.", ok:["Objetivo"], why:"Dice qué se hará (describir) y con qué foco; es un objetivo descriptivo."},
+  {t:"¿Es importante la movilidad en la pandemia?", ok:["Mal formulado"], why:"Se responde con sí o no y es demasiado amplia: no define qué es “importante” ni para qué."},
+  {t:"La movilidad cambió por la pandemia.", ok:["Mal formulado","Supuesto"], why:"Es una afirmación general sin variables definidas ni forma contrastable; funciona como supuesto, no como hipótesis."}
+];
+var OPTS=["Supuesto","Pregunta bien formulada","Hipótesis","Objetivo","Mal formulado"];
+function fresh(){return {nombre:"",
+  mapa:[{n:"",tr:"",es:"",fa:"",va:false},{n:"",tr:"",es:"",fa:"",va:false},{n:"",tr:"",es:"",fa:"",va:false}],
+  problema:"",aporte:{tema:"",sabe:"",vacio:"",razon:"",tipo:"",hara:"",datos:""},criterios:[false,false,false],
+  diag:{sel:["","","","","","","",""],r7p:"",r7h:"",r8p:"",r8h:""},
+  eje:{tipo:"",just:"",pregunta:"",hipotesis:"",supuestos:"",hipCrit:[false,false,false,false]},
+  obj:{general:"",esp:["",""]},cotejo:[false,false,false,false,false,false]};}
+var S=fresh();
+try{var raw=localStorage.getItem(STORE);if(raw){var p=JSON.parse(raw);if(p&&p.aporte&&p.eje)S=Object.assign(fresh(),p)}}catch(e){}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(S))}catch(e){}}
+function $(s,r){return (r||document).querySelector(s)}
+function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+function esc(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function filled(t){return typeof t==="string"&&t.trim().length>0}
+
+/* binding por ruta data-k */
+function getp(path){var o=S,k=path.split(".");for(var i=0;i<k.length;i++){if(o==null)return "";o=o[k[i]]}return o}
+function setp(path,v){var o=S,k=path.split(".");for(var i=0;i<k.length-1;i++)o=o[k[i]];o[k[k.length-1]]=v}
+function bindStatic(){
+  $$("[data-k]").forEach(function(el){
+    var v=getp(el.getAttribute("data-k"));
+    if(el.type==="checkbox")el.checked=!!v;else el.value=v==null?"":v;
+    var ev=(el.type==="checkbox"||el.tagName==="SELECT")?"change":"input";
+    el.addEventListener(ev,function(){
+      setp(el.getAttribute("data-k"),el.type==="checkbox"?el.checked:el.value);
+      save();refresh();
+    });
+  });
+}
+
+/* mapa */
+function renderMapa(){
+  var box=$("#mapa");box.innerHTML="";
+  S.mapa.forEach(function(c,i){
+    var d=document.createElement("div");d.className="card"+(c.va?" star":"");
+    d.innerHTML='<div class="item-head"><h3>Conversación '+(i+1)+'</h3><span>'+
+      (S.mapa.length>2?'<button class="btn ghost small" data-del="'+i+'">Quitar</button>':'')+'</span></div>'+
+      '<div class="grid2"><div><label>Nombre del enfoque o conversación</label><input type="text" data-f="n" value="'+esc(c.n)+'" placeholder="Ej.: Economía política de las drogas"></div>'+
+      '<div><label>Trabajos clave <small>(autor y año)</small></label><input type="text" data-f="tr" value="'+esc(c.tr)+'"></div>'+
+      '<div><label>Lo que ya se sabe</label><textarea data-f="es">'+esc(c.es)+'</textarea></div>'+
+      '<div><label>Lo que falta o no explica</label><textarea data-f="fa">'+esc(c.fa)+'</textarea></div></div>'+
+      '<label class="check"><input type="checkbox" data-f="va"'+(c.va?" checked":"")+'> <span>★ Este es el vacío que mi tesina podría atender</span></label>';
+    $$("[data-f]",d).forEach(function(el){
+      var f=el.getAttribute("data-f");
+      el.addEventListener(el.type==="checkbox"?"change":"input",function(){
+        c[f]=el.type==="checkbox"?el.checked:el.value;save();
+        if(f==="va"){d.classList.toggle("star",c.va)}
+        refresh();
+      });
+    });
+    var del=$("[data-del]",d);if(del)del.addEventListener("click",function(){S.mapa.splice(i,1);save();renderMapa();refresh()});
+    box.appendChild(d);
+  });
+  $("#convCount").textContent=S.mapa.length+" de 5 conversaciones";
+  $("#addConv").disabled=S.mapa.length>=5;
+}
+$("#addConv").addEventListener("click",function(){if(S.mapa.length<5){S.mapa.push({n:"",tr:"",es:"",fa:"",va:false});save();renderMapa();refresh()}});
+
+/* diagnóstico */
+function renderDiag(){
+  var box=$("#diagList");box.innerHTML="";
+  DIAG.forEach(function(d,i){
+    var row=document.createElement("div");row.className="diag";
+    var sel='<select aria-label="Clasificación del enunciado '+(i+1)+'"><option value="">Clasifica…</option>'+OPTS.map(function(o){return '<option'+(S.diag.sel[i]===o?" selected":"")+'>'+o+'</option>'}).join("")+'</select>';
+    row.innerHTML='<div class="num">'+(i+1)+'</div><div class="txt">'+esc(d.t)+'</div>'+sel+'<div class="fb" id="fb'+i+'"></div>';
+    $("select",row).addEventListener("change",function(e){S.diag.sel[i]=e.target.value;save();$("#fb"+i).className="fb";$("#diagScore").style.display="none";refresh()});
+    box.appendChild(row);
+  });
+}
+$("#checkDiag").addEventListener("click",function(){
+  var ok=0,done=0;
+  DIAG.forEach(function(d,i){
+    var fb=$("#fb"+i),v=S.diag.sel[i];
+    if(!v){fb.className="fb show no";fb.textContent="Aún no clasificaste este enunciado.";return}
+    done++;
+    if(d.ok.indexOf(v)>-1){ok++;fb.className="fb show ok";fb.textContent="Correcto. "+d.why}
+    else{fb.className="fb show no";fb.textContent="Revisa: "+d.why}
+  });
+  var sc=$("#diagScore");sc.style.display="inline-block";sc.textContent=ok+" de "+DIAG.length+" correctos";
+});
+
+/* específicos */
+function renderEsp(){
+  var box=$("#espList");box.innerHTML="";
+  S.obj.esp.forEach(function(t,i){
+    var w=document.createElement("div");w.className="row";w.style.marginBottom="8px";w.style.flexWrap="nowrap";
+    w.innerHTML='<span class="badge" style="flex:0 0 auto">'+(i+1)+'</span><input type="text" aria-label="Objetivo específico '+(i+1)+'" value="'+esc(t)+'" placeholder="Verbo medible + producto observable">'+
+      (S.obj.esp.length>2?'<button class="btn ghost small" style="flex:0 0 auto">Quitar</button>':'');
+    $("input",w).addEventListener("input",function(e){S.obj.esp[i]=e.target.value;save();refresh()});
+    var b=$("button",w);if(b)b.addEventListener("click",function(){S.obj.esp.splice(i,1);save();renderEsp();refresh()});
+    box.appendChild(w);
+  });
+  $("#addEsp").disabled=S.obj.esp.length>=4;
+}
+$("#addEsp").addEventListener("click",function(){if(S.obj.esp.length<4){S.obj.esp.push("");save();renderEsp();refresh()}});
+
+/* ficha: bloques -> html + texto */
+var PEND="[Pendiente]";
+function aporteSentence(){
+  var a=S.aporte;function g(t,l){return filled(t)?t.trim():"[…"+l+"…]"}
+  var tipo=filled(a.tipo)?a.tipo:"[…tipo de aporte…]";
+  return "La literatura sobre "+g(a.tema,"tema")+" ha establecido "+g(a.sabe,"lo que se sabe")+". Sin embargo, "+g(a.vacio,"vacío o límite")+", debido a "+g(a.razon,"razón")+". Esta tesina contribuye con "+tipo+" al "+g(a.hara,"qué harás")+", con "+g(a.datos,"datos o casos")+".";
+}
+function aporteComplete(){var a=S.aporte;return filled(a.tema)&&filled(a.sabe)&&filled(a.vacio)&&filled(a.razon)&&filled(a.tipo)&&filled(a.hara)&&filled(a.datos)}
+function blocks(){
+  var B=[];
+  B.push({t:"title",x:"Ficha de aporte, eje y objetivos"});
+  B.push({t:"p",x:"Estudiante: "+(filled(S.nombre)?S.nombre.trim():PEND)+" · Taller de tesina I · Entrega del 19 de noviembre de 2026"});
+  B.push({t:"h",x:"1. Problema de la literatura"});
+  B.push(filled(S.problema)?{t:"p",x:S.problema.trim()}:{t:"pend",x:PEND});
+  var conv=S.mapa.filter(function(c){return filled(c.n)||filled(c.es)||filled(c.fa)});
+  if(conv.length){
+    B.push({t:"p",x:"Conversaciones de la literatura:",b:true});
+    B.push({t:"ul",items:conv.map(function(c){
+      var s=(filled(c.n)?c.n.trim():"Sin nombre");
+      if(filled(c.tr))s+=" ("+c.tr.trim()+")";
+      s+=". Se sabe: "+(filled(c.es)?c.es.trim():PEND)+". Falta: "+(filled(c.fa)?c.fa.trim():PEND)+".";
+      if(c.va)s+=" ★ Vacío que atiende esta tesina.";
+      return s})});
+  }
+  B.push({t:"h",x:"2. Aporte específico"});
+  B.push(aporteComplete()?{t:"p",x:aporteSentence()}:{t:"pend",x:filled(S.aporte.tema)||filled(S.aporte.sabe)||filled(S.aporte.vacio)?aporteSentence():PEND});
+  B.push({t:"h",x:"3. Eje de la investigación"});
+  if(!filled(S.eje.tipo)){B.push({t:"pend",x:PEND})}
+  else{
+    B.push({t:"p",x:"Eje elegido: "+S.eje.tipo+(filled(S.eje.just)?". "+S.eje.just.trim():".")});
+    var usaP=S.eje.tipo==="Pregunta"||S.eje.tipo.indexOf("Pregunta e")===0;
+    var usaH=S.eje.tipo==="Hipótesis"||S.eje.tipo.indexOf("Pregunta e")===0;
+    if(usaP)B.push({t:"p",x:"Pregunta de investigación: "+(filled(S.eje.pregunta)?S.eje.pregunta.trim():PEND)});
+    if(usaH)B.push({t:"p",x:"Hipótesis: "+(filled(S.eje.hipotesis)?S.eje.hipotesis.trim():PEND)});
+  }
+  if(filled(S.eje.supuestos))B.push({t:"p",x:"Supuestos de partida: "+S.eje.supuestos.trim()});
+  B.push({t:"h",x:"4. Objetivos"});
+  B.push({t:"p",x:"Objetivo general: "+(filled(S.obj.general)?S.obj.general.trim():PEND)});
+  var esp=S.obj.esp.filter(filled);
+  B.push({t:"p",x:"Objetivos específicos:",b:true});
+  B.push(esp.length?{t:"ol",items:esp.map(function(s){return s.trim()})}:{t:"pend",x:PEND});
+  var d=S.diag;
+  if(filled(d.r7p)||filled(d.r7h)||filled(d.r8p)||filled(d.r8h)){
+    B.push({t:"h",x:"Anexo: reescritura de enunciados"});
+    B.push({t:"ul",items:[
+      "Enunciado 7 como pregunta: "+(filled(d.r7p)?d.r7p.trim():PEND),
+      "Enunciado 7 como hipótesis: "+(filled(d.r7h)?d.r7h.trim():PEND),
+      "Enunciado 8 como pregunta: "+(filled(d.r8p)?d.r8p.trim():PEND),
+      "Enunciado 8 como hipótesis: "+(filled(d.r8h)?d.r8h.trim():PEND)]});
+  }
+  return B;
+}
+function toHTML(B,forWord){
+  var f=forWord?' style="font-family:Calibri,Arial,sans-serif;font-size:11pt"':"";
+  return B.map(function(b){
+    if(b.t==="title")return "<h1"+f+">"+esc(b.x)+"</h1>";
+    if(b.t==="h")return "<h2"+f+">"+esc(b.x)+"</h2>";
+    if(b.t==="p")return "<p"+f+">"+(b.b?"<strong>"+esc(b.x)+"</strong>":esc(b.x))+"</p>";
+    if(b.t==="pend")return forWord?"<p"+f+">"+esc(b.x)+"</p>":'<p class="pend">'+esc(b.x)+"</p>";
+    var tag=b.t==="ol"?"ol":"ul";
+    return "<"+tag+f+">"+b.items.map(function(i){return "<li>"+esc(i)+"</li>"}).join("")+"</"+tag+">";
+  }).join("");
+}
+function toText(B){
+  return B.map(function(b){
+    if(b.t==="title")return b.x.toUpperCase()+"\n";
+    if(b.t==="h")return "\n"+b.x.toUpperCase();
+    if(b.t==="p"||b.t==="pend")return b.x;
+    return b.items.map(function(i,k){return (b.t==="ol"?(k+1)+". ":"• ")+i}).join("\n");
+  }).join("\n");
+}
+function renderFicha(){$("#ficha").innerHTML=toHTML(blocks(),false)}
+
+/* copiar */
+function say(m){var t=$("#toast");t.textContent=m;clearTimeout(say.h);say.h=setTimeout(function(){t.textContent=""},4500)}
+function selectFicha(){var r=document.createRange();r.selectNodeContents($("#ficha"));var s=window.getSelection();s.removeAllRanges();s.addRange(r)}
+function legacyCopy(){try{selectFicha();var ok=document.execCommand("copy");return ok}catch(e){return false}}
+$("#copyRich").addEventListener("click",function(){
+  renderFicha();var B=blocks(),html=toHTML(B,true),txt=toText(B);
+  function fallback(){if(legacyCopy())say("Copiado. Pega en Word con Ctrl + V.");else{selectFicha();say("Seleccioné la ficha: pulsa Ctrl + C para copiarla.")}}
+  try{
+    if(navigator.clipboard&&window.ClipboardItem){
+      navigator.clipboard.write([new ClipboardItem({"text/html":new Blob([html],{type:"text/html"}),"text/plain":new Blob([txt],{type:"text/plain"})})])
+        .then(function(){say("Copiado con formato. Pega en Word con Ctrl + V.")},fallback);
+    }else fallback();
+  }catch(e){fallback()}
+});
+$("#copyPlain").addEventListener("click",function(){
+  var txt=toText(blocks());
+  function fb(){var ta=document.createElement("textarea");ta.value=txt;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand("copy")}catch(e){}document.body.removeChild(ta);say(ok?"Texto copiado.":"No se pudo copiar: selecciona la ficha y usa Ctrl + C.")}
+  try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){say("Texto copiado.")},fb)}else fb()}catch(e){fb()}
+});
+
+/* reset */
+$("#resetAsk").addEventListener("click",function(){
+  $("#resetBox").innerHTML='<span>¿Seguro? Se borrarán todas tus respuestas. </span><button class="btn small" id="rY" style="background:var(--red)">Sí, borrar</button> <button class="btn ghost small" id="rN">Cancelar</button>';
+  $("#rY").addEventListener("click",function(){S=fresh();save();location.reload()});
+  $("#rN").addEventListener("click",function(){location.reload()});
+});
+
+/* pasos y estado */
+var STEPS=["Mapa de literatura","Aporte","Diagnóstico","Eje y objetivos","Mi ficha"];
+var cur=1;
+function stepDone(n){
+  if(n===1)return S.mapa.some(function(c){return filled(c.es)&&filled(c.fa)})&&S.mapa.some(function(c){return c.va});
+  if(n===2)return aporteComplete()&&filled(S.problema);
+  if(n===3)return S.diag.sel.every(filled);
+  if(n===4)return filled(S.eje.tipo)&&filled(S.obj.general)&&S.obj.esp.filter(filled).length>=2;
+  return false;
+}
+function renderStepper(){
+  var nav=$("#stepper");nav.innerHTML="";
+  STEPS.forEach(function(s,i){
+    var n=i+1,b=document.createElement("button");
+    b.className=(n===cur?"on ":"")+(n<5&&stepDone(n)&&n!==cur?"done":"");
+    b.innerHTML='<span class="n">'+(n<5&&stepDone(n)?"✓":n)+'</span>'+s;
+    b.addEventListener("click",function(){go(n)});
+    nav.appendChild(b);
+  });
+}
+function go(n){
+  cur=n;$$("section.step").forEach(function(s){s.classList.toggle("on",s.id==="s"+n)});
+  if(n===5)renderFicha();
+  renderStepper();window.scrollTo({top:0,behavior:"smooth"});
+  try{location.hash="paso-"+n}catch(e){}
+}
+$$("[data-go]").forEach(function(b){b.addEventListener("click",function(){go(parseInt(b.getAttribute("data-go"),10))})});
+
+function refresh(){
+  /* vista previa del aporte */
+  var p=aporteSentence();
+  $("#aportePrev").innerHTML=esc(p).replace(/\[…([^\]]*?)…\]/g,'<span class="ph">[…$1…]</span>');
+  /* ejes condicionales */
+  var t=S.eje.tipo,usaP=t==="Pregunta"||t.indexOf("Pregunta e")===0,usaH=t==="Hipótesis"||t.indexOf("Pregunta e")===0;
+  $("#boxPreg").style.display=usaP?"block":"none";
+  $("#boxHip").style.display=usaH?"block":"none";
+  /* avisos */
+  var q=S.eje.pregunta.trim();
+  $("#wPreg").className="warn"+(usaP&&/^¿\s*(es|son|existe|existen|hay|tiene|tienen|puede|pueden|influye)\b/i.test(q)?" show":"");
+  var og=S.obj.general.trim();
+  $("#wOg").className="warn"+(/^(conocer|ver|analizar|estudiar|investigar)\b/i.test(og)?" show":"");
+  renderStepper();
+}
+
+bindStatic();renderMapa();renderDiag();renderEsp();refresh();
+var h=(location.hash||"").match(/^#paso-([1-5])$/);go(h?parseInt(h[1],10):1);
+})();
+</script>
+</body>
+</html>
