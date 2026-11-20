@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quito: septiembre vs. noviembre 2026</title>
+<style>
+:root{--bg:#faf9f5;--fg:#1f1e1d;--mut:#5e5d59;--panel:#fff;--line:#dcd9cf;--up:#0072B2;--down:#D55E00;--ns:#b8b4a8;--grid:#e8e5db;--sep:#8a877e}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#262624;--fg:#f0eee6;--mut:#b5b2a6;--panel:#30302e;--line:#4a4944;--up:#56B4E9;--down:#E69F00;--ns:#6b6960;--grid:#3d3c38;--sep:#8a877e}}
+:root[data-theme=dark]{--bg:#262624;--fg:#f0eee6;--mut:#b5b2a6;--panel:#30302e;--line:#4a4944;--up:#56B4E9;--down:#E69F00;--ns:#6b6960;--grid:#3d3c38;--sep:#8a877e}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--fg)}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45;padding:24px 16px 48px}
+.wrap{max-width:1040px;margin:auto;display:flex;flex-direction:column;gap:20px}
+h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(1.7rem,4.5vw,2.4rem);line-height:1.1;margin:0;text-wrap:balance}
+.sub{color:var(--mut);max-width:68ch;margin:.4rem 0 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 20px}
+h2{font-size:1.15rem;font-weight:600;margin:0 0 .3rem}
+.note{color:var(--mut);font-size:.85rem;margin:0 0 .8rem;max-width:80ch}
+.waves{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:12px}
+.wave{border-top:3px solid var(--fg);padding-top:6px}.wave b{display:block}.wave span{color:var(--mut);font-size:.88rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(11.5rem,1fr));gap:12px}
+.tile{border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.tile .t{font-size:.8rem;color:var(--mut)}.tile .v{font-size:1.5rem;font-weight:600}.tile .d{font-size:.85rem;font-weight:600}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.chip{border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:999px;padding:5px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+label.sw{display:flex;gap:6px;align-items:center;font-size:.88rem;margin-left:auto;cursor:pointer}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.82rem;color:var(--mut);margin-bottom:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+.grp{margin-top:18px}.grp h3{font-size:.95rem;margin:0 0 6px;padding-bottom:4px;border-bottom:1px solid var(--line)}
+.r{display:grid;grid-template-columns:minmax(9rem,1.25fr) 6.2rem minmax(10rem,2fr) 3.4rem;gap:10px;align-items:center;padding:5px 0;font-size:.9rem;border-bottom:1px solid var(--grid)}
+.r .vals{font-variant-numeric:tabular-nums;white-space:nowrap}.r .vals .s{color:var(--mut)}
+.r .z{font-variant-numeric:tabular-nums;color:var(--mut);font-size:.8rem;text-align:right}
+.hd{font-size:.75rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line)}
+svg{display:block;width:100%;height:22px}
+.lbl small{display:block;color:var(--mut);font-size:.75rem}
+@media(max-width:640px){.r{grid-template-columns:1fr 5.8rem 3rem;grid-template-areas:"l v z" "c c c"}.r .lbl{grid-area:l}.r .vals{grid-area:v}.r .z{grid-area:z}.r .ch{grid-area:c}.hd{display:none}}
+ul.w{margin:0;padding-left:1.1rem}ul.w li{margin:.3rem 0}
+.tip{position:fixed;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 9px;font-size:.8rem;box-shadow:0 4px 16px rgba(0,0,0,.15);z-index:5;max-width:18rem}
+</style></head><body><div class="wrap">
+<header><h1>Quito: septiembre vs. noviembre de 2026</h1>
+<p class="sub">Qué cambió entre las dos olas de la encuesta de Clima Social. Porcentajes ponderados, sin modelos. Cada barra es el cambio en puntos porcentuales, con su intervalo de confianza del 95 %.</p></header>
+
+<section class="card"><div class="waves">
+<div class="wave"><b>Septiembre</b><span>25 al 27 de septiembre · n = 2.025 · alcaldía, concejales, prefectura y régimen</span></div>
+<div class="wave"><b>Noviembre</b><span>7 al 9 de noviembre · n = 1.255 · cuestionario más corto, agrega corrupción municipal y detención de Luisa González</span></div>
+</div></section>
+
+<section class="card"><h2>Lo más importante</h2><div class="tiles" id="tiles"></div></section>
+
+<section class="card"><h2>Todas las diferencias</h2>
+<p class="note">Las dos olas son muestras independientes: se comparan niveles agregados, no personas. Un cambio es «claro» cuando su intervalo del 95 % no incluye el cero (|z| &gt; 1,96). Con tantas comparaciones, alguna saldrá clara por azar; las de |z| mayor a 3 son las más firmes.</p>
+<div class="ctl" id="ctl"></div>
+<div class="legend"><span><i style="background:var(--up)"></i>Sube (cambio claro)</span><span><i style="background:var(--down)"></i>Baja (cambio claro)</span><span><i style="background:var(--ns)"></i>Sin cambio claro</span></div>
+<div class="r hd"><div>Indicador</div><div>Sept → Nov</div><div>Cambio (puntos)</div><div style="text-align:right">z</div></div>
+<div id="rows"></div></section>
+
+<section class="card"><h2>Cómo leer esto</h2><ul class="w">
+<li><b>Composición estable.</b> Las dos muestras se parecen en sexo, zona, edad y educación (última sección), así que las diferencias no vienen de un cambio en quiénes respondieron.</li>
+<li><b>Muñoz sube sobre todo porque bajan los nulos y los indecisos.</b> Entre quienes eligen candidato, su avance es menor y menos firme que en el total.</li>
+<li><b>Orden de las preguntas.</b> En noviembre, la descripción del gobierno viene después de las preguntas sobre la detención de Luisa González y el encarcelamiento de dirigentes; el aumento de «autoritario» puede reflejar en parte ese orden.</li>
+<li><b>Intervalos aproximados.</b> Usan el tamaño efectivo por ponderación; la base no trae estrato ni conglomerado.</li>
+<li><b>Cruzar no es explicar.</b> Estas cifras describen cambios; no dicen por qué ocurrieron.</li>
+</ul><p class="note" style="margin:.8rem 0 0">Fuente: encuestas de Quito de Clima Social, septiembre y noviembre de 2026, ponderadas con el factor de expansión.</p></section>
+</div><div class="tip" id="tip" hidden></div>
+<script>
+const D={"rows": [{"g": "Voto para alcalde (hoy)", "l": "Pabel Muñoz", "a": 27.7, "b": 35.6, "na": 2025, "nb": 1255, "d": 7.9, "ci": 3.3, "z": 4.7, "note": ""}, {"g": "Voto para alcalde (hoy)", "l": "Harold Burbano", "a": 9.5, "b": 10.8, "na": 2025, "nb": 1255, "d": 1.3, "ci": 2.2, "z": 1.2, "note": ""}, {"g": "Voto para alcalde (hoy)", "l": "Jorge Yunda", "a": 8.6, "b": 9.1, "na": 2025, "nb": 1255, "d": 0.5, "ci": 2.0, "z": 0.5, "note": ""}, {"g": "Voto para alcalde (hoy)", "l": "Wilson Merino", "a": 6.9, "b": 5.9, "na": 2025, "nb": 1255, "d": -1.0, "ci": 1.7, "z": -1.1, "note": ""}, {"g": "Voto para alcalde (hoy)", "l": "Otros candidatos", "a": 7.3, "b": 9.7, "na": 2025, "nb": 1255, "d": 2.4, "ci": 2.0, "z": 2.4, "note": ""}, {"g": "Voto para alcalde (hoy)", "l": "Nulo o blanco", "a": 18.2, "b": 10.9, "na": 2025, "nb": 1255, "d": -7.3, "ci": 2.4, "z": -5.9, "note": ""}, {"g": "Voto para alcalde (hoy)", "l": "No sabe / no ha decidido", "a": 21.8, "b": 18.1, "na": 2025, "nb": 1255, "d": -3.7, "ci": 2.8, "z": -2.6, "note": ""}, {"g": "Voto entre quienes eligen candidato", "l": "Pabel Muñoz", "a": 46.2, "b": 50.1, "na": 1216, "nb": 894, "d": 3.9, "ci": 4.3, "z": 1.8, "note": "Base: quienes eligen un candidato (sin indecisos ni nulos)"}, {"g": "Voto entre quienes eligen candidato", "l": "Harold Burbano", "a": 15.9, "b": 15.2, "na": 1216, "nb": 894, "d": -0.6, "ci": 3.1, "z": -0.4, "note": "Base: quienes eligen un candidato (sin indecisos ni nulos)"}, {"g": "Voto entre quienes eligen candidato", "l": "Jorge Yunda", "a": 14.4, "b": 12.8, "na": 1216, "nb": 894, "d": -1.6, "ci": 3.0, "z": -1.0, "note": "Base: quienes eligen un candidato (sin indecisos ni nulos)"}, {"g": "Voto entre quienes eligen candidato", "l": "Wilson Merino", "a": 11.4, "b": 8.2, "na": 1216, "nb": 894, "d": -3.2, "ci": 2.6, "z": -2.4, "note": "Base: quienes eligen un candidato (sin indecisos ni nulos)"}, {"g": "Rechazo: nunca votaría por…", "l": "Pabel Muñoz", "a": 14.6, "b": 18.4, "na": 2025, "nb": 1255, "d": 3.8, "ci": 2.7, "z": 2.8, "note": ""}, {"g": "Rechazo: nunca votaría por…", "l": "Harold Burbano", "a": 14.9, "b": 23.1, "na": 2025, "nb": 1255, "d": 8.2, "ci": 2.8, "z": 5.7, "note": ""}, {"g": "Rechazo: nunca votaría por…", "l": "Jorge Yunda", "a": 13.3, "b": 12.3, "na": 2025, "nb": 1255, "d": -1.1, "ci": 2.4, "z": -0.9, "note": ""}, {"g": "Rechazo: nunca votaría por…", "l": "Wilson Merino", "a": 3.4, "b": 4.1, "na": 2025, "nb": 1255, "d": 0.7, "ci": 1.4, "z": 1.1, "note": ""}, {"g": "Conocimiento", "l": "Pabel Muñoz", "a": 95.9, "b": 98.6, "na": 2025, "nb": 1255, "d": 2.7, "ci": 1.1, "z": 4.8, "note": "Porcentaje que lo conoce"}, {"g": "Conocimiento", "l": "Jorge Yunda", "a": 93.7, "b": 95.7, "na": 2025, "nb": 1255, "d": 2.0, "ci": 1.6, "z": 2.5, "note": "Porcentaje que lo conoce"}, {"g": "Conocimiento", "l": "Harold Burbano", "a": 50.2, "b": 60.8, "na": 2025, "nb": 1255, "d": 10.6, "ci": 3.5, "z": 5.9, "note": "Porcentaje que lo conoce"}, {"g": "Conocimiento", "l": "Wilson Merino", "a": 53.8, "b": 56.6, "na": 2025, "nb": 1255, "d": 2.8, "ci": 3.5, "z": 1.6, "note": "Porcentaje que lo conoce"}, {"g": "Opinión positiva (7 a 10) entre quienes lo conocen", "l": "Pabel Muñoz", "a": 27.6, "b": 34.9, "na": 1943, "nb": 1236, "d": 7.3, "ci": 3.3, "z": 4.3, "note": ""}, {"g": "Opinión positiva (7 a 10) entre quienes lo conocen", "l": "Jorge Yunda", "a": 13.5, "b": 12.5, "na": 1898, "nb": 1201, "d": -0.9, "ci": 2.4, "z": -0.7, "note": ""}, {"g": "Opinión positiva (7 a 10) entre quienes lo conocen", "l": "Harold Burbano", "a": 12.7, "b": 17.9, "na": 1025, "nb": 765, "d": 5.2, "ci": 3.4, "z": 3.0, "note": ""}, {"g": "Opinión positiva (7 a 10) entre quienes lo conocen", "l": "Wilson Merino", "a": 20.7, "b": 15.8, "na": 1099, "nb": 719, "d": -4.9, "ci": 3.6, "z": -2.7, "note": ""}, {"g": "Opinión negativa (0 a 3) entre quienes lo conocen", "l": "Pabel Muñoz", "a": 39.1, "b": 30.7, "na": 1943, "nb": 1236, "d": -8.5, "ci": 3.4, "z": -4.9, "note": ""}, {"g": "Opinión negativa (0 a 3) entre quienes lo conocen", "l": "Jorge Yunda", "a": 57.3, "b": 58.7, "na": 1898, "nb": 1201, "d": 1.5, "ci": 3.6, "z": 0.8, "note": ""}, {"g": "Opinión negativa (0 a 3) entre quienes lo conocen", "l": "Harold Burbano", "a": 57.3, "b": 59.2, "na": 1025, "nb": 765, "d": 2.0, "ci": 4.6, "z": 0.8, "note": ""}, {"g": "Opinión negativa (0 a 3) entre quienes lo conocen", "l": "Wilson Merino", "a": 48.7, "b": 50.0, "na": 1099, "nb": 719, "d": 1.2, "ci": 4.7, "z": 0.5, "note": ""}, {"g": "Gestión (calificación positiva)", "l": "Presidente Noboa", "a": 34.0, "b": 31.1, "na": 2025, "nb": 1255, "d": -2.9, "ci": 3.3, "z": -1.7, "note": ""}, {"g": "Gestión (calificación positiva)", "l": "Alcalde Muñoz", "a": 50.1, "b": 55.7, "na": 2025, "nb": 1255, "d": 5.6, "ci": 3.5, "z": 3.1, "note": ""}, {"g": "Gestión (calificación positiva)", "l": "Prefecta Pabón", "a": 46.0, "b": 44.4, "na": 2025, "nb": 1255, "d": -1.6, "ci": 3.5, "z": -0.9, "note": ""}, {"g": "Gestión (calificación negativa)", "l": "Presidente Noboa", "a": 62.2, "b": 67.2, "na": 2025, "nb": 1255, "d": 5.0, "ci": 3.4, "z": 2.9, "note": ""}, {"g": "Gestión (calificación negativa)", "l": "Alcalde Muñoz", "a": 42.6, "b": 40.9, "na": 2025, "nb": 1255, "d": -1.7, "ci": 3.5, "z": -1.0, "note": ""}, {"g": "Gestión (calificación negativa)", "l": "Prefecta Pabón", "a": 35.4, "b": 36.9, "na": 2025, "nb": 1255, "d": 1.5, "ci": 3.4, "z": 0.9, "note": ""}, {"g": "Gobierno nacional y apoyos", "l": "Describe al gobierno como autoritario", "a": 47.5, "b": 57.7, "na": 2025, "nb": 1255, "d": 10.2, "ci": 3.5, "z": 5.7, "note": "En noviembre la pregunta viene después de las de detención de Luisa González y encarcelamiento de dirigentes; puede haber efecto de orden."}, {"g": "Gobierno nacional y apoyos", "l": "Describe al gobierno como democrático", "a": 17.0, "b": 16.1, "na": 2025, "nb": 1255, "d": -0.8, "ci": 2.6, "z": -0.6, "note": ""}, {"g": "Gobierno nacional y apoyos", "l": "Si Correa apoya a un candidato: definitivamente votaría", "a": 15.7, "b": 18.6, "na": 2025, "nb": 1255, "d": 2.9, "ci": 2.7, "z": 2.1, "note": ""}, {"g": "Gobierno nacional y apoyos", "l": "Si Correa apoya a un candidato: definitivamente no votaría", "a": 24.2, "b": 20.1, "na": 2025, "nb": 1255, "d": -4.1, "ci": 2.9, "z": -2.7, "note": ""}, {"g": "Gobierno nacional y apoyos", "l": "Si Noboa apoya a un candidato: definitivamente votaría", "a": 5.5, "b": 6.1, "na": 2025, "nb": 1255, "d": 0.6, "ci": 1.7, "z": 0.7, "note": ""}, {"g": "Gobierno nacional y apoyos", "l": "Si Noboa apoya a un candidato: definitivamente no votaría", "a": 34.1, "b": 41.0, "na": 2025, "nb": 1255, "d": 6.9, "ci": 3.4, "z": 3.9, "note": ""}, {"g": "Composición de la muestra (control)", "l": "Mujeres", "a": 51.9, "b": 52.0, "na": 2025, "nb": 1255, "d": 0.1, "ci": 3.5, "z": 0.1, "note": ""}, {"g": "Composición de la muestra (control)", "l": "Zona rural", "a": 28.4, "b": 27.7, "na": 2025, "nb": 1255, "d": -0.7, "ci": 3.2, "z": -0.4, "note": ""}, {"g": "Composición de la muestra (control)", "l": "45 años o más", "a": 34.7, "b": 34.2, "na": 2025, "nb": 1255, "d": -0.5, "ci": 3.4, "z": -0.3, "note": ""}, {"g": "Composición de la muestra (control)", "l": "Educación superior", "a": 31.3, "b": 33.6, "na": 2025, "nb": 1255, "d": 2.3, "ci": 3.3, "z": 1.3, "note": ""}], "meta": {"na": 2025, "nb": 1255}};
+const f1=v=>v.toFixed(1).replace('.',','),sg=v=>(v>0?'+':v<0?'−':'')+f1(Math.abs(v));
+const AX=16;let grp='Todos',onlySig=false;
+const groups=['Todos',...[...new Set(D.rows.map(r=>r.g))]];
+const sig=r=>Math.abs(r.d)>r.ci;
+const tip=document.getElementById('tip');
+function bar(r){
+ const W=300,H=22,x=v=>(v+AX)/(2*AX)*W,c=sig(r)?(r.d>0?'var(--up)':'var(--down)'):'var(--ns)';
+ const lo=Math.max(-AX,r.d-r.ci),hi=Math.min(AX,r.d+r.ci),d=Math.max(-AX,Math.min(AX,r.d));
+ const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('viewBox',`0 0 ${W} ${H}`);s.setAttribute('preserveAspectRatio','none');
+ s.innerHTML=`<line x1="${x(0)}" x2="${x(0)}" y1="0" y2="${H}" stroke="var(--sep)" stroke-width="1"/>`+
+ `<rect x="${Math.min(x(0),x(d))}" y="5" width="${Math.max(1,Math.abs(x(d)-x(0)))}" height="12" fill="${c}" rx="2"/>`+
+ `<line x1="${x(lo)}" x2="${x(hi)}" y1="11" y2="11" stroke="var(--fg)" stroke-width="1.4" vector-effect="non-scaling-stroke"/>`+
+ `<line x1="${x(lo)}" x2="${x(lo)}" y1="7" y2="15" stroke="var(--fg)" stroke-width="1.4" vector-effect="non-scaling-stroke"/>`+
+ `<line x1="${x(hi)}" x2="${x(hi)}" y1="7" y2="15" stroke="var(--fg)" stroke-width="1.4" vector-effect="non-scaling-stroke"/>`;
+ return s;
+}
+function draw(){
+ const box=document.getElementById('rows');box.replaceChildren();
+ const gs=[...new Set(D.rows.map(r=>r.g))].filter(g=>grp==='Todos'||g===grp);
+ gs.forEach(g=>{
+  const rs=D.rows.filter(r=>r.g===g&&(!onlySig||sig(r)));if(!rs.length)return;
+  const d=document.createElement('div');d.className='grp';const h=document.createElement('h3');h.textContent=g;d.append(h);
+  rs.forEach(r=>{
+   const e=document.createElement('div');e.className='r';
+   e.innerHTML=`<div class="lbl">${r.l}${r.note?`<small>${r.note}</small>`:''}</div><div class="vals"><span class="s">${f1(r.a)}</span> → <b>${f1(r.b)}</b> %</div><div class="ch"></div><div class="z">${sg(r.z)}</div>`;
+   e.querySelector('.ch').append(bar(r));
+   const ch=e.querySelector('.ch');
+   ch.addEventListener('mousemove',ev=>{tip.hidden=false;tip.innerHTML=`<b>${r.l}</b><br>Septiembre: ${f1(r.a)} % (n = ${r.na})<br>Noviembre: ${f1(r.b)} % (n = ${r.nb})<br>Cambio: ${sg(r.d)} puntos (IC 95 %: ${sg(r.d-r.ci)} a ${sg(r.d+r.ci)})`;tip.style.left=Math.min(ev.clientX+14,innerWidth-tip.offsetWidth-8)+'px';tip.style.top=(ev.clientY+16)+'px';});
+   ch.addEventListener('mouseleave',()=>tip.hidden=true);
+   d.append(e);
+  });box.append(d);
+ });
+}
+function ctl(){
+ const c=document.getElementById('ctl');c.replaceChildren();
+ groups.forEach(g=>{const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=g==='Todos'?'Todos los bloques':g;b.setAttribute('aria-pressed',g===grp);b.onclick=()=>{grp=g;ctl();draw();};c.append(b);});
+ const l=document.createElement('label');l.className='sw';l.innerHTML='<input type="checkbox"> Solo cambios claros';l.querySelector('input').checked=onlySig;l.querySelector('input').onchange=e=>{onlySig=e.target.checked;draw();};c.append(l);
+}
+const K=[['Pabel Muñoz','Voto para alcalde (hoy)','Voto por Muñoz'],['Nulo o blanco','Voto para alcalde (hoy)','Voto nulo o blanco'],['Harold Burbano','Rechazo: nunca votaría por…','Rechazo a Burbano'],['Presidente Noboa','Gestión (calificación negativa)','Gestión de Noboa: negativa'],['Describe al gobierno como autoritario','Gobierno nacional y apoyos','Gobierno autoritario']];
+const T=document.getElementById('tiles');
+K.forEach(([l,g,t])=>{const r=D.rows.find(x=>x.l===l&&x.g===g);const e=document.createElement('div');e.className='tile';
+ e.innerHTML=`<div class="t">${t}</div><div class="v">${f1(r.a)} → ${f1(r.b)} %</div><div class="d" style="color:${sig(r)?(r.d>0?'var(--up)':'var(--down)'):'var(--mut)'}">${sg(r.d)} puntos${sig(r)?'':' (sin cambio claro)'}</div>`;T.append(e);});
+ctl();draw();
+</script></body></html>
